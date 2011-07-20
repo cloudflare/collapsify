@@ -11,6 +11,7 @@ single file.
 
     sudo npm install -g mobilize
 
+
 ## Usage
 
 Start the server with the 'mobilize' command:
