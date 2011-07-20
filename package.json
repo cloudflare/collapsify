@@ -9,7 +9,7 @@
         "email" : "chris@scriptolo.gy",
         "url" : "http://scriptolo.gy"
     },
-    "main" : "./lib/index.js", 
+    "main" : "index", 
     "bin" : { "mobilize" : "./bin/mobilize" }, 
     "repository" : {
         "type" : "git",
@@ -28,6 +28,7 @@
     "engine" : {
         "node" : "~0.4.0"
     },
+    "preferGlobal" : true,
     "licenses" : [
         {
             "type" : "GPLv3",
