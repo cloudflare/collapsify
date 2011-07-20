@@ -23,7 +23,7 @@
         "jsdom" : "~0.2.0",
         "optimist" : "~0.2.5",
         "step" : "0.0.4",
-        "connect" : "~1.6.0"
+        "connect" : "~1.6.0",
         "cluster" : "~0.6.8"
     },
     "engine" : {
