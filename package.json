@@ -3,7 +3,7 @@
     "description" : "Inlines all of the JavaScripts, stylesheets and images of an HTML page.",
     "keywords" : ["html", "stylesheet", "css", "javascript", "js", "compile", "inline", "mobilize", "optimize", "optimization"],
     "homepage" : "http://github.com/cdata/mobilize",
-    "version" : "0.0.3",
+    "version" : "0.0.4",
     "author" : {
         "name" : "Christopher Joel",
         "email" : "chris@scriptolo.gy",
@@ -19,11 +19,12 @@
     "dependencies" : { 
         "cssmin" : "0.3.0",
         "htmlKompressor" : "0.0.6",
-        "uglify-js" : "1.0.5",
-        "jsdom" : "0.2.0",
-        "optimist" : "0.2.5",
+        "uglify-js" : "~1.0.5",
+        "jsdom" : "~0.2.0",
+        "optimist" : "~0.2.5",
         "step" : "0.0.4",
-        "cluster" : "0.6.8"
+        "connect" : "~1.6.0"
+        "cluster" : "~0.6.8"
     },
     "engine" : {
         "node" : "~0.4.0"

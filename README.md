@@ -1,13 +1,9 @@
-# mobilize
+# Mobilize
 
-Mobilize is a server that exposes a very basic service. Point it at an HTML 
-page on the web, and it will respond with the same page with all JavaScripts,
-stylesheets and images merged into the page.
+Mobilize is a web optimization server. Currently its main use to to merge all
+all of the assets of a given HTML file, producing a working page in one file.
 
-In other words, Mobilize attempts to convert arbitrary html pages into a
-single file.
-
-## Installing
+## Installation
 
     sudo npm install -g mobilize
 
