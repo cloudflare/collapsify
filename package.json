@@ -3,7 +3,7 @@
     "description" : "Inlines all of the JavaScripts, stylesheets and images of an HTML page.",
     "keywords" : ["html", "stylesheet", "css", "javascript", "js", "compile", "inline", "mobilize", "optimize", "optimization"],
     "homepage" : "http://github.com/cdata/mobilize",
-    "version" : "0.0.5",
+    "version" : "0.0.6",
     "author" : {
         "name" : "Christopher Joel",
         "email" : "chris@scriptolo.gy",

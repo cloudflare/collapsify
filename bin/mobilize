@@ -3,7 +3,7 @@
 var cluster = require('cluster'),
     argv = require('optimist').argv;
 
-cluster(require('mobilize'))
+cluster(require('mobilize').server)
     .set('workers', argv.workers || 4)
     .set('title', 'Mobilize Master')
     .set('worker title', 'Mobilize Worker')
