@@ -33,7 +33,7 @@ Mobilize accepts the following query parameters.
 
 Required. Defines the path to the HTML page to "mobilize."
 
-### imageroot
+### imagebase
 
 Optional. If defined, instead of inlining images as data URLs (which is not
 supported well, if at all, by older versions of Internet Explorer), image

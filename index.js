@@ -1,2 +1,2 @@
+exports = module.exports = require('./lib/mobilize');
 exports.server = require('./lib/server');
-exports.build = require('./lib/build');
