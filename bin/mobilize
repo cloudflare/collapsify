@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-
-var argv = require('optimist').argv;
-
-require('../index').server.listen(argv.port || 80);
-
