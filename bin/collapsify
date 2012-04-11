@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+var optimist = require('optimist'),
+    cluster = require('cluster'),
+    utility = require('../lib/utility'),
+    argv = optimist.usage('Usage: $0 <options>')
+    .alias({
+        '?': 'help',
+        'p': 'port',
+        'h': 'host',
+        'd': 'depth',
+        'v': 'verbose',
+        'a': 'all',
+        'c': 'css',
+        'j': 'js',
+        'I': 'images',
+        'i': 'htmlimages',
+        'u': 'cssimages',
+        'F': 'fonts',
+        'f': 'favicons',
+        'w': 'workers'
+    }).default({
+        'p': 8020,
+        'd': 10,
+        'v': 0,
+        'w': 4
+    }).describe({
+        '?': 'Show this usage information.',
+        'p': 'The port for Collapsify to listen on.',
+        'h': 'The hostname that Collapsify should respond to.',
+        'd': 'Specify the maximum depth of linked assets to insert.',
+        'w': 'Specify the number of works to spawn.',
+        'v': 'Verbosity of logging output. 1 is errors, 2 is all.',
+        'a': 'Collapse all assets found in the document.',
+        'c': 'Collapse stylesheets.',
+        'j': 'Collapse JavaScripts.',
+        'I': 'Collapse all images.',
+        'i': 'Collapse images in the HTML.',
+        'u': 'Collapse images within stylesheets.',
+        'F': 'Collapse fonts within stylesheets.',
+        'f': 'Collapse favicons and mobile device icons.'
+    }).boolean(['a', 'c', 'j', 'I', 'i', 'u', 'F', 'f']).argv;
+
+if(argv['?']) {
+    optimist.showHelp();
+    process.exit(1);
+}
+
+utility.verbosity = argv.v;
+
+if(cluster.isMaster && argv.w > 0) {
+
+    var worker;
+
+    for(var i = 0; i < argv.w; i++) {
+
+        worker = cluster.fork();
+        worker.on('death', function(worker) {
+
+            utility.error('Worker ' + worker.pid + ' died. Attempting to respawn..');
+        });
+    }
+} else
+    require('../index').startServer(argv);

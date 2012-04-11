@@ -1,2 +1,3 @@
-exports = module.exports = require('./lib/mobilize');
-exports.server = require('./lib/server');
+exports = module.exports = require('./lib/server');
+
+exports.collapsify = require('./lib/collapsify').collapsify;
