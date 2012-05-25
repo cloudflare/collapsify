@@ -49,7 +49,7 @@ if(argv['?']) {
 }
 
 if(argv['H'])
-    argv['H'] = argv['H'].reduce(function(headers, header) {
+    argv['H'] = [].concat(argv['H']).reduce(function(headers, header) {
 
         header = header.trim().split(':');
         headers[header[0].trim()] = header[1].trim();
