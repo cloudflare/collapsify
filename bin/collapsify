@@ -8,6 +8,7 @@ var optimist = require('optimist'),
         '?': 'help',
         'p': 'port',
         'h': 'host',
+        'H': 'headers',
         'd': 'depth',
         'v': 'verbose',
         'a': 'all',
@@ -28,6 +29,7 @@ var optimist = require('optimist'),
         '?': 'Show this usage information.',
         'p': 'The port for Collapsify to listen on.',
         'h': 'The hostname that Collapsify should respond to.',
+        'H': 'Custom headers (curl style) to set on all requests.',
         'd': 'Specify the maximum depth of linked assets to insert.',
         'w': 'Specify the number of works to spawn.',
         'v': 'Verbosity of logging output. 1 is errors, 2 is all.',
@@ -45,6 +47,15 @@ if(argv['?']) {
     optimist.showHelp();
     process.exit(1);
 }
+
+if(argv['H'])
+    argv['H'] = argv['H'].reduce(function(headers, header) {
+
+        header = header.trim().split(':');
+        headers[header[0].trim()] = header[1].trim();
+
+        return headers;
+    }, {});
 
 utility.verbosity = argv.v;
 
