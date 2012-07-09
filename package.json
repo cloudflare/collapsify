@@ -3,7 +3,7 @@
     "description" : "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
     "keywords" : ["html", "stylesheet", "font", "css", "javascript", "js", "compile", "inline", "mobilize", "optimize", "optimization"],
     "homepage" : "http://github.com/cdata/collapsify",
-    "version" : "0.1.3",
+    "version" : "0.1.4",
     "author" : {
         "name" : "Christopher Joel",
         "email" : "chris@scriptolo.gy",
@@ -27,7 +27,7 @@
         "htmlparser" : "~1.7.4"
     },
     "engine" : {
-        "node" : "~0.6.0"
+        "node" : "~0.8.0"
     },
     "preferGlobal" : true,
     "licenses" : [

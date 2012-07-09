@@ -63,13 +63,17 @@ if(cluster.isMaster && argv.w > 0) {
 
     var worker;
 
-    for(var i = 0; i < argv.w; i++) {
+    cluster.on('fork', function(worker) {
 
-        worker = cluster.fork();
-        worker.on('death', function(worker) {
+        worker.on('exit', function() {
 
             utility.error('Worker ' + worker.pid + ' died. Attempting to respawn..');
+            cluster.fork();
         });
-    }
+    });
+
+    for(var i = 0; i < argv.w; i++)
+        cluster.fork();
+
 } else
     require('../index').startServer(argv);
