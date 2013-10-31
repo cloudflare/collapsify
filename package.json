@@ -1,40 +1,55 @@
 {
-    "name" : "collapsify", 
-    "description" : "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-    "keywords" : ["html", "stylesheet", "font", "css", "javascript", "js", "compile", "inline", "mobilize", "optimize", "optimization"],
-    "homepage" : "http://github.com/cdata/collapsify",
-    "version" : "0.1.5",
-    "author" : {
-        "name" : "Christopher Joel",
-        "email" : "chris@scriptolo.gy",
-        "url" : "http://scriptolo.gy"
-    },
-    "main" : "index", 
-    "bin" : { "collapsify" : "./bin/collapsify" }, 
-    "repository" : {
-        "type" : "git",
-        "url" : "git://github.com/cdata/collapsify.git"
-    },
-    "bugs" : "http://github.com/cdata/collapsify/issues",
-    "dependencies" : { 
-        "uglify-js" : "~1.2.6",
-        "optimist" : "~0.3.1",
-        "express" : "~2.5.8",
-        "entities" : "~0.1.0",
-        "q-fs" : "~0.1.24",
-        "q" : "~0.8.2",
-        "parserlib" : "~0.1.6",
-        "htmlparser" : "~1.7.4",
-        "follow-redirects": "~0.0.3"
-    },
-    "engine" : {
-        "node" : "~0.8.0"
-    },
-    "preferGlobal" : true,
-    "licenses" : [
-        {
-            "type" : "GPLv3",
-            "url" : "http://www.gnu.org/copyleft/gpl.html"
-        }
-    ]
+  "name": "collapsify",
+  "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
+  "keywords": [
+    "html",
+    "stylesheet",
+    "font",
+    "css",
+    "javascript",
+    "js",
+    "compile",
+    "inline",
+    "mobilize",
+    "optimize",
+    "optimization"
+  ],
+  "homepage": "http://github.com/cdata/collapsify",
+  "version": "0.1.5",
+  "author": {
+    "name": "Christopher Joel",
+    "email": "chris@scriptolo.gy",
+    "url": "http://scriptolo.gy"
+  },
+  "main": "index",
+  "bin": {
+    "collapsify": "./bin/collapsify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cdata/collapsify.git"
+  },
+  "bugs": "http://github.com/cdata/collapsify/issues",
+  "dependencies": {
+    "uglify-js": "~2.4.1",
+    "optimist": "~0.3.1",
+    "express": "~3.4.4",
+    "q-io": "~1.10.2",
+    "q": "~0.9.7",
+    "parserlib": "~0.2.3",
+    "restler": "git+https://github.com/danwrong/restler.git",
+    "clean-css": "~1.1.7",
+    "he": "~0.3.6",
+    "htmlparser2": "~3.3.0"
+  },
+  "engine": {
+    "node": "~0.8.0"
+  },
+  "preferGlobal": true,
+  "licenses": [
+    {
+      "type": "GPLv3",
+      "url": "http://www.gnu.org/copyleft/gpl.html"
+    }
+  ]
 }
