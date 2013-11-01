@@ -14,7 +14,7 @@ BUILD_DEPS           := nodejs python
 DEB_PACKAGE          := $(NAME)_$(VERSION)-$(ITERATION)-${REVISION}_amd64.deb
 
 print-builddeps:
-    @echo $(BUILD_DEPS)
+	@echo $(BUILD_DEPS)
 
 $(DEB_PACKAGE): clean
 	@echo $VERSION
