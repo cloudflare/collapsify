@@ -30,10 +30,5 @@
         "node" : "~0.8.0"
     },
     "preferGlobal" : true,
-    "licenses" : [
-        {
-            "type" : "GPLv3",
-            "url" : "http://www.gnu.org/copyleft/gpl.html"
-        }
-    ]
+    "licenses" : "MIT"
 }
