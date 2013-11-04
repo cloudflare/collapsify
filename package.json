@@ -16,11 +16,12 @@
   ],
   "homepage": "http://github.com/cdata/collapsify",
   "version": "0.1.6",
-  "author": {
-    "name": "Christopher Joel",
-    "email": "chris@scriptolo.gy",
-    "url": "http://scriptolo.gy"
-  },
+  "contributors": [
+    "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
+    "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
+    "Andrew Galloni <andrew@cloudflare.com>"
+  ],
+  "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
   "main": "index",
   "bin": {
     "collapsify": "./bin/collapsify"
@@ -43,7 +44,7 @@
     "htmlparser2": "~3.3.0"
   },
   "engine": {
-    "node": "~0.8.0"
+    "node": "~0.10.0"
   },
   "preferGlobal": true,
   "license": "MIT"
