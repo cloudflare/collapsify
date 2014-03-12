@@ -1,9 +1,9 @@
-//#!/usr/bin/env node
+#!/usr/bin/env node
 
-var optimist = require( 'optimist' ),
+var yargs = require( 'yargs' ),
 	cluster = require( 'cluster' ),
 	utility = require( '../lib/utility' ),
-	argv = optimist.usage( 'Usage: $0 <options>' )
+	argv = yargs.usage( 'Usage: $0 <options>' )
 	.alias( {
 		'?' : 'help',
 		'p' : 'port',
@@ -46,12 +46,12 @@ var optimist = require( 'optimist' ),
 	} ).boolean( [ 'a', 'c', 'j', 'I', 'i', 'u', 'F', 'f' ] ).argv;
 
 if ( argv['?'] ) {
-	optimist.showHelp();
+	yargs.showHelp();
 	process.exit( 1 );
 }
 
-if ( argv['H'] ) {
-	argv['H'] = [].concat( argv['H'] ).reduce( function( headers, header ) {
+if ( argv.H ) {
+	argv.H = [].concat( argv.H ).reduce( function( headers, header ) {
 
 		header = header.trim().split( ':' );
 		headers[header[0].trim()] = header[1].trim();
