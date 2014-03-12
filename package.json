@@ -4,7 +4,7 @@
   "version": "0.1.6",
   "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
   "bin": {
-    "collapsify": "./bin/collapsify"
+    "collapsify": "./bin/collapsify.js"
   },
   "bugs": "http://github.com/cdata/collapsify/issues",
   "contributors": [
