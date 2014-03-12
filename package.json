@@ -1,6 +1,33 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
+  "version": "0.1.6",
+  "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
+  "bin": {
+    "collapsify": "./bin/collapsify"
+  },
+  "bugs": "http://github.com/cdata/collapsify/issues",
+  "contributors": [
+    "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
+    "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
+    "Andrew Galloni <andrew@cloudflare.com>"
+  ],
+  "dependencies": {
+    "clean-css": "^2.1.6",
+    "express": "^3.4.4",
+    "he": "^0.3.6",
+    "htmlparser2": "^3.5.1",
+    "optimist": "^0.6.0",
+    "parserlib": "^0.2.3",
+    "q": "^1.0.1",
+    "q-io": "^1.11.0",
+    "restler": "^3.2.0",
+    "uglify-js": "^2.4.1"
+  },
+  "engine": {
+    "node": "~0.10.0"
+  },
+  "homepage": "http://github.com/cdata/collapsify",
   "keywords": [
     "html",
     "stylesheet",
@@ -14,38 +41,11 @@
     "optimize",
     "optimization"
   ],
-  "homepage": "http://github.com/cdata/collapsify",
-  "version": "0.1.6",
-  "contributors": [
-    "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
-    "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
-    "Andrew Galloni <andrew@cloudflare.com>"
-  ],
-  "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
+  "license": "MIT",
   "main": "index",
-  "bin": {
-    "collapsify": "./bin/collapsify"
-  },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/cdata/collapsify.git"
-  },
-  "bugs": "http://github.com/cdata/collapsify/issues",
-  "dependencies": {
-    "uglify-js": "^2.4.1",
-    "optimist": "^0.6.0",
-    "express": "^3.4.4",
-    "q-io": "^1.11.0",
-    "q": "^1.0.1",
-    "parserlib": "^0.2.3",
-    "restler": "^3.2.0",
-    "clean-css": "^2.1.6",
-    "he": "^0.3.6",
-    "htmlparser2": "^3.5.1"
-  },
-  "engine": {
-    "node": "~0.10.0"
-  },
-  "preferGlobal": true,
-  "license": "MIT"
+  }
 }
