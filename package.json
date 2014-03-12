@@ -32,16 +32,16 @@
   },
   "bugs": "http://github.com/cdata/collapsify/issues",
   "dependencies": {
-    "uglify-js": "~2.4.1",
-    "optimist": "~0.6.0",
-    "express": "~3.4.4",
-    "q-io": "~1.10.2",
-    "q": "~0.9.7",
-    "parserlib": "~0.2.3",
-    "restler": "git+https://github.com/danwrong/restler.git",
-    "clean-css": "~1.1.7",
-    "he": "~0.3.6",
-    "htmlparser2": "~3.3.0"
+    "uglify-js": "^2.4.1",
+    "optimist": "^0.6.0",
+    "express": "^3.4.4",
+    "q-io": "^1.11.0",
+    "q": "^1.0.1",
+    "parserlib": "^0.2.3",
+    "restler": "^3.2.0",
+    "clean-css": "^2.1.6",
+    "he": "^0.3.6",
+    "htmlparser2": "^3.5.1"
   },
   "engine": {
     "node": "~0.10.0"
