@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
   "bin": {
     "collapsify": "./bin/collapsify.js"
