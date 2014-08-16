@@ -7,8 +7,6 @@ TMP_ROOT             := $(shell pwd)/tmp
 DEPS_ROOT            := $(TMP_ROOT)/deps
 BUILD_ROOT           := $(TMP_ROOT)/build
 PACKAGE_ROOT         := $(TMP_ROOT)/packaging
-MANIFEST_ROOT        := $(PACKAGE_ROOT)/etc/manifest
-MANIFEST_FILE        := $(MANIFEST_ROOT)/$(NAME)
 INSTALL_PREFIX       := usr/local
 BUILD_DEPS           := nodejs python
 DEB_PACKAGE          := $(NAME)_$(VERSION)-$(ITERATION)-${REVISION}_amd64.deb
@@ -19,11 +17,6 @@ print-builddeps:
 $(DEB_PACKAGE): clean
 	@echo $VERSION
 	mkdir -p $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)
-
-    # manifest:
-	mkdir -p $(MANIFEST_ROOT)
-	rm -f $(MANIFEST_FILE)
-	git log -n1 --pretty='collapsify :: %h :: %an :: %ad :: %ae' >> $(MANIFEST_FILE)
 
     # statics:
 	scp -r -p bin           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
