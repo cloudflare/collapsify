@@ -20,7 +20,8 @@ var yargs = require( 'yargs' ),
 		'F' : 'fonts',
 		'f' : 'favicons',
 		'w' : 'workers',
-		'D' : 'listenfd'
+		'D' : 'listenfd',
+		's'  : 'systemd'
 	} ).default( {
 		'p' : 8020,
 		'd' : 10,
@@ -42,7 +43,8 @@ var yargs = require( 'yargs' ),
 		'u' : 'Collapse images within stylesheets.',
 		'F' : 'Collapse fonts within stylesheets.',
 		'f' : 'Collapse favicons and mobile device icons.',
-		'D' : 'The file descriptor {number} to listen on'
+		'D' : 'The file descriptor {number} to listen on',
+		's' : 'Start with systemd'
 	} ).boolean( [ 'a', 'c', 'j', 'I', 'i', 'u', 'F', 'f' ] ).argv;
 
 if ( argv['?'] ) {
