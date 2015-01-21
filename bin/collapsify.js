@@ -25,7 +25,8 @@ var yargs = require( 'yargs' ),
 		'p' : 8020,
 		'd' : 10,
 		'v' : 0,
-		'w' : 4
+		'w' : 4,
+		'forbidden': '^(?:https?:)?(?:\/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)'
 	} ).describe( {
 		'?' : 'Show this usage information.',
 		'p' : 'The port for Collapsify to listen on.',
@@ -42,7 +43,8 @@ var yargs = require( 'yargs' ),
 		'u' : 'Collapse images within stylesheets.',
 		'F' : 'Collapse fonts within stylesheets.',
 		'f' : 'Collapse favicons and mobile device icons.',
-		'D' : 'The file descriptor {number} to listen on'
+		'D' : 'The file descriptor {number} to listen on',
+		'forbidden': 'Forbidden URLs (passed to the RegExp constructor)'
 	} ).boolean( [ 'a', 'c', 'j', 'I', 'i', 'u', 'F', 'f' ] ).argv;
 
 if ( argv['?'] ) {
