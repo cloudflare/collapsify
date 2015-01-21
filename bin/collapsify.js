@@ -64,6 +64,7 @@ if (argv.H) {
   }, {});
 }
 
+var logger = argv.logger = require('../lib/utils/logger')(argv);
 utility.verbosity = argv.v;
 
 if (cluster.isMaster && argv.w > 0) {
@@ -72,7 +73,7 @@ if (cluster.isMaster && argv.w > 0) {
 
     worker.on('exit', function() {
 
-      utility.error('Worker ' + worker.pid + ' died. Attempting to respawn..');
+      logger.error('Worker %s died. Attempting to respawn…', worker.pid);
       cluster.fork();
     });
   });
