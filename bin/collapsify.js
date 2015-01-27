@@ -20,7 +20,8 @@ var argv = yargs.usage('Usage: $0 <options>')
     F: 'fonts',
     f: 'favicons',
     w: 'workers',
-    D: 'listenfd'
+    D: 'listenfd',
+    s: 'systemd'
   }).default({
   p: 8020,
   d: 10,
@@ -43,6 +44,7 @@ var argv = yargs.usage('Usage: $0 <options>')
   u: 'Collapse images within stylesheets.',
   F: 'Collapse fonts within stylesheets.',
   f: 'Collapse favicons and mobile device icons.',
+  s: 'Start with systemd',
   D: 'The file descriptor {number} to listen on',
   forbidden: 'Forbidden URLs (passed to the RegExp constructor)'
 }).boolean(['a', 'c', 'j', 'I', 'i', 'u', 'F', 'f']).argv;
