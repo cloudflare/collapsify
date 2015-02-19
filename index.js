@@ -1,3 +1,4 @@
-exports = module.exports = require('./lib/server');
+'use strict';
+module.exports = require('./lib/server');
 
-exports.collapsify = require('./lib/collapsify').collapsify;
+module.exports.collapsify = require('./lib/collapsify').collapsify;
