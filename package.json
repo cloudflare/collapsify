@@ -20,6 +20,7 @@
     "clean-css": "^2.1.6",
     "he": "^0.5.0",
     "htmlparser2": "^3.5.1",
+    "httperr": "^1.0.0",
     "minimist": "^1.1.0",
     "mmmagic": "^0.3.13",
     "parserlib": "^0.2.3",
