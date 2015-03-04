@@ -22,6 +22,7 @@ $(DEB_PACKAGE): clean
 	scp -r -p bin           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 	scp -r -p lib           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 	scp -r -p index.js      $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	scp -r -p versionify.js      $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 	scp -r -p package.json  $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 
     # add node dependcies
