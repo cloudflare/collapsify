@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "bl": "^0.9.4",
-    "eslint": "^0.14.1",
-    "jsfmt": "git+https://github.com/rdio/jsfmt.git#a3794bb16e4bb9359cf1978e7228bf5e15a0fbe0"
+    "eslint": "^0.17.1",
+    "jsfmt": "^0.4.1"
   },
   "scripts": {
     "lint": "eslint bin/ lib/",

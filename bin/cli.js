@@ -64,5 +64,5 @@ require('../')(domain, argv).done(function(output) {
     digits: 2
   }));
 }, function(err) {
-    console.log('An error has occured: ', err.name, ': ', err.message);
-  });
+  console.log('An error has occured: ', err.name, ': ', err.message);
+});

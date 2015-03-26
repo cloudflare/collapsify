@@ -75,12 +75,12 @@ http.createServer(function(req, res) {
         url: queries.url
       }, 'Collapsify succeeded.');
     }, function(err) {
-        res.statusCode = 500;
-        res.end('Failed to collapsify. ' + err.message);
-        logger.info({
-          url: queries.url,
-          err: err
-        }, 'Collapsify failed.');
-      });
+      res.statusCode = 500;
+      res.end('Failed to collapsify. ' + err.message);
+      logger.info({
+        url: queries.url,
+        err: err
+      }, 'Collapsify failed.');
+    });
   }
 }).listen(systemdSocket() || argv.port);
