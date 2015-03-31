@@ -1,15 +1,41 @@
-# Collapsify
+# Collapsify [![Build Status](http://img.shields.io/travis/cloudflare/collapsify.svg?style=flat)](https://travis-ci.org/cloudflare/collapsify) [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify)
 
 > Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.
 
+## Installation
+
+```sh
+npm install -g collapsify
+```
+
 ## Usage
 
-Install this binary globally with npm:
+An HTTP server is installed as `collapsify-server`, which collapses the URL passed to “/?url=”.
+This HTTP server is systemd-aware: when running as a systemd service, collapsify will listen on the socket passed.
+Otherwise, this server defaults to listening on port 8020, which can be changed via the “-p” flag.
 
-`npm install -g collapsify`
+Additional options can by found via the built in usage information, `collapsify-server -h`.
 
-Then run the `collapsify` command.
-By default, Collapsify listens on localhost port 8020.
-URIs should be passed via a query string as the value of the url key: `http://localhost:8020/?url=http://example.com`
+## API
 
-As a note, `collapsify -?` has more usage information.
+```javascript
+var collapsify = require('collapsify');
+
+collapsify('http://www.cloudflare.com', {
+  headers: {
+    Accept-Language: 'en-US'
+  },
+  logger: console,
+}).then(function(output) {
+  console.log(output);
+});
+```
+
+The “collapsify” function takes the URL to collapse, as well as an object of options, and returns a promise that resolves to a Buffer.
+
+### Options
+Of these, “logger” is required.
+
+* **logger**: An object that exposes a bunyan instance-like API.
+* **headers**: An object of headers, to be added to each HTTP request.
+* **forbidden**: A regex that matches blacklisted resources that should be avoided while navigating.

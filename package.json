@@ -2,12 +2,12 @@
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
   "version": "0.2.0",
-  "author": "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
+  "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "bin": {
     "collapsify": "./bin/cli.js",
     "collapsify-server": "./bin/server.js"
   },
-  "bugs": "http://github.com/cdata/collapsify/issues",
+  "bugs": "http://github.com/cloudflare/collapsify/issues",
   "contributors": [
     "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
     "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
@@ -29,10 +29,7 @@
     "systemd-socket": "0.0.0",
     "uglify-js": "^2.4.1"
   },
-  "engine": {
-    "node": "~0.10.0"
-  },
-  "homepage": "http://github.com/cdata/collapsify",
+  "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [
     "html",
     "stylesheet",
@@ -51,7 +48,7 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/cdata/collapsify.git"
+    "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
     "assume": "^1.2.0",
