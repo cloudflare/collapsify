@@ -6,6 +6,7 @@ var url = require('url');
 var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
 var parseArgs = require('minimist');
+var fds = require('fds');
 var argv = parseArgs(process.argv.slice(2), {
   'boolean': [
     'help',
@@ -63,6 +64,11 @@ argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function(
 }, {});
 
 var logger = argv.logger = require('../lib/utils/logger')(argv);
+var socket = systemdSocket();
+
+if (socket) {
+  fds.nonblock(socket.fd);
+}
 
 http.createServer(function(req, res) {
   var queries = url.parse(req.url, true).query;
@@ -83,4 +89,4 @@ http.createServer(function(req, res) {
       }, 'Collapsify failed.');
     });
   }
-}).listen(systemdSocket() || argv.port);
+}).listen(socket || argv.port);
