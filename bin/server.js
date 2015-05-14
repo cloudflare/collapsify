@@ -5,45 +5,49 @@ var http = require('http');
 var url = require('url');
 var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
-var parseArgs = require('minimist');
 var fds = require('fds');
-var argv = parseArgs(process.argv.slice(2), {
-  'boolean': [
-    'help',
-    'version'
-  ],
-  string: [
-    'headers',
-    'verbose',
-    'forbidden',
-    'port'
-  ],
-  alias: {
-    h: 'help',
-    H: 'headers',
-    v: 'verbose',
-    V: 'version',
-    p: 'port',
-    x: 'forbidden'
-  },
-  'default': {
-    port: 8020,
-    depth: 10,
-    verbose: 0,
-    forbidden: '^(?:https?:)?(?:\/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)'
-  }
+var allowedArgs = [{
+  name: 'forbidden',
+  abbr: 'x',
+  'default': '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
+  help: 'Forbidden URLs (passed to the RegExp constructor).'
+}, {
+  name: 'headers',
+  abbr: 'H',
+  help: 'Custom headers (curl style) to set on all requests.'
+}, {
+  name: 'port',
+  abbr: 'p',
+  'default': 8020,
+  help: 'Port that Collapsify should listen on. Ignored when running as a systemd service.'
+}, {
+  name: 'verbose',
+  abbr: 'V',
+  'default': 0,
+  help: 'Verbosity of logging output. 1 is errors, 2 is all.'
+}, {
+  name: 'version',
+  abbr: 'v',
+  'boolean': true,
+  help: 'Print the version number.'
+}, {
+  name: 'help',
+  abbr: 'h',
+  'boolean': true,
+  help: 'Show this usage information.'
+}];
+
+var clopts = require('cliclopts')(allowedArgs);
+var argv = require('minimist')(process.argv.slice(2), {
+  alias: clopts.alias(),
+  'boolean': clopts.boolean(),
+  'default': clopts.default()
 });
 
 if (argv.help) {
-  console.log('Usage: ' + process.argv.slice(0, 2).join(' ') + ' <options>\n');
+  console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');
   console.log('Options:');
-  console.log('-h, --help        Show this usage information.');
-  console.log('-H, --headers     Custom headers (curl style) to set on all requests.');
-  console.log('-p, --port        The port for Collapsify to listen on.                  [default: 8020]');
-  console.log('                  Ignored when running under systemd');
-  console.log('-v, --verbose     Verbosity of logging output. 1 is errors, 2 is all.    [default: 0]');
-  console.log('-V, --version     Print the version number.');
-  console.log('--forbidden       Forbidden URLs (passed to the RegExp constructor)      [default: "^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)"]');
+  clopts.print();
   /* eslint-disable no-process-exit */
   process.exit(0);
   /* eslint-enable no-process-exit */
