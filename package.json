@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "bin": {
     "collapsify": "./bin/cli.js",
@@ -28,7 +28,7 @@
     "parserlib": "^0.2.3",
     "restler": "^3.2.0",
     "systemd-socket": "0.0.0",
-    "uglify-js": "^2.4.1"
+    "uglify-js": "^2.4.24"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [
