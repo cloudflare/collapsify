@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 'use strict';
+var errors = require('errors');
 if (process.env.DEBUG) {
   var Rx = require('rx');
   Rx.config.longStackSupport = true;
+  errors.stacks(true);
 }
 
 var VERSION = require('../lib/version');
 var http = require('http');
-var httperr = require('httperr');
 var url = require('url');
 var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
@@ -80,6 +81,12 @@ if (socket) {
   fds.nonblock(socket.fd);
 }
 
+function json(res, status, data) {
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify(data));
+}
+
 http.createServer(function(req, res) {
   var queries = url.parse(req.url, true).query;
 
@@ -93,26 +100,22 @@ http.createServer(function(req, res) {
         url: queries.url
       }, 'Collapsify succeeded.');
     }, function(err) {
-      if (err instanceof httperr.HttpError) {
-        res.statusCode = 502;
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-        res.end(JSON.stringify({
-          errors: [{
-            code: err.statusCode,
-            message: err.title + ': ' + err.message
-          }]
-        }));
-      } else {
-        res.statusCode = 500;
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-        res.end(JSON.stringify({
+      if (err instanceof errors.HttpError) {
+        json(res, 502, {
           errors: [
-            {
-              code: err.code || 999,
-              message: process.env.NODE_ENV === 'development' ? err.message : 'An unknown error occured.'
-            }
+            new errors.Http502Error({
+              cause: err
+            })
           ]
-        }));
+        });
+      } else {
+        json(res, 500, {
+          errors: [
+            new errors.Http500Error({
+              cause: err
+            })
+          ]
+        });
       }
 
       logger.info({

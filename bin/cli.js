@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 'use strict';
+var errors = require('errors');
 if (process.env.DEBUG) {
   var Rx = require('rx');
   Rx.config.longStackSupport = true;
+  errors.stacks(true);
 }
 
 var VERSION = require('../lib/version');
