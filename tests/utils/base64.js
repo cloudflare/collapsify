@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('assume');
-var base64 = require('../lib/utils/base64');
+var base64 = require('../../lib/utils/base64');
 var fs = require('mz/fs');
 var Rx = require('rx');
 var path = require('path');
