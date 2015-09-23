@@ -99,8 +99,8 @@ function methodNotAllowed(request, response) {
   });
 }
 
-function collapseWith(response, collapseURL, successCallback) {
-  collapsify(collapseURL, argv).subscribe(function(result) {
+function collapseWith(request, response, collapseURL, successCallback) {
+  var subscription = collapsify(collapseURL, argv).subscribe(function(result) {
     successCallback(result);
 
     logger.info({
@@ -131,6 +131,11 @@ function collapseWith(response, collapseURL, successCallback) {
       err: err
     }, 'Collapsify failed.');
   });
+
+  request.on('close', function() {
+    subscription.dispose();
+    logger.debug('client discconected');
+  });
 }
 
 http.createServer(function(req, res) {
@@ -149,7 +154,7 @@ http.createServer(function(req, res) {
           return;
         }
 
-        collapseWith(response, body.url, function(result) {
+        collapseWith(request, response, body.url, function(result) {
           json(response, 200, {
             data: [{
               html: result
@@ -174,7 +179,7 @@ http.createServer(function(req, res) {
         return;
       }
 
-      collapseWith(response, queries.url, function(result) {
+      collapseWith(request, response, queries.url, function(result) {
         response.statusCode = 200;
         response.setHeader('Content-Type', 'text/html; charset=utf-8');
         response.end(result);
