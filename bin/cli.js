@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 'use strict';
+if (process.env.DEBUG) {
+  var Rx = require('rx');
+  Rx.config.longStackSupport = true;
+}
+
 var VERSION = require('../lib/version');
 var byte = require('8bits');
+var collapsify = require('../');
+var prettify = require('prettify-error');
 var allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
@@ -27,6 +34,8 @@ var allowedArgs = [{
   'boolean': true,
   help: 'Show this usage information.'
 }];
+
+require('exit-code');
 
 var clopts = require('cliclopts')(allowedArgs);
 var argv = require('minimist')(process.argv.slice(2), {
@@ -62,11 +71,13 @@ argv.logger = require('../lib/utils/logger')(argv);
 
 var domain = argv._[0];
 
-require('../')(domain, argv).done(function(output) {
-  console.log('Collapsed Size: ', byte(output.length, {
-    binary: true,
-    digits: 2
-  }));
-}, function(err) {
-  console.log('An error has occured: ', err.name, ': ', err.message);
-});
+collapsify(domain, argv)
+  .subscribe(function(result) {
+    console.log('Collapsed size: ', byte(result.length, {
+      binary: true,
+      digits: 2
+    }));
+  }, function(err) {
+    console.error(prettify(err) || err);
+    process.exitCode = 2;
+  });

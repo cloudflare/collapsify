@@ -1,7 +1,13 @@
 #!/usr/bin/env node
 'use strict';
+if (process.env.DEBUG) {
+  var Rx = require('rx');
+  Rx.config.longStackSupport = true;
+}
+
 var VERSION = require('../lib/version');
 var http = require('http');
+var httperr = require('httperr');
 var url = require('url');
 var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
@@ -78,15 +84,37 @@ http.createServer(function(req, res) {
   var queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
-    collapsify(queries.url, argv).done(function(result) {
+    collapsify(queries.url, argv).subscribe(function(result) {
       res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.end(result);
+
       logger.info({
         url: queries.url
       }, 'Collapsify succeeded.');
     }, function(err) {
-      res.statusCode = 500;
-      res.end('Failed to collapsify. ' + err.message);
+      if (err instanceof httperr.HttpError) {
+        res.statusCode = 502;
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.end(JSON.stringify({
+          errors: [{
+            code: err.statusCode,
+            message: err.title + ': ' + err.message
+          }]
+        }));
+      } else {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.end(JSON.stringify({
+          errors: [
+            {
+              code: err.code || 999,
+              message: process.env.NODE_ENV === 'development' ? err.message : 'An unknown error occured.'
+            }
+          ]
+        }));
+      }
+
       logger.info({
         url: queries.url,
         err: err
