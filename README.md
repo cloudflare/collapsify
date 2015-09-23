@@ -1,4 +1,4 @@
-# Collapsify [![Build Status](http://img.shields.io/travis/cloudflare/collapsify.svg?style=flat)](https://travis-ci.org/cloudflare/collapsify) [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify)
+# Collapsify [![Build Status](http://img.shields.io/travis/cloudflare/collapsify/master.svg?style=flat)](https://travis-ci.org/cloudflare/collapsify) [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](https://img.shields.io/coveralls/cloudflare/collapsify/master.svg)](https://coveralls.io/github/cloudflare/collapsify)
 
 > Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.
 
