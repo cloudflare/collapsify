@@ -46,6 +46,11 @@
   ],
   "license": "MIT",
   "main": "index",
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
   "preferGlobal": true,
   "repository": {
     "type": "git",
