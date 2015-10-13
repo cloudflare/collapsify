@@ -1,11 +1,22 @@
 #!/usr/bin/env node
 'use strict';
+var errors = require('errors');
+if (process.env.DEBUG) {
+  var Rx = require('rx');
+  Rx.config.longStackSupport = true;
+  errors.stacks(true);
+}
+
 var VERSION = require('../lib/version');
 var http = require('http');
+var wayfarer = require('wayfarer');
+var wayfarerToServer = require('wayfarer-to-server');
+var pathnameMatch = require('pathname-match');
 var url = require('url');
 var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
 var fds = require('fds');
+var jsonBody = require('body/json');
 var allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
@@ -74,23 +85,117 @@ if (socket) {
   fds.nonblock(socket.fd);
 }
 
-http.createServer(function(req, res) {
-  var queries = url.parse(req.url, true).query;
+function json(res, status, data) {
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify(data));
+}
 
-  if (queries && queries.url) {
-    collapsify(queries.url, argv).done(function(result) {
-      res.statusCode = 200;
-      res.end(result);
-      logger.info({
-        url: queries.url
-      }, 'Collapsify succeeded.');
-    }, function(err) {
-      res.statusCode = 500;
-      res.end('Failed to collapsify. ' + err.message);
-      logger.info({
-        url: queries.url,
-        err: err
-      }, 'Collapsify failed.');
-    });
-  }
+function methodNotAllowed(request, response) {
+  json(response, 405, {
+    errors: [
+      new errors.Http405Error('Method "' + request.method + '" Not Allowed"')
+    ]
+  });
+}
+
+function collapseWith(request, response, collapseURL, successCallback) {
+  var subscription = collapsify(collapseURL, argv).subscribe(function(result) {
+    successCallback(result);
+
+    logger.info({
+      url: collapseURL,
+      res: response
+    }, 'Collapsify succeeded.');
+  }, function(err) {
+    if (err instanceof errors.HttpError) {
+      json(response, 502, {
+        errors: [
+          new errors.Http502Error({
+            cause: err
+          })
+        ]
+      });
+    } else {
+      json(response, 500, {
+        errors: [
+          new errors.Http500Error({
+            cause: err
+          })
+        ]
+      });
+    }
+
+    logger.info({
+      res: response,
+      err: err
+    }, 'Collapsify failed.');
+  });
+
+  request.on('close', function() {
+    subscription.dispose();
+    logger.debug('client discconected');
+  });
+}
+
+http.createServer(function(req, res) {
+  var router = wayfarerToServer(wayfarer('/404'));
+
+  router.on('/v1/collapse', {
+    any: methodNotAllowed,
+    post: function(request, response) {
+      jsonBody(request, function(err, body) {
+        if (err) {
+          json(response, 400, {
+            errors: [
+              new errors.Http400Error('Missing or malformed JSON body')
+            ]
+          });
+          return;
+        }
+
+        collapseWith(request, response, body.url, function(result) {
+          json(response, 200, {
+            data: [{
+              html: result
+            }]
+          });
+        });
+      });
+    }
+  });
+
+  router.on('/', {
+    any: methodNotAllowed,
+    get: function(request, response) {
+      var queries = url.parse(req.url, true).query;
+
+      if (queries && !queries.url) {
+        json(response, 400, {
+          errors: [
+            new errors.Http400Error('Missing "url" query parameter')
+          ]
+        });
+        return;
+      }
+
+      collapseWith(request, response, queries.url, function(result) {
+        response.statusCode = 200;
+        response.setHeader('Content-Type', 'text/html; charset=utf-8');
+        response.end(result);
+      });
+    }
+  });
+
+  router.on('/404', {
+    any: function(request, response) {
+      json(response, 404, {
+        errors: [
+          new errors.Http404Error('Route Not Found')
+        ]
+      });
+    }
+  });
+
+  router(pathnameMatch(req.url), req, res);
 }).listen(socket || argv.port);
