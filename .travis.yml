@@ -13,4 +13,4 @@ after_script:
 node_js:
   - 0.12
   - 0.10
-  - 4.0
+  - 4
