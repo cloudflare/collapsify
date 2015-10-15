@@ -2,13 +2,14 @@ language: node_js
 sudo: false
 env:
   - CXX=g++-4.8
-script: npm run coverage
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+after_script:
+  - npm run coverage
 node_js:
   - 0.12
   - 0.10
