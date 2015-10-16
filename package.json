@@ -71,7 +71,7 @@
     "format": "jsfmt -w bin/ lib/ tests/",
     "start": "./bin/server.js",
     "prepublish": "./versionify.js",
-    "coverage": "npm test && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "istanbul cover _mocha -- -R spec tests"
   }
 }
