@@ -30,7 +30,6 @@ $(DEB_PACKAGE): clean
     # build deb package:
 	fpm -C $(PACKAGE_ROOT) -s dir -t deb -n $(NAME) -v $(VERSION) \
         --iteration $(ITERATION) \
-        --depends "circus" \
         --depends "nodejs" \
         --deb-user root \
         --deb-group root \
