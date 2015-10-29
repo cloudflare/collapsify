@@ -9,7 +9,7 @@ describe('base64 utility', function() {
     it('should base64 encode ASCII text', function() {
       return base64.encode(new Buffer('plain text')).then(function(encoded) {
         expect(encoded).is.a('string');
-        expect(encoded).matches(/^data:text\/plain; charset=us-ascii;base64,/);
+        expect(encoded).matches(/^data:text\/plain;charset=us-ascii;base64,/);
       });
     });
 
@@ -18,7 +18,7 @@ describe('base64 utility', function() {
 
       return base64.encode(buf).then(function(encoded) {
         expect(encoded).is.a('string');
-        expect(encoded).matches(/^data:text\/plain; charset=utf-8;base64,/);
+        expect(encoded).matches(/^data:text\/plain;charset=utf-8;base64,/);
       });
     });
 
@@ -27,24 +27,33 @@ describe('base64 utility', function() {
         .then(base64.encode)
         .then(function(encoded) {
           expect(encoded).is.a('string');
-          expect(encoded).matches(/^data:image\/gif; charset=binary;base64,/);
+          expect(encoded).matches(/^data:image\/gif;charset=binary;base64,/);
+        });
+    });
+
+    it('should not have spaces in the base64 string', function() {
+      return fs.readFile(path.join(__dirname, 'fixtures/gif.gif'))
+        .then(base64.encode)
+        .then(function(encoded) {
+          expect(encoded).is.a('string');
+          expect(encoded).does.not.match(/\s/);
         });
     });
   });
 
   describe('verifySync', function() {
     it('should verify ASCII text', function() {
-      var encoded = 'data:text/plain; charset=us-ascii;base64,cGxhaW4gdGV4dA==';
+      var encoded = 'data:text/plain;charset=us-ascii;base64,cGxhaW4gdGV4dA==';
       expect(base64.validateSync(encoded)).is.true();
     });
 
     it('should verify Unicode text', function() {
-      var encoded = 'data:text/plain; charset=utf-8;base64,8J+alw==';
+      var encoded = 'data:text/plain;charset=utf-8;base64,8J+alw==';
       expect(base64.validateSync(encoded)).is.true();
     });
 
     it('should verify a GIF', function() {
-      var encoded = 'data:image/gif; charset=binary;base64,R0lGODlhAQABAAAAADs=';
+      var encoded = 'data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=';
       expect(base64.validateSync(encoded)).is.true();
     });
   });
