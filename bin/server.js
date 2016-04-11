@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 'use strict';
-var VERSION = require('../lib/version');
 var http = require('http');
 var url = require('url');
-var collapsify = require('../');
 var systemdSocket = require('systemd-socket');
 var fds = require('fds');
 var allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
-  'default': '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
+  default: '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
   help: 'Forbidden URLs (passed to the RegExp constructor).'
 }, {
   name: 'headers',
@@ -18,31 +16,34 @@ var allowedArgs = [{
 }, {
   name: 'port',
   abbr: 'p',
-  'default': 8020,
+  default: 8020,
   help: 'Port that Collapsify should listen on. Ignored when running as a systemd service.'
 }, {
   name: 'verbose',
   abbr: 'V',
-  'default': 0,
+  default: 0,
   help: 'Verbosity of logging output. 1 is errors, 2 is all.'
 }, {
   name: 'version',
   abbr: 'v',
-  'boolean': true,
+  boolean: true,
   help: 'Print the version number.'
 }, {
   name: 'help',
   abbr: 'h',
-  'boolean': true,
+  boolean: true,
   help: 'Show this usage information.'
 }];
 
 var clopts = require('cliclopts')(allowedArgs);
 var argv = require('minimist')(process.argv.slice(2), {
   alias: clopts.alias(),
-  'boolean': clopts.boolean(),
-  'default': clopts.default()
+  boolean: clopts.boolean(),
+  default: clopts.default()
 });
+
+var VERSION = require('../lib/version');
+var collapsify = require('../');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');
@@ -60,7 +61,7 @@ if (argv.version) {
   /* eslint-enable no-process-exit */
 }
 
-argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function(headers, header) {
+argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function (headers, header) {
   header = header.trim().split(':');
   headers[header[0].trim()] = header[1].trim();
 
@@ -74,17 +75,17 @@ if (socket) {
   fds.nonblock(socket.fd);
 }
 
-http.createServer(function(req, res) {
+http.createServer(function (req, res) {
   var queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
-    collapsify(queries.url, argv).done(function(result) {
+    collapsify(queries.url, argv).done(function (result) {
       res.statusCode = 200;
       res.end(result);
       logger.info({
         url: queries.url
       }, 'Collapsify succeeded.');
-    }, function(err) {
+    }, function (err) {
       res.statusCode = 500;
       res.end('Failed to collapsify. ' + err.message);
       logger.info({
