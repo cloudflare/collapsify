@@ -60,18 +60,18 @@
     "assume": "^1.2.0",
     "bl": "^1.0.0",
     "coveralls": "^2.11.4",
-    "eslint": "^2.0.0",
     "istanbul": "^0.4.0",
-    "jsfmt": "^0.5.1",
     "mocha": "^2.2.1",
-    "mz": "^2.1.0"
+    "mz": "^2.1.0",
+    "xo": "^0.14.0"
   },
   "scripts": {
-    "lint": "eslint bin/ lib/ tests/",
-    "format": "jsfmt -w bin/ lib/ tests/",
     "start": "./bin/server.js",
     "prepublish": "./versionify.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
-    "test": "istanbul cover _mocha -- -R spec tests"
+    "test": "xo && istanbul cover _mocha -- -R spec tests"
+  },
+  "xo": {
+    "space": true
   }
 }
