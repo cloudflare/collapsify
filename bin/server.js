@@ -22,7 +22,7 @@ var allowedArgs = [{
   name: 'verbose',
   abbr: 'V',
   default: 0,
-  help: 'Verbosity of logging output. 1 is errors, 2 is all.'
+  help: 'Verbosity of logging output. 0 is errors and warnings, 1 is info, 2 is all.'
 }, {
   name: 'version',
   abbr: 'v',
