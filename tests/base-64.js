@@ -4,7 +4,7 @@ var expect = require('assume');
 var fs = require('mz/fs');
 var describe = require('mocha').describe;
 var it = require('mocha').it;
-var base64 = require('../lib/utils/base64');
+var base64 = require('../lib/utils/base-64');
 
 describe('base64 utility', function () {
   describe('encode', function () {
