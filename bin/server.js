@@ -3,6 +3,7 @@
 var http = require('http');
 var url = require('url');
 var systemdSocket = require('systemd-socket');
+var bole = require('bole');
 
 var allowedArgs = [{
   name: 'forbidden',
@@ -64,7 +65,12 @@ argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function 
   return headers;
 }, {});
 
-var logger = argv.logger = require('../lib/utils/logger')(argv);
+var levels = 'warn info debug'.split(' ');
+bole.output({
+  level: levels[argv.verbose] || 'warn',
+  stream: process.stdout
+});
+var logger = bole('collapsify-server');
 
 var socket = systemdSocket();
 
@@ -82,9 +88,8 @@ http.createServer(function (req, res) {
     }, function (err) {
       res.statusCode = 500;
       res.end('Failed to collapsify. ' + err.message);
-      logger.info({
-        url: queries.url,
-        err: err
+      logger.info(err, {
+        url: url
       }, 'Collapsify failed.');
     });
   } else {

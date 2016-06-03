@@ -25,7 +25,6 @@ collapsify('http://www.cloudflare.com', {
   headers: {
     Accept-Language: 'en-US'
   },
-  logger: console,
 }).then(function(output) {
   console.log(output);
 });
@@ -34,8 +33,6 @@ collapsify('http://www.cloudflare.com', {
 The “collapsify” function takes the URL to collapse, as well as an object of options, and returns a promise that resolves to a Buffer.
 
 ### Options
-Of these, “logger” is required.
 
-* **logger**: An object that exposes a bunyan instance-like API.
 * **headers**: An object of headers, to be added to each HTTP request.
 * **forbidden**: A regex that matches blacklisted resources that should be avoided while navigating.
