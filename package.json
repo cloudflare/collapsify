@@ -58,19 +58,20 @@
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
-    "assume": "^1.2.0",
     "bl": "^1.0.0",
     "coveralls": "^2.11.4",
+    "intelli-espower-loader": "^1.0.1",
     "istanbul": "^0.4.0",
     "mocha": "^3.0.0",
     "mz": "^2.1.0",
+    "power-assert": "^1.5.0",
     "xo": "^0.16.0"
   },
   "scripts": {
     "start": "./bin/server.js",
     "prepublish": "./versionify.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
-    "test": "xo && istanbul cover _mocha -- -R spec tests"
+    "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
   "xo": {
     "space": true
