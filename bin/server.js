@@ -4,6 +4,8 @@ var http = require('http');
 var url = require('url');
 var systemdSocket = require('systemd-socket');
 var bole = require('bole');
+var summary = require('server-summary');
+var httpNdjson = require('http-ndjson');
 
 var allowedArgs = [{
   name: 'forbidden',
@@ -74,7 +76,8 @@ var logger = bole('collapsify-server');
 
 var socket = systemdSocket();
 
-http.createServer(function (req, res) {
+var server = http.createServer(function (req, res) {
+  httpNdjson(req, res, logger.info);
   var queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
@@ -96,4 +99,6 @@ http.createServer(function (req, res) {
     res.statusCode = 500;
     res.end();
   }
-}).listen(socket || argv.port);
+});
+
+server.listen(socket || argv.port, summary(server, logger.info));

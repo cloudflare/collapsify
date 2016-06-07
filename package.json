@@ -21,6 +21,7 @@
     "cssnano": "^3.10.0",
     "got": "^8.3.1",
     "he": "^1.0.0",
+    "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
     "mmmagic": "^0.4.1",
     "ndjson-logrus": "^1.1.0",
@@ -28,6 +29,7 @@
     "postcss-value-parser": "^3.3.0",
     "posthtml": "^0.11.3",
     "pumpify": "^1.5.0",
+    "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
     "uglify-js": "^2.4.24"
   },
