@@ -63,7 +63,7 @@
     "istanbul": "^0.4.0",
     "mocha": "^2.2.1",
     "mz": "^2.1.0",
-    "xo": "^0.15.0"
+    "xo": "^0.16.0"
   },
   "scripts": {
     "start": "./bin/server.js",
