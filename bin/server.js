@@ -3,7 +3,6 @@
 var http = require('http');
 var url = require('url');
 var systemdSocket = require('systemd-socket');
-var fds = require('fds');
 
 var allowedArgs = [{
   name: 'forbidden',
@@ -50,16 +49,12 @@ if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');
   console.log('Options:');
   clopts.print();
-  /* eslint-disable no-process-exit */
   process.exit(0);
-  /* eslint-enable no-process-exit */
 }
 
 if (argv.version) {
   console.log('Collapsify Server - ' + VERSION);
-  /* eslint-disable no-process-exit */
   process.exit(0);
-  /* eslint-enable no-process-exit */
 }
 
 argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function (headers, header) {
@@ -73,16 +68,13 @@ var logger = argv.logger = require('../lib/utils/logger')(argv);
 
 var socket = systemdSocket();
 
-if (socket) {
-  fds.nonblock(socket.fd);
-}
-
 http.createServer(function (req, res) {
   var queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
     collapsify(queries.url, argv).done(function (result) {
       res.statusCode = 200;
+      res.setHeader('content-type', 'text/html; charset=utf-8');
       res.end(result);
       logger.info({
         url: queries.url
@@ -95,5 +87,8 @@ http.createServer(function (req, res) {
         err: err
       }, 'Collapsify failed.');
     });
+  } else {
+    res.statusCode = 500;
+    res.end();
   }
 }).listen(socket || argv.port);

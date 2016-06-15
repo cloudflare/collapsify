@@ -1,16 +1,17 @@
 language: node_js
+dist: trusty
 sudo: false
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-after_script:
-  - npm run coverage
 node_js:
-  - 0.12
-  - 0.10
-  - 4
+  - "8"
+  - "10"
+before_install:
+  - npm install -g npm@latest
+install:
+  - npm ci
+after_success:
+  - npm run coverage
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+notifications:
+  email: false
