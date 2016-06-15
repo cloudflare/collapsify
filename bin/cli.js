@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 var byte = require('8bits');
+
 var allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',

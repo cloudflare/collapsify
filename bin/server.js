@@ -4,6 +4,7 @@ var http = require('http');
 var url = require('url');
 var systemdSocket = require('systemd-socket');
 var fds = require('fds');
+
 var allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
@@ -69,6 +70,7 @@ argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function 
 }, {});
 
 var logger = argv.logger = require('../lib/utils/logger')(argv);
+
 var socket = systemdSocket();
 
 if (socket) {
