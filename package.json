@@ -25,7 +25,7 @@
     "httperr": "^1.0.0",
     "minimist": "^1.1.0",
     "mmmagic": "^0.4.1",
-    "parserlib": "^0.2.3",
+    "parserlib": "^1.0.0",
     "restler": "^3.2.0",
     "systemd-socket": "0.0.0",
     "uglify-js": "^2.4.24"
