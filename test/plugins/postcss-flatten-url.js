@@ -24,7 +24,7 @@ describe('postcss-flatten-url', () => {
   it('should replace the URL in a property', () => {
     return test(
       '.flatten { background: url("example.png") }',
-      '.flatten { background: url("data:application/x-empty;charset=binary;base64,") }',
+      '.flatten { background: url(data:application/x-empty;charset=binary;base64,) }',
       {
         fetch(url) {
           assert(url === 'http://example.com/example.png');
