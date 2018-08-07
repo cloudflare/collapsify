@@ -1,8 +1,7 @@
 'use strict';
 const assert = require('power-assert');
 const Bluebird = require('bluebird');
-const describe = require('mocha').describe;
-const it = require('mocha').it;
+const {describe, it} = require('mocha');
 const collapser = require('../../lib/collapsers/html');
 
 describe('html collapser', () => {

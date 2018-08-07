@@ -1,8 +1,7 @@
 'use strict';
 const assert = require('power-assert');
 const nock = require('nock');
-const describe = require('mocha').describe;
-const it = require('mocha').it;
+const {describe, it} = require('mocha');
 const collapsify = require('..');
 
 nock.disableNetConnect();

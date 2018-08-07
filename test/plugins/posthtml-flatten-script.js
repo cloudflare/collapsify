@@ -2,8 +2,7 @@
 const assert = require('power-assert');
 const Bluebird = require('bluebird');
 const posthtml = require('posthtml');
-const describe = require('mocha').describe;
-const it = require('mocha').it;
+const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/posthtml-flatten-script');
 

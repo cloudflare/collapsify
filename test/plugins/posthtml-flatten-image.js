@@ -3,8 +3,7 @@ const path = require('path');
 const assert = require('power-assert');
 const posthtml = require('posthtml');
 const fs = require('mz/fs');
-const describe = require('mocha').describe;
-const it = require('mocha').it;
+const {describe, it} = require('mocha');
 const plugin = require('../../lib/plugins/posthtml-flatten-image');
 
 const fixture = path.join(__dirname, '../fixtures/gif.gif');

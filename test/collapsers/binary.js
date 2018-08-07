@@ -2,8 +2,7 @@
 const path = require('path');
 const assert = require('power-assert');
 const fs = require('mz/fs');
-const describe = require('mocha').describe;
-const it = require('mocha').it;
+const {describe, it} = require('mocha');
 const collapser = require('../../lib/collapsers/binary');
 
 describe('binary collapser', () => {

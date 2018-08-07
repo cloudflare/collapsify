@@ -2,7 +2,7 @@
 'use strict';
 const fs = require('fs');
 const BL = require('bl');
-const version = require('./package.json').version;
+const {version} = require('./package.json');
 
 const bl = new BL();
 bl.append("'use strict';\n");
