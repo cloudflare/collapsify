@@ -60,15 +60,16 @@ if (argv.version) {
   process.exit(0);
 }
 
-argv.headers = argv.H = []
-  .concat(argv.headers)
-  .filter(Boolean)
-  .reduce((headers, header) => {
+const opts = {
+  forbidden: argv.forbidden,
+
+  headers: [...argv.headers].filter(Boolean).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
     return headers;
-  }, {});
+  }, {})
+};
 
 const levels = 'warn info debug'.split(' ');
 bole.output({
@@ -79,7 +80,7 @@ const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
-require('..')(domain, argv).done(
+require('..')(domain, opts).done(
   output => {
     console.log(
       'Collapsed Size: ',

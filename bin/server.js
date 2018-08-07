@@ -70,15 +70,16 @@ if (argv.version) {
   process.exit(0);
 }
 
-argv.headers = argv.H = []
-  .concat(argv.headers)
-  .filter(Boolean)
-  .reduce((headers, header) => {
+const opts = {
+  forbidden: argv.forbidden,
+
+  headers: [...argv.headers].filter(Boolean).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
     return headers;
-  }, {});
+  }, {})
+};
 
 const levels = 'warn info debug'.split(' ');
 bole.output({
@@ -94,7 +95,7 @@ const server = http.createServer((req, res) => {
   const queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
-    collapsify(queries.url, argv).done(
+    collapsify(queries.url, opts).done(
       result => {
         res.statusCode = 200;
         res.setHeader('content-type', 'text/html; charset=utf-8');
