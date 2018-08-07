@@ -5,8 +5,10 @@ const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-url');
 
-async function test(input, output, opts) {
-  const result = await postcss([plugin(opts)]).process(input);
+async function test(input, output, opts = {}) {
+  const result = await postcss([plugin(opts)]).process(input, {
+    from: opts.resourceLocation
+  });
 
   assert(result.css === output);
 }
