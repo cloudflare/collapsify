@@ -1,6 +1,5 @@
 'use strict';
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const {describe, it} = require('mocha');
 const collapser = require('../../lib/collapsers/html');
 
@@ -28,7 +27,7 @@ describe('html collapser', () => {
       {
         fetch(url) {
           assert(url === 'https://example.org/foobar.png');
-          return Bluebird.resolve(Buffer.from(''));
+          return Promise.resolve(Buffer.from(''));
         },
         resourceLocation: 'https://example.com'
       }
@@ -46,15 +45,15 @@ describe('html collapser', () => {
       fetch(url) {
         switch (url) {
           case 'https://terinstock.com':
-            return Bluebird.resolve(
+            return Promise.resolve(
               Buffer.from(
                 '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
               )
             );
           case 'https://terinstock.com/avatar.jpeg':
-            return Bluebird.resolve(Buffer.from(''));
+            return Promise.resolve(Buffer.from(''));
           default:
-            return Bluebird.reject(
+            return Promise.reject(
               new assert.AssertionError('unknown resource resolution')
             );
         }

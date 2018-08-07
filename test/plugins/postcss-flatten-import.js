@@ -1,7 +1,6 @@
 'use strict';
 const postcss = require('postcss');
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-import');
@@ -20,7 +19,7 @@ describe('postcss-flatten-import', () => {
       {
         fetch(url) {
           assert(url === 'http://example.com/static/css/fonts.css');
-          return Bluebird.resolve(
+          return Promise.resolve(
             Buffer.from(
               '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
             )
@@ -38,7 +37,7 @@ describe('postcss-flatten-import', () => {
       {
         fetch(url) {
           assert(url === 'http://example.com/static/css/flatten.css');
-          return Bluebird.resolve(Buffer.from('.flatten { color: blue }'));
+          return Promise.resolve(Buffer.from('.flatten { color: blue }'));
         },
         resourceLocation: 'http://example.com/static/css/app.css'
       }

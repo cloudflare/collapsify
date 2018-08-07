@@ -1,6 +1,5 @@
 'use strict';
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const posthtml = require('posthtml');
 const {describe, it} = require('mocha');
 
@@ -54,7 +53,7 @@ describe('posthtml-flatten-script', () => {
       {
         fetch(url) {
           assert(url === 'https://example.com/app.js');
-          return Bluebird.resolve(Buffer.from('alert("foo" + "bar");'));
+          return Promise.resolve(Buffer.from('alert("foo" + "bar");'));
         },
         resourceLocation: 'https://example.com/'
       }

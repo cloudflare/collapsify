@@ -1,6 +1,5 @@
 'use strict';
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const {describe, it} = require('mocha');
 const collapser = require('../../lib/collapsers/css');
 
@@ -43,7 +42,7 @@ describe('CSS collapser', () => {
         {
           fetch(url) {
             assert(url === 'https://example.com/example.png');
-            return Bluebird.resolve(Buffer.from(''));
+            return Promise.resolve(Buffer.from(''));
           },
           resourceLocation: 'https://example.com'
         }

@@ -1,7 +1,6 @@
 'use strict';
 const postcss = require('postcss');
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-url');
@@ -27,7 +26,7 @@ describe('postcss-flatten-url', () => {
       {
         fetch(url) {
           assert(url === 'http://example.com/example.png');
-          return Bluebird.resolve(Buffer.from(''));
+          return Promise.resolve(Buffer.from(''));
         },
         resourceLocation: 'http://example.com/'
       }

@@ -1,7 +1,6 @@
 'use strict';
 const path = require('path');
 const assert = require('power-assert');
-const Bluebird = require('bluebird');
 const posthtml = require('posthtml');
 const fs = require('mz/fs');
 const {describe, it} = require('mocha');
@@ -49,7 +48,7 @@ describe('posthtml-flatten-style', () => {
       {
         fetch(url) {
           assert(url === 'https://example.com/static/css/app.css');
-          return Bluebird.resolve(Buffer.from('html, body { height: 100%; }'));
+          return Promise.resolve(Buffer.from('html, body { height: 100%; }'));
         },
         resourceLocation: 'https://example.com/page.html'
       }
@@ -64,7 +63,7 @@ describe('posthtml-flatten-style', () => {
         fetch(url) {
           switch (url) {
             case 'https://example.com/static/css/app.css':
-              return Bluebird.resolve(
+              return Promise.resolve(
                 Buffer.from('html, body { background: url(gif.gif) }')
               );
             case 'https://example.com/static/css/gif.gif':
