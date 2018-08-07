@@ -18,7 +18,7 @@
     "bluebird": "^3.0.0",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
-    "cssnano": "^3.10.0",
+    "cssnano": "^4.0.5",
     "got": "^9.0.0",
     "he": "^1.0.0",
     "http-ndjson": "^3.1.0",
