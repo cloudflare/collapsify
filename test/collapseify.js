@@ -7,7 +7,7 @@ const collapsify = require('..');
 nock.disableNetConnect();
 
 describe('collapsify', () => {
-  it('should collapse an HTML page', () => {
+  it('should collapse an HTML page', async () => {
     nock('https://terinstock.com')
       .get('/')
       .reply(
@@ -17,30 +17,28 @@ describe('collapsify', () => {
       .get('/avatar.jpeg')
       .reply(200, '');
 
-    return collapsify('https://terinstock.com', {}).then(collapsed => {
-      assert(typeof collapsed === 'string');
-      assert(
-        collapsed ===
-          '<!doctype html><html><body><h1>Hi.</h1><img src="data:application/x-empty;charset=binary;base64,"></body></html>'
-      );
-    });
+    const collapsed = await collapsify('https://terinstock.com', {});
+    assert(typeof collapsed === 'string');
+    assert(
+      collapsed ===
+        '<!doctype html><html><body><h1>Hi.</h1><img src="data:application/x-empty;charset=binary;base64,"></body></html>'
+    );
   });
 
-  it('should reject forbidden resources', () => {
-    nock('https://terinstock.com')
-      .get('/')
-      .reply(200, '<!doctype html><img src="http://localhost">');
+  it('should reject forbidden resources', async () => {
+    try {
+      nock('https://terinstock.com')
+        .get('/')
+        .reply(200, '<!doctype html><img src="http://localhost">');
 
-    return collapsify('https://terinstock.com', {
-      forbidden: 'localhost'
-    }).then(
-      () => {
-        assert(false, 'unexpected Promise resolution');
-      },
-      err => {
-        assert(err instanceof Error);
-        assert(err.message === 'Forbidden Resource');
-      }
-    );
+      await collapsify('https://terinstock.com', {
+        forbidden: 'localhost'
+      });
+
+      assert(false, 'unexpected Promise resolution');
+    } catch (err) {
+      assert(err instanceof Error);
+      assert(err.message === 'Forbidden Resource');
+    }
   });
 });

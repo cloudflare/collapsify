@@ -8,12 +8,10 @@ const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/posthtml-flatten-style');
 
-function test(input, output, opts) {
-  return posthtml([plugin(opts)])
-    .process(input)
-    .then(result => {
-      assert(result.html === output);
-    });
+async function test(input, output, opts) {
+  const result = await posthtml([plugin(opts)]).process(input);
+
+  assert(result.html === output);
 }
 
 describe('posthtml-flatten-style', () => {

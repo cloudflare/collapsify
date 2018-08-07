@@ -7,40 +7,36 @@ const base64 = require('../../lib/utils/base-64');
 
 describe('base64 utility', () => {
   describe('encode', () => {
-    it('should base64 encode ASCII text', () => {
-      return base64.encode(Buffer.from('plain text')).then(encoded => {
-        assert(typeof encoded === 'string');
-        assert(encoded.match(/^data:text\/plain;charset=us-ascii;base64,/));
-      });
+    it('should base64 encode ASCII text', async () => {
+      const encoded = await base64.encode(Buffer.from('plain text'));
+      assert(typeof encoded === 'string');
+      assert(encoded.match(/^data:text\/plain;charset=us-ascii;base64,/));
     });
 
-    it('should base64 encode Unicode text', () => {
+    it('should base64 encode Unicode text', async () => {
       const buf = Buffer.from([0xf0, 0x9f, 0x9a, 0x97]);
 
-      return base64.encode(buf).then(encoded => {
-        assert(typeof encoded === 'string');
-        assert(encoded.match(/^data:text\/plain;charset=utf-8;base64,/));
-      });
+      const encoded = await base64.encode(buf);
+      assert(typeof encoded === 'string');
+      assert(encoded.match(/^data:text\/plain;charset=utf-8;base64,/));
     });
 
-    it('should base64 encode a GIF', () => {
-      return fs
+    it('should base64 encode a GIF', async () => {
+      const encoded = await fs
         .readFile(path.join(__dirname, '../fixtures/gif.gif'))
-        .then(base64.encode)
-        .then(encoded => {
-          assert(typeof encoded === 'string');
-          assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
-        });
+        .then(base64.encode);
+
+      assert(typeof encoded === 'string');
+      assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
     });
 
-    it('should not have spaces in the base64 string', () => {
-      return fs
+    it('should not have spaces in the base64 string', async () => {
+      const encoded = await fs
         .readFile(path.join(__dirname, '../fixtures/gif.gif'))
-        .then(base64.encode)
-        .then(encoded => {
-          assert(typeof encoded === 'string');
-          assert(!encoded.match(/\s/));
-        });
+        .then(base64.encode);
+
+      assert(typeof encoded === 'string');
+      assert(!encoded.match(/\s/));
     });
   });
 

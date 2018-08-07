@@ -6,12 +6,10 @@ const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-import');
 
-function test(input, output, opts) {
-  return postcss([plugin(opts)])
-    .process(input)
-    .then(result => {
-      assert(result.css === output);
-    });
+async function test(input, output, opts) {
+  const result = await postcss([plugin(opts)]).process(input);
+
+  assert(result.css === output);
 }
 
 describe('postcss-flatten-import', () => {
