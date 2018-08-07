@@ -19,7 +19,7 @@
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^3.10.0",
-    "got": "^8.3.1",
+    "got": "^8.3.2",
     "he": "^1.0.0",
     "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
@@ -28,7 +28,7 @@
     "postcss": "^5.2.18",
     "postcss-value-parser": "^3.3.0",
     "posthtml": "^0.11.3",
-    "pumpify": "^1.5.0",
+    "pumpify": "^1.5.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
     "uglify-js": "^2.4.24"
@@ -66,8 +66,8 @@
     "istanbul": "^0.4.0",
     "mocha": "^5.2.0",
     "mz": "^2.1.0",
-    "nock": "^9.2.5",
-    "power-assert": "^1.5.0",
+    "nock": "^9.5.0",
+    "power-assert": "^1.6.0",
     "xo": "^0.21.1"
   },
   "scripts": {
