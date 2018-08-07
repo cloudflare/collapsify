@@ -22,6 +22,8 @@
     "got": "^8.3.2",
     "he": "^1.0.0",
     "http-ndjson": "^3.1.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
     "minimist": "^1.1.0",
     "mmmagic": "^0.4.1",
     "ndjson-logrus": "^1.1.0",
@@ -79,5 +81,16 @@
   "xo": {
     "space": true,
     "prettier": true
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
