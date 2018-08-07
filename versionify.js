@@ -5,9 +5,9 @@ const BL = require('bl');
 const version = require('./package.json').version;
 
 const bl = new BL();
-bl.append('\'use strict\';\n');
-bl.append('module.exports = \'');
+bl.append("'use strict';\n");
+bl.append("module.exports = '");
 bl.append(version);
-bl.append('\';\n');
+bl.append("';\n");
 
 bl.pipe(fs.createWriteStream('./lib/version.js'));

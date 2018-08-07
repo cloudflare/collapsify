@@ -24,12 +24,15 @@ describe('CSS collapser', () => {
         assert(false, 'unexpected resource resolution');
       },
       resourceLocation: 'https://example.com'
-    }).then(() => {
-      assert(false, 'unexpect Promise resolution');
-    }, err => {
-      assert(!(err instanceof assert.AssertionError));
-      assert(err.reason === 'Unclosed block');
-    });
+    }).then(
+      () => {
+        assert(false, 'unexpect Promise resolution');
+      },
+      err => {
+        assert(!(err instanceof assert.AssertionError));
+        assert(err.reason === 'Unclosed block');
+      }
+    );
   });
 
   describe('external', () => {

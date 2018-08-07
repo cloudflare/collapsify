@@ -77,6 +77,7 @@
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
   "xo": {
-    "space": true
+    "space": true,
+    "prettier": true
   }
 }

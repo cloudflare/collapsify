@@ -16,7 +16,7 @@ describe('base64 utility', () => {
     });
 
     it('should base64 encode Unicode text', () => {
-      const buf = Buffer.from([0xF0, 0x9F, 0x9A, 0x97]);
+      const buf = Buffer.from([0xf0, 0x9f, 0x9a, 0x97]);
 
       return base64.encode(buf).then(encoded => {
         assert(typeof encoded === 'string');
@@ -25,7 +25,8 @@ describe('base64 utility', () => {
     });
 
     it('should base64 encode a GIF', () => {
-      return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
+      return fs
+        .readFile(path.join(__dirname, '../fixtures/gif.gif'))
         .then(base64.encode)
         .then(encoded => {
           assert(typeof encoded === 'string');
@@ -34,7 +35,8 @@ describe('base64 utility', () => {
     });
 
     it('should not have spaces in the base64 string', () => {
-      return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
+      return fs
+        .readFile(path.join(__dirname, '../fixtures/gif.gif'))
         .then(base64.encode)
         .then(encoded => {
           assert(typeof encoded === 'string');
@@ -45,7 +47,8 @@ describe('base64 utility', () => {
 
   describe('verifySync', () => {
     it('should verify ASCII text', () => {
-      const encoded = 'data:text/plain;charset=us-ascii;base64,cGxhaW4gdGV4dA==';
+      const encoded =
+        'data:text/plain;charset=us-ascii;base64,cGxhaW4gdGV4dA==';
       assert(base64.validateSync(encoded));
     });
 
@@ -55,7 +58,8 @@ describe('base64 utility', () => {
     });
 
     it('should verify a GIF', () => {
-      const encoded = 'data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=';
+      const encoded =
+        'data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=';
       assert(base64.validateSync(encoded));
     });
   });

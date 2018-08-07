@@ -11,15 +11,20 @@ describe('collapsify', () => {
   it('should collapse an HTML page', () => {
     nock('https://terinstock.com')
       .get('/')
-      .reply(200, '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg" /></body></html>')
+      .reply(
+        200,
+        '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg" /></body></html>'
+      )
       .get('/avatar.jpeg')
       .reply(200, '');
 
-    return collapsify('https://terinstock.com', {})
-      .then(collapsed => {
-        assert(typeof collapsed === 'string');
-        assert(collapsed === '<!doctype html><html><body><h1>Hi.</h1><img src="data:application/x-empty;charset=binary;base64,"></body></html>');
-      });
+    return collapsify('https://terinstock.com', {}).then(collapsed => {
+      assert(typeof collapsed === 'string');
+      assert(
+        collapsed ===
+          '<!doctype html><html><body><h1>Hi.</h1><img src="data:application/x-empty;charset=binary;base64,"></body></html>'
+      );
+    });
   });
 
   it('should reject forbidden resources', () => {
@@ -29,12 +34,14 @@ describe('collapsify', () => {
 
     return collapsify('https://terinstock.com', {
       forbidden: 'localhost'
-    })
-      .then(() => {
+    }).then(
+      () => {
         assert(false, 'unexpected Promise resolution');
-      }, err => {
+      },
+      err => {
         assert(err instanceof Error);
         assert(err.message === 'Forbidden Resource');
-      });
+      }
+    );
   });
 });
