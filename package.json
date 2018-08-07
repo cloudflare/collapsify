@@ -19,13 +19,13 @@
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^3.10.0",
-    "got": "^8.3.2",
+    "got": "^9.0.0",
     "he": "^1.0.0",
     "http-ndjson": "^3.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "minimist": "^1.1.0",
-    "mmmagic": "^0.4.1",
+    "mmmagic": "^0.5.0",
     "ndjson-logrus": "^1.1.0",
     "postcss": "^5.2.18",
     "postcss-value-parser": "^3.3.0",
@@ -62,7 +62,7 @@
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
-    "bl": "^1.0.0",
+    "bl": "^2.0.1",
     "coveralls": "^3.0.2",
     "intelli-espower-loader": "^1.0.1",
     "istanbul": "^0.4.0",
@@ -70,7 +70,7 @@
     "mz": "^2.1.0",
     "nock": "^9.5.0",
     "power-assert": "^1.6.0",
-    "xo": "^0.21.1"
+    "xo": "^0.22.0"
   },
   "scripts": {
     "start": "./bin/server.js",
