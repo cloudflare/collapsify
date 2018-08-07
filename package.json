@@ -33,7 +33,7 @@
     "pumpify": "^1.5.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
-    "uglify-js": "^2.4.24"
+    "uglify-js": "^3.4.6"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [
