@@ -27,7 +27,7 @@
     "minimist": "^1.1.0",
     "mmmagic": "^0.5.0",
     "ndjson-logrus": "^1.1.0",
-    "postcss": "^5.2.18",
+    "postcss": "^7.0.2",
     "postcss-value-parser": "^3.3.0",
     "posthtml": "^0.11.3",
     "pumpify": "^1.5.1",

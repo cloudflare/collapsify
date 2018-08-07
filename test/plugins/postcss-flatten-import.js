@@ -16,22 +16,27 @@ function test(input, output, opts) {
 
 describe('postcss-flatten-import', () => {
   it('should flatten imports', () => {
-    const style =
-      '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}';
-
-    return test('@import "fonts.css"', style, {
-      fetch(url) {
-        assert(url === 'http://example.com/static/css/fonts.css');
-        return Bluebird.resolve(Buffer.from(style));
-      },
-      resourceLocation: 'http://example.com/static/css/app.css'
-    });
+    return test(
+      '@import "fonts.css"',
+      '@font-face{font-family:Noto Sans;font-style:normal;font-weight:400;src:local("Noto Sans")}',
+      {
+        fetch(url) {
+          assert(url === 'http://example.com/static/css/fonts.css');
+          return Bluebird.resolve(
+            Buffer.from(
+              '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
+            )
+          );
+        },
+        resourceLocation: 'http://example.com/static/css/app.css'
+      }
+    );
   });
 
   it('should wrap flattend imports with media query', () => {
     return test(
       '@import flatten.css screen, projection',
-      '@media screen, projection {\n    .flatten {\n        color: blue\n    }\n}',
+      '@media screen, projection {.flatten{color:blue}}',
       {
         fetch(url) {
           assert(url === 'http://example.com/static/css/flatten.css');
