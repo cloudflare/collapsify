@@ -15,7 +15,6 @@
   ],
   "dependencies": {
     "8bits": "^0.2.1",
-    "bluebird": "^3.0.0",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^4.0.5",
