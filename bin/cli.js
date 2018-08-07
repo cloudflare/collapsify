@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
-var byte = require('8bits');
-var bole = require('bole');
-var ndjs = require('ndjson-logrus');
-var pumpify = require('pumpify');
+const byte = require('8bits');
+const bole = require('bole');
+const ndjs = require('ndjson-logrus');
+const pumpify = require('pumpify');
 
-var allowedArgs = [{
+const allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
   default: '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
@@ -31,14 +31,14 @@ var allowedArgs = [{
   help: 'Show this usage information.'
 }];
 
-var clopts = require('cliclopts')(allowedArgs);
-var argv = require('minimist')(process.argv.slice(2), {
+const clopts = require('cliclopts')(allowedArgs);
+const argv = require('minimist')(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default()
 });
 
-var VERSION = require('../lib/version');
+const VERSION = require('../lib/version');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' [options]\n');
@@ -52,27 +52,27 @@ if (argv.version) {
   process.exit(0);
 }
 
-argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function (headers, header) {
+argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce((headers, header) => {
   header = header.trim().split(':');
   headers[header[0].trim()] = header[1].trim();
 
   return headers;
 }, {});
 
-var levels = 'warn info debug'.split(' ');
+const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
   stream: pumpify(ndjs(), process.stdout)
 });
-var logger = bole('collapsify-cli');
+const logger = bole('collapsify-cli');
 
-var domain = argv._[0];
+const domain = argv._[0];
 
-require('../')(domain, argv).done(function (output) {
+require('..')(domain, argv).done(output => {
   console.log('Collapsed Size: ', byte(output.length, {
     binary: true,
     digits: 2
   }));
-}, function (err) {
+}, err => {
   logger.error(err, 'An error has occured while collapsing %s', domain);
 });

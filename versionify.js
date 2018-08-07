@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 'use strict';
-var fs = require('fs');
-var BL = require('bl');
-var version = require('./package.json').version;
+const fs = require('fs');
+const BL = require('bl');
+const version = require('./package.json').version;
 
-var bl = new BL();
+const bl = new BL();
 bl.append('\'use strict\';\n');
 bl.append('module.exports = \'');
 bl.append(version);

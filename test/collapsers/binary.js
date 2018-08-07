@@ -1,30 +1,30 @@
 'use strict';
-var path = require('path');
-var assert = require('power-assert');
-var fs = require('mz/fs');
-var describe = require('mocha').describe;
-var it = require('mocha').it;
-var collapser = require('../../lib/collapsers/binary');
+const path = require('path');
+const assert = require('power-assert');
+const fs = require('mz/fs');
+const describe = require('mocha').describe;
+const it = require('mocha').it;
+const collapser = require('../../lib/collapsers/binary');
 
-describe('binary collapser', function () {
-  it('should collapse a GIF', function () {
+describe('binary collapser', () => {
+  it('should collapse a GIF', () => {
     return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
       .then(collapser)
-      .then(function (encoded) {
+      .then(encoded => {
         assert(typeof encoded === 'string');
         assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
       });
   });
 
-  describe('external', function () {
-    it('should collapse an external binary', function () {
+  describe('external', () => {
+    it('should collapse an external binary', () => {
       return collapser.external('https://example.com/gif.gif', {
-        fetch: function (url) {
+        fetch(url) {
           assert(url === 'https://example.com/gif.gif');
           return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
         }
       })
-        .then(function (encoded) {
+        .then(encoded => {
           assert(typeof encoded === 'string');
           assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
         });

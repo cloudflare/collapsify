@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict';
-var http = require('http');
-var url = require('url');
-var systemdSocket = require('systemd-socket');
-var bole = require('bole');
-var summary = require('server-summary');
-var httpNdjson = require('http-ndjson');
+const http = require('http');
+const url = require('url');
+const systemdSocket = require('systemd-socket');
+const bole = require('bole');
+const summary = require('server-summary');
+const httpNdjson = require('http-ndjson');
 
-var allowedArgs = [{
+const allowedArgs = [{
   name: 'forbidden',
   abbr: 'x',
   default: '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
@@ -38,15 +38,15 @@ var allowedArgs = [{
   help: 'Show this usage information.'
 }];
 
-var clopts = require('cliclopts')(allowedArgs);
-var argv = require('minimist')(process.argv.slice(2), {
+const clopts = require('cliclopts')(allowedArgs);
+const argv = require('minimist')(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default()
 });
 
-var VERSION = require('../lib/version');
-var collapsify = require('../');
+const VERSION = require('../lib/version');
+const collapsify = require('..');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');
@@ -60,39 +60,39 @@ if (argv.version) {
   process.exit(0);
 }
 
-argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function (headers, header) {
+argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce((headers, header) => {
   header = header.trim().split(':');
   headers[header[0].trim()] = header[1].trim();
 
   return headers;
 }, {});
 
-var levels = 'warn info debug'.split(' ');
+const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
   stream: process.stdout
 });
-var logger = bole('collapsify-server');
+const logger = bole('collapsify-server');
 
-var socket = systemdSocket();
+const socket = systemdSocket();
 
-var server = http.createServer(function (req, res) {
+const server = http.createServer((req, res) => {
   httpNdjson(req, res, logger.info);
-  var queries = url.parse(req.url, true).query;
+  const queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
-    collapsify(queries.url, argv).done(function (result) {
+    collapsify(queries.url, argv).done(result => {
       res.statusCode = 200;
       res.setHeader('content-type', 'text/html; charset=utf-8');
       res.end(result);
       logger.info({
         url: queries.url
       }, 'Collapsify succeeded.');
-    }, function (err) {
+    }, err => {
       res.statusCode = 500;
       res.end('Failed to collapsify. ' + err.message);
       logger.info(err, {
-        url: url
+        url
       }, 'Collapsify failed.');
     });
   } else {

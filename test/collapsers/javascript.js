@@ -1,36 +1,36 @@
 'use strict';
-var assert = require('power-assert');
-var Bluebird = require('bluebird');
-var describe = require('mocha').describe;
-var it = require('mocha').it;
-var collapser = require('../../lib/collapsers/javascript');
+const assert = require('power-assert');
+const Bluebird = require('bluebird');
+const describe = require('mocha').describe;
+const it = require('mocha').it;
+const collapser = require('../../lib/collapsers/javascript');
 
-describe('JavaScript collapser', function () {
-  it('should minify JavaScript', function () {
-    return collapser(new Buffer('alert("foo: " + bar)'))
-      .then(function (encoded) {
+describe('JavaScript collapser', () => {
+  it('should minify JavaScript', () => {
+    return collapser(Buffer.from('alert("foo: " + bar)'))
+      .then(encoded => {
         assert(typeof encoded === 'string');
       });
   });
 
-  it('should reject if invalid JavaScript', function () {
-    return collapser(new Buffer('for: {'))
-      .then(function () {
+  it('should reject if invalid JavaScript', () => {
+    return collapser(Buffer.from('for: {'))
+      .then(() => {
         assert.fail('expected rejected promise');
-      }, function (err) {
+      }, err => {
         assert(err);
       });
   });
 
-  describe('external', function () {
-    it('should collapse an external script', function () {
+  describe('external', () => {
+    it('should collapse an external script', () => {
       return collapser.external('https://example.com/script.js', {
-        fetch: function (url) {
+        fetch(url) {
           assert(url === 'https://example.com/script.js');
           return Bluebird.resolve('console.log("hello world!");');
         }
       })
-        .then(function (encoded) {
+        .then(encoded => {
           assert(typeof encoded === 'string');
         });
     });
