@@ -19,7 +19,7 @@ describe('posthtml-flatten-style', () => {
       '<style>body { background: url(gif.gif); }</style>',
       '<style>body{background:url(data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
           return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
         },
@@ -46,9 +46,9 @@ describe('posthtml-flatten-style', () => {
       '<link rel="stylesheet" href="/static/css/app.css">',
       '<style>body,html{height:100%}</style>',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.com/static/css/app.css');
-          return Promise.resolve(Buffer.from('html, body { height: 100%; }'));
+          return Buffer.from('html, body { height: 100%; }');
         },
         resourceLocation: 'https://example.com/page.html'
       }
@@ -60,17 +60,14 @@ describe('posthtml-flatten-style', () => {
       '<link rel="stylesheet" href="/static/css/app.css">',
       '<style>body,html{background:url(data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
-        fetch(url) {
+        async fetch(url) {
           switch (url) {
             case 'https://example.com/static/css/app.css':
-              return Promise.resolve(
-                Buffer.from('html, body { background: url(gif.gif) }')
-              );
+              return Buffer.from('html, body { background: url(gif.gif) }');
             case 'https://example.com/static/css/gif.gif':
               return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
             default:
               assert(false, 'unknown resource resolution');
-              return '';
           }
         },
         resourceLocation: 'https://example.com/page.html'

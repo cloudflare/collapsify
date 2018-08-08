@@ -20,7 +20,7 @@ describe('posthtml-flatten-image', () => {
       '<html><body><div class="main"><img src="gif.gif" alt="An animated graphic!" /></div></body></html>',
       '<html><body><div class="main"><img src="data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=" alt="An animated graphic!"></div></body></html>',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
           return fs.readFile(fixture);
         },

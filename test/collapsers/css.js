@@ -40,9 +40,9 @@ describe('CSS collapser', () => {
       const collapsed = await collapser(
         Buffer.from('body { background: url("example.png") }'),
         {
-          fetch(url) {
+          async fetch(url) {
             assert(url === 'https://example.com/example.png');
-            return Promise.resolve(Buffer.from(''));
+            return Buffer.from('');
           },
           resourceLocation: 'https://example.com'
         }

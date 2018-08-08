@@ -26,9 +26,9 @@ describe('postcss-flatten-url', () => {
       '.flatten { background: url("example.png") }',
       '.flatten { background: url(data:application/x-empty;charset=binary;base64,) }',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'http://example.com/example.png');
-          return Promise.resolve(Buffer.from(''));
+          return Buffer.from('');
         },
         resourceLocation: 'http://example.com/'
       }

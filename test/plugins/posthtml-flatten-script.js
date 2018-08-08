@@ -51,9 +51,9 @@ describe('posthtml-flatten-script', () => {
       '<script src="app.js"></script>',
       '<script>alert("foobar");</script>',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.com/app.js');
-          return Promise.resolve(Buffer.from('alert("foo" + "bar");'));
+          return Buffer.from('alert("foo" + "bar");');
         },
         resourceLocation: 'https://example.com/'
       }

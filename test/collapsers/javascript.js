@@ -23,9 +23,9 @@ describe('JavaScript collapser', () => {
       const encoded = await collapser.external(
         'https://example.com/script.js',
         {
-          fetch(url) {
+          async fetch(url) {
             assert(url === 'https://example.com/script.js');
-            return Promise.resolve('console.log("hello world!");');
+            return Buffer.from('console.log("hello world!");');
           }
         }
       );

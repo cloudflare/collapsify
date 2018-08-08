@@ -18,7 +18,7 @@ describe('binary collapser', () => {
   describe('external', () => {
     it('should collapse an external binary', async () => {
       const encoded = await collapser.external('https://example.com/gif.gif', {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
           return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
         }

@@ -25,9 +25,9 @@ describe('html collapser', () => {
     const collapsed = await collapser(
       '<html><body><img src="https://example.org/foobar.png"></body></html>',
       {
-        fetch(url) {
+        async fetch(url) {
           assert(url === 'https://example.org/foobar.png');
-          return Promise.resolve(Buffer.from(''));
+          return Buffer.from('');
         },
         resourceLocation: 'https://example.com'
       }
@@ -42,20 +42,16 @@ describe('html collapser', () => {
 
   it('should collapse an external HTML page', async () => {
     const collapsed = await collapser.external('https://terinstock.com', {
-      fetch(url) {
+      async fetch(url) {
         switch (url) {
           case 'https://terinstock.com':
-            return Promise.resolve(
-              Buffer.from(
-                '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
-              )
+            return Buffer.from(
+              '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
             );
           case 'https://terinstock.com/avatar.jpeg':
-            return Promise.resolve(Buffer.from(''));
+            return Buffer.from('');
           default:
-            return Promise.reject(
-              new assert.AssertionError('unknown resource resolution')
-            );
+            throw new assert.AssertionError('unknown resource resolution');
         }
       },
       resourceLocation: 'https://terinstock.com'
