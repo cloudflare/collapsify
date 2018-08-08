@@ -85,7 +85,7 @@ const opts = {
 const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
-  stream: process.stdout
+  stream: process.stderr
 });
 const logger = bole('collapsify-server');
 
