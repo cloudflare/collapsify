@@ -18,6 +18,7 @@ const allowedArgs = [
   {
     name: 'headers',
     abbr: 'H',
+    default: [],
     help: 'Custom headers (curl style) to set on all requests.'
   },
   {
@@ -73,7 +74,7 @@ if (argv.version) {
 const opts = {
   forbidden: argv.forbidden,
 
-  headers: [...argv.headers].filter(Boolean).reduce((headers, header) => {
+  headers: argv.headers.filter(Boolean).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
@@ -95,7 +96,7 @@ const server = http.createServer((req, res) => {
   const queries = url.parse(req.url, true).query;
 
   if (queries && queries.url) {
-    collapsify(queries.url, opts).done(
+    collapsify(queries.url, opts).then(
       result => {
         res.statusCode = 200;
         res.setHeader('content-type', 'text/html; charset=utf-8');

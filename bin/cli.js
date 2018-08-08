@@ -16,6 +16,7 @@ const allowedArgs = [
   {
     name: 'headers',
     abbr: 'H',
+    default: [],
     help: 'Custom headers (curl style) to set on all requests.'
   },
   {
@@ -63,7 +64,7 @@ if (argv.version) {
 const opts = {
   forbidden: argv.forbidden,
 
-  headers: [...argv.headers].filter(Boolean).reduce((headers, header) => {
+  headers: argv.headers.filter(Boolean).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
@@ -80,17 +81,18 @@ const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
-require('..')(domain, opts).done(
+require('..')(domain, opts).then(
   output => {
-    console.log(
+    logger.info(
       'Collapsed Size: ',
       byte(output.length, {
         binary: true,
         digits: 2
       })
     );
+    process.stdout.write(output);
   },
   err => {
-    logger.error(err, 'An error has occured while collapsing %s', domain);
+    logger.error('An error has occured while collapsing', domain, err);
   }
 );
