@@ -24,7 +24,6 @@
     "husky": "^1.0.0-rc.13",
     "lint-staged": "^7.2.0",
     "minimist": "^1.1.0",
-    "mmmagic": "^0.5.0",
     "ndjson-logrus": "^1.1.0",
     "postcss": "^7.0.2",
     "postcss-value-parser": "^3.3.0",

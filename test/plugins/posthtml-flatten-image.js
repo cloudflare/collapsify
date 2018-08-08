@@ -18,11 +18,11 @@ describe('posthtml-flatten-image', () => {
   it('should flatten found image', () => {
     return test(
       '<html><body><div class="main"><img src="gif.gif" alt="An animated graphic!" /></div></body></html>',
-      '<html><body><div class="main"><img src="data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=" alt="An animated graphic!"></div></body></html>',
+      '<html><body><div class="main"><img src="data:image/gif;base64,R0lGODlhAQABAAAAADs=" alt="An animated graphic!"></div></body></html>',
       {
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return fs.readFile(fixture);
+          return {contentType: 'image/gif', body: await fs.readFile(fixture)};
         },
         resourceLocation: 'https://example.com/page.html'
       }

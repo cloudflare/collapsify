@@ -24,11 +24,11 @@ describe('postcss-flatten-url', () => {
   it('should replace the URL in a property', () => {
     return test(
       '.flatten { background: url("example.png") }',
-      '.flatten { background: url(data:application/x-empty;charset=binary;base64,) }',
+      '.flatten { background: url(data:image/png;base64,) }',
       {
         async fetch(url) {
           assert(url === 'http://example.com/example.png');
-          return Buffer.from('');
+          return {contentType: 'image/png', body: Buffer.from('')};
         },
         resourceLocation: 'http://example.com/'
       }
@@ -37,8 +37,8 @@ describe('postcss-flatten-url', () => {
 
   it('should ignore URLs from the data scheme', () => {
     return test(
-      '.flatten { background: url("data:application/x-empty;charset=binary;base64,") }',
-      '.flatten { background: url("data:application/x-empty;charset=binary;base64,") }',
+      '.flatten { background: url("data:application/x-empty;base64,") }',
+      '.flatten { background: url("data:application/x-empty;base64,") }',
       {
         fetch() {
           assert.fail('should not have called fetch');

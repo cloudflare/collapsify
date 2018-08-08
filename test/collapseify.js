@@ -15,13 +15,15 @@ describe('collapsify', () => {
         '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg" /></body></html>'
       )
       .get('/avatar.jpeg')
-      .reply(200, '');
+      .reply(200, '', {
+        'Content-Type': 'image/jpeg'
+      });
 
     const collapsed = await collapsify('https://terinstock.com', {});
     assert(typeof collapsed === 'string');
     assert(
       collapsed ===
-        '<!doctype html><html><body><h1>Hi.</h1><img src="data:application/x-empty;charset=binary;base64,"></body></html>'
+        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"></body></html>'
     );
   });
 

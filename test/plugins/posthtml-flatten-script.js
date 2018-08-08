@@ -53,7 +53,7 @@ describe('posthtml-flatten-script', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/app.js');
-          return Buffer.from('alert("foo" + "bar");');
+          return {body: Buffer.from('alert("foo" + "bar");')};
         },
         resourceLocation: 'https://example.com/'
       }

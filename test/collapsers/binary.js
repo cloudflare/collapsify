@@ -7,12 +7,14 @@ const collapser = require('../../lib/collapsers/binary');
 
 describe('binary collapser', () => {
   it('should collapse a GIF', async () => {
-    const encoded = await fs
-      .readFile(path.join(__dirname, '../fixtures/gif.gif'))
-      .then(collapser);
+    const body = await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
+
+    const encoded = await collapser(body, {
+      contentType: 'image/gif'
+    });
 
     assert(typeof encoded === 'string');
-    assert(encoded.startsWith('data:image/gif;charset=binary;base64,'));
+    assert(encoded.startsWith('data:image/gif;base64,'));
   });
 
   describe('external', () => {
@@ -20,13 +22,16 @@ describe('binary collapser', () => {
       const encoded = await collapser.external({
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
+          return {
+            contentType: 'image/gif',
+            body: await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
+          };
         },
         resourceLocation: 'https://example.com/gif.gif'
       });
 
       assert(typeof encoded === 'string');
-      assert(encoded.startsWith('data:image/gif;charset=binary;base64,'));
+      assert(encoded.startsWith('data:image/gif;base64,'));
     });
   });
 });

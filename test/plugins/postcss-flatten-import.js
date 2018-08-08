@@ -21,9 +21,11 @@ describe('postcss-flatten-import', () => {
       {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/fonts.css');
-          return Buffer.from(
-            '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
-          );
+          return {
+            body: Buffer.from(
+              '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
+            )
+          };
         },
         resourceLocation: 'http://example.com/static/css/app.css'
       }
@@ -37,7 +39,7 @@ describe('postcss-flatten-import', () => {
       {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/flatten.css');
-          return Buffer.from('.flatten { color: blue }');
+          return {body: Buffer.from('.flatten { color: blue }')};
         },
         resourceLocation: 'http://example.com/static/css/app.css'
       }

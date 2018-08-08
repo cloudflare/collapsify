@@ -42,13 +42,16 @@ describe('CSS collapser', () => {
         {
           async fetch(url) {
             assert(url === 'https://example.com/example.png');
-            return Buffer.from('');
+            return {
+              contentType: 'image/png',
+              body: Buffer.from('')
+            };
           },
           resourceLocation: 'https://example.com'
         }
       );
 
-      assert(collapsed.includes('data:application/x-empty'));
+      assert(collapsed.includes('data:image/png'));
     });
   });
 });

@@ -17,11 +17,14 @@ describe('posthtml-flatten-style', () => {
   it('should flatten inline style', () => {
     return test(
       '<style>body { background: url(gif.gif); }</style>',
-      '<style>body{background:url(data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=)}</style>',
+      '<style>body{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
+          return {
+            contentType: 'image/gif',
+            body: await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
+          };
         },
         resourceLocation: 'https://example.com'
       }
@@ -48,7 +51,7 @@ describe('posthtml-flatten-style', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/static/css/app.css');
-          return Buffer.from('html, body { height: 100%; }');
+          return {body: Buffer.from('html, body { height: 100%; }')};
         },
         resourceLocation: 'https://example.com/page.html'
       }
@@ -58,14 +61,23 @@ describe('posthtml-flatten-style', () => {
   it('should flatten resources in external stylesheets', () => {
     return test(
       '<link rel="stylesheet" href="/static/css/app.css">',
-      '<style>body,html{background:url(data:image/gif;charset=binary;base64,R0lGODlhAQABAAAAADs=)}</style>',
+      '<style>body,html{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
         async fetch(url) {
           switch (url) {
             case 'https://example.com/static/css/app.css':
-              return Buffer.from('html, body { background: url(gif.gif) }');
+              return {
+                body: Buffer.from('html, body { background: url(gif.gif) }')
+              };
+
             case 'https://example.com/static/css/gif.gif':
-              return fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
+              return {
+                contentType: 'image/gif',
+                body: await fs.readFile(
+                  path.join(__dirname, '../fixtures/gif.gif')
+                )
+              };
+
             default:
               assert(false, 'unknown resource resolution');
           }

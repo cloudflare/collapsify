@@ -23,7 +23,9 @@ describe('JavaScript collapser', () => {
       const encoded = await collapser.external({
         async fetch(url) {
           assert(url === 'https://example.com/script.js');
-          return Buffer.from('console.log("hello world!");');
+          return {
+            body: Buffer.from('console.log("hello world!");')
+          };
         },
         resourceLocation: 'https://example.com/script.js'
       });
