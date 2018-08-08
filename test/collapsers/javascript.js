@@ -9,13 +9,10 @@ describe('JavaScript collapser', () => {
     assert(typeof encoded === 'string');
   });
 
-  it('should reject if invalid JavaScript', async () => {
-    try {
-      await collapser(Buffer.from('for: {'));
-      assert.fail('expected rejected promise');
-    } catch (err) {
-      assert(err);
-    }
+  it('should preserve JavaScript as-is if minification fails', async () => {
+    const original = 'for: {';
+    const encoded = await collapser(Buffer.from(original));
+    assert(encoded === original);
   });
 
   describe('external', () => {
