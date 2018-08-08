@@ -20,15 +20,13 @@ describe('JavaScript collapser', () => {
 
   describe('external', () => {
     it('should collapse an external script', async () => {
-      const encoded = await collapser.external(
-        'https://example.com/script.js',
-        {
-          async fetch(url) {
-            assert(url === 'https://example.com/script.js');
-            return Buffer.from('console.log("hello world!");');
-          }
-        }
-      );
+      const encoded = await collapser.external({
+        async fetch(url) {
+          assert(url === 'https://example.com/script.js');
+          return Buffer.from('console.log("hello world!");');
+        },
+        resourceLocation: 'https://example.com/script.js'
+      });
 
       assert(typeof encoded === 'string');
     });

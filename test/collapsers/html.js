@@ -41,7 +41,7 @@ describe('html collapser', () => {
   });
 
   it('should collapse an external HTML page', async () => {
-    const collapsed = await collapser.external('https://terinstock.com', {
+    const collapsed = await collapser.external({
       async fetch(url) {
         switch (url) {
           case 'https://terinstock.com':
