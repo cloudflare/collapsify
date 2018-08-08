@@ -111,7 +111,7 @@ const server = http.createServer((req, res) => {
       err => {
         res.statusCode = 500;
         res.end('Failed to collapsify. ' + err.message);
-        logger.info(
+        logger.error(
           err,
           {
             url

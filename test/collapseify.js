@@ -40,7 +40,7 @@ describe('collapsify', () => {
       assert(false, 'unexpected Promise resolution');
     } catch (err) {
       assert(err instanceof Error);
-      assert(err.message === 'Forbidden Resource');
+      assert(err.message === 'Forbidden resource http://localhost/');
     }
   });
 });
