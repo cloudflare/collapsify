@@ -42,8 +42,7 @@ describe('base64 utility', () => {
 
   describe('verifySync', () => {
     it('should verify ASCII text', () => {
-      const encoded =
-        'data:text/plain;charset=us-ascii;base64,cGxhaW4gdGV4dA==';
+      const encoded = 'data:text/plain;charset=us-ascii,plain text';
       assert(base64.validateSync(encoded));
     });
 
