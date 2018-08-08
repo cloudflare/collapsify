@@ -10,7 +10,7 @@ describe('base64 utility', () => {
     it('should base64 encode ASCII text', async () => {
       const encoded = await base64.encode(Buffer.from('plain text'));
       assert(typeof encoded === 'string');
-      assert(encoded.match(/^data:text\/plain;charset=us-ascii;base64,/));
+      assert(encoded.startsWith('data:text/plain;charset=us-ascii;base64,'));
     });
 
     it('should base64 encode Unicode text', async () => {
@@ -18,7 +18,7 @@ describe('base64 utility', () => {
 
       const encoded = await base64.encode(buf);
       assert(typeof encoded === 'string');
-      assert(encoded.match(/^data:text\/plain;charset=utf-8;base64,/));
+      assert(encoded.startsWith('data:text/plain;charset=utf-8;base64,'));
     });
 
     it('should base64 encode a GIF', async () => {
@@ -27,7 +27,7 @@ describe('base64 utility', () => {
         .then(base64.encode);
 
       assert(typeof encoded === 'string');
-      assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
+      assert(encoded.startsWith('data:image/gif;charset=binary;base64,'));
     });
 
     it('should not have spaces in the base64 string', async () => {
@@ -36,7 +36,7 @@ describe('base64 utility', () => {
         .then(base64.encode);
 
       assert(typeof encoded === 'string');
-      assert(!encoded.match(/\s/));
+      assert(!/\s/.test(encoded));
     });
   });
 

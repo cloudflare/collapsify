@@ -12,7 +12,7 @@ describe('binary collapser', () => {
       .then(collapser);
 
     assert(typeof encoded === 'string');
-    assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
+    assert(encoded.startsWith('data:image/gif;charset=binary;base64,'));
   });
 
   describe('external', () => {
@@ -25,7 +25,7 @@ describe('binary collapser', () => {
       });
 
       assert(typeof encoded === 'string');
-      assert(encoded.match(/^data:image\/gif;charset=binary;base64,/));
+      assert(encoded.startsWith('data:image/gif;charset=binary;base64,'));
     });
   });
 });

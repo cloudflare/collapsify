@@ -48,7 +48,7 @@ describe('CSS collapser', () => {
         }
       );
 
-      assert(collapsed.match(/data:application\/x-empty/));
+      assert(/data:application\/x-empty/.test(collapsed));
     });
   });
 });
