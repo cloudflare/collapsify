@@ -1,16 +1,19 @@
 'use strict';
 const path = require('path');
 const assert = require('power-assert');
-const posthtml = require('posthtml');
 const fs = require('mz/fs');
 const {describe, it} = require('mocha');
+const {CollapserStream} = require('../../lib/collapsers/html');
 
-const plugin = require('../../lib/plugins/posthtml-flatten-style');
+const inlinePlugin = require('../../lib/plugins/parse5-flatten-inline-style');
+const externalPlugin = require('../../lib/plugins/parse5-flatten-external-style');
 
-async function test(input, output, opts) {
-  const result = await posthtml([plugin(opts)]).process(input);
-
-  assert(result.html === output);
+async function test(input, expected, opts) {
+  const rewriter = new CollapserStream();
+  inlinePlugin(rewriter, opts);
+  externalPlugin(rewriter, opts);
+  const actual = await rewriter.process(input);
+  assert(actual === expected);
 }
 
 describe('posthtml-flatten-style', () => {

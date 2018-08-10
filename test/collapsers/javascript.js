@@ -5,13 +5,17 @@ const collapser = require('../../lib/collapsers/javascript');
 
 describe('JavaScript collapser', () => {
   it('should minify JavaScript', async () => {
-    const encoded = await collapser(Buffer.from('alert("foo: " + bar)'));
+    const encoded = await collapser(Buffer.from('alert("foo: " + bar)'), {
+      resourceLocation: '<test>'
+    });
     assert(typeof encoded === 'string');
   });
 
   it('should preserve JavaScript as-is if minification fails', async () => {
     const original = 'for: {';
-    const encoded = await collapser(Buffer.from(original));
+    const encoded = await collapser(Buffer.from(original), {
+      resourceLocation: '<test>'
+    });
     assert(encoded === original);
   });
 

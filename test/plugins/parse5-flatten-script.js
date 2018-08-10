@@ -1,14 +1,15 @@
 'use strict';
 const assert = require('power-assert');
-const posthtml = require('posthtml');
 const {describe, it} = require('mocha');
+const {CollapserStream} = require('../../lib/collapsers/html');
 
-const plugin = require('../../lib/plugins/posthtml-flatten-script');
+const plugin = require('../../lib/plugins/parse5-flatten-script');
 
-async function test(input, output, opts) {
-  const result = await posthtml([plugin(opts)]).process(input);
-
-  assert(result.html === output);
+async function test(input, expected, opts) {
+  const rewriter = new CollapserStream();
+  plugin(rewriter, opts);
+  const actual = await rewriter.process(input);
+  assert(actual === expected);
 }
 
 describe('posthtml-flatten-script', () => {
@@ -36,7 +37,7 @@ describe('posthtml-flatten-script', () => {
 
   it('should flatten inline JavaScript wraped in CDATA', () => {
     return test(
-      '<script type="application/javascript">\n//<![CDATA[\nalert("foo" + "bar");\n//]]>',
+      '<script type="application/javascript">\n//<![CDATA[\nalert("foo" + "bar");\n//]]></script>',
       '<script type="application/javascript">alert("foobar");</script>',
       {
         fetch() {
