@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 var byte = require('8bits');
+var bole = require('bole');
+var ndjs = require('ndjson-logrus');
+var pumpify = require('pumpify');
 
 var allowedArgs = [{
   name: 'forbidden',
@@ -41,16 +44,12 @@ if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' [options]\n');
   console.log('Options:');
   clopts.print();
-  /* eslint-disable no-process-exit */
   process.exit(0);
-  /* eslint-enable no-process-exit */
 }
 
 if (argv.version) {
   console.log('Collapsify CLI - ' + VERSION);
-  /* eslint-disable no-process-exit */
   process.exit(0);
-  /* eslint-enable no-process-exit */
 }
 
 argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function (headers, header) {
@@ -60,7 +59,12 @@ argv.headers = argv.H = [].concat(argv.headers).filter(Boolean).reduce(function 
   return headers;
 }, {});
 
-argv.logger = require('../lib/utils/logger')(argv);
+var levels = 'warn info debug'.split(' ');
+bole.output({
+  level: levels[argv.verbose] || 'warn',
+  stream: pumpify(ndjs(), process.stdout)
+});
+var logger = bole('collapsify-cli');
 
 var domain = argv._[0];
 
@@ -70,5 +74,5 @@ require('../')(domain, argv).done(function (output) {
     digits: 2
   }));
 }, function (err) {
-  console.log('An error has occured: ', err.name, ': ', err.message);
+  logger.error(err, 'An error has occured while collapsing %s', domain);
 });
