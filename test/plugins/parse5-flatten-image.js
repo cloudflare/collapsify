@@ -3,14 +3,14 @@ const path = require('path');
 const assert = require('power-assert');
 const fs = require('mz/fs');
 const {describe, it} = require('mocha');
-const {CollapserStream} = require('../../lib/collapsers/html');
+const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const plugin = require('../../lib/plugins/parse5-flatten-image');
 
 const fixture = path.join(__dirname, '../fixtures/gif.gif');
 
 async function test(input, expected, opts) {
-  const rewriter = new CollapserStream();
+  const rewriter = new Rewriter();
   plugin(rewriter, opts);
   const actual = await rewriter.process(input);
   assert(actual === expected);

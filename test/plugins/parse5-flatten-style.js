@@ -3,13 +3,13 @@ const path = require('path');
 const assert = require('power-assert');
 const fs = require('mz/fs');
 const {describe, it} = require('mocha');
-const {CollapserStream} = require('../../lib/collapsers/html');
+const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const inlinePlugin = require('../../lib/plugins/parse5-flatten-inline-style');
 const externalPlugin = require('../../lib/plugins/parse5-flatten-external-style');
 
 async function test(input, expected, opts) {
-  const rewriter = new CollapserStream();
+  const rewriter = new Rewriter();
   inlinePlugin(rewriter, opts);
   externalPlugin(rewriter, opts);
   const actual = await rewriter.process(input);
