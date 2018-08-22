@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 'use strict';
+const fs = require('fs');
 const byte = require('8bits');
 const bole = require('bole');
 const ndjs = require('ndjson-logrus');
 const pumpify = require('pumpify');
-const fs = require('fs');
 
 const allowedArgs = [
   {
