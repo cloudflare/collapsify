@@ -27,7 +27,7 @@ $(DEB_PACKAGE): clean
         --depends "nodejs" \
         --deb-user root \
         --deb-group root \
-        .
+        -p $(DEB_PACKAGE)
 
 .PHONY: cf-package
 cf-package: $(DEB_PACKAGE)
