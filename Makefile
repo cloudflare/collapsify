@@ -1,31 +1,25 @@
 NAME      := collapsify
-VERSION   := $(shell python -c "import json; data = json.load(file('package.json')); print data.get('version')")
+VERSION   := $(shell node -p "require('./package.json').version")
 ITERATION := 0
 
 TMP_ROOT             := $(shell pwd)/tmp
-DEPS_ROOT            := $(TMP_ROOT)/deps
-BUILD_ROOT           := $(TMP_ROOT)/build
 PACKAGE_ROOT         := $(TMP_ROOT)/packaging
 INSTALL_PREFIX       := usr/local
-BUILD_DEPS           := nodejs python
-DEB_PACKAGE          := $(NAME)_$(VERSION)-$(ITERATION)_amd64.deb
-
-print-builddeps:
-	@echo $(BUILD_DEPS)
+DEB_PACKAGE          := $(TMP_ROOT)/$(NAME)_$(VERSION)-$(ITERATION)_amd64.deb
 
 $(DEB_PACKAGE): clean
-	@echo $VERSION
+	@echo $(VERSION)
 	mkdir -p $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)
 
     # statics:
-	scp -r -p bin           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
-	scp -r -p lib           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
-	scp -r -p index.js      $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
-	scp -r -p versionify.js      $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
-	scp -r -p package.json  $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	cp -r -p bin                $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	cp -r -p lib                $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	cp -r -p index.js           $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	cp -r -p package.json       $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
+	cp -r -p package-lock.json  $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 
     # add node dependcies
-	cd $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/; npm install
+	cd $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/; npm ci
 
     # build deb package:
 	fpm -C $(PACKAGE_ROOT) -s dir -t deb -n $(NAME) -v $(VERSION) \
@@ -33,7 +27,7 @@ $(DEB_PACKAGE): clean
         --depends "nodejs" \
         --deb-user root \
         --deb-group root \
-        .
+        -p $(DEB_PACKAGE)
 
 .PHONY: cf-package
 cf-package: $(DEB_PACKAGE)
@@ -41,7 +35,6 @@ cf-package: $(DEB_PACKAGE)
 .PHONY: clean-package
 clean-package:
 	$(RM) -r $(TMP_ROOT)
-	$(RM) *.deb
 
 .PHONY: clean
 clean: clean-package

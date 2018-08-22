@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "bin": {
     "collapsify": "./bin/cli.js",
@@ -11,27 +11,28 @@
   "contributors": [
     "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
     "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
-    "Andrew Galloni <andrew@cloudflare.com>"
+    "Andrew Galloni <andrew@cloudflare.com>",
+    "Ingvar Stepanyan <me@rreverser.com> (https://rreverser.com)"
   ],
   "dependencies": {
     "8bits": "^0.2.1",
-    "bluebird": "^3.0.0",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
-    "cssnano": "^3.10.0",
-    "got": "^8.3.1",
-    "he": "^1.0.0",
+    "cssnano": "^4.0.5",
+    "got": "^9.0.0",
     "http-ndjson": "^3.1.0",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.0",
     "minimist": "^1.1.0",
-    "mmmagic": "^0.4.1",
     "ndjson-logrus": "^1.1.0",
-    "postcss": "^5.2.18",
+    "p-queue": "^2.4.2",
+    "parse5-html-rewriting-stream": "^5.0.0",
+    "postcss": "^7.0.2",
     "postcss-value-parser": "^3.3.0",
-    "posthtml": "^0.11.3",
-    "pumpify": "^1.5.0",
+    "pumpify": "^1.5.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
-    "uglify-js": "^2.4.24"
+    "uglify-js": "^3.4.6"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [
@@ -60,23 +61,34 @@
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
-    "bl": "^1.0.0",
-    "coveralls": "^2.11.4",
+    "bl": "^2.0.1",
+    "coveralls": "^3.0.2",
     "intelli-espower-loader": "^1.0.1",
-    "istanbul": "^0.4.0",
-    "mocha": "^3.0.0",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^5.2.0",
     "mz": "^2.1.0",
-    "nock": "^9.2.5",
-    "power-assert": "^1.5.0",
-    "xo": "^0.16.0"
+    "nock": "^9.5.0",
+    "power-assert": "^1.6.0",
+    "xo": "^0.22.0"
   },
   "scripts": {
     "start": "./bin/server.js",
-    "prepublish": "./versionify.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
   "xo": {
-    "space": true
+    "space": true,
+    "prettier": true
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

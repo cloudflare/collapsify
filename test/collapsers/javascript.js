@@ -1,38 +1,37 @@
 'use strict';
-var assert = require('power-assert');
-var Bluebird = require('bluebird');
-var describe = require('mocha').describe;
-var it = require('mocha').it;
-var collapser = require('../../lib/collapsers/javascript');
+const assert = require('power-assert');
+const {describe, it} = require('mocha');
+const collapser = require('../../lib/collapsers/javascript');
 
-describe('JavaScript collapser', function () {
-  it('should minify JavaScript', function () {
-    return collapser(new Buffer('alert("foo: " + bar)'))
-      .then(function (encoded) {
-        assert(typeof encoded === 'string');
-      });
+describe('JavaScript collapser', () => {
+  it('should minify JavaScript', async () => {
+    const encoded = await collapser(Buffer.from('alert("foo: " + bar)'), {
+      resourceLocation: '<test>'
+    });
+    assert(typeof encoded === 'string');
   });
 
-  it('should reject if invalid JavaScript', function () {
-    return collapser(new Buffer('for: {'))
-      .then(function () {
-        assert.fail('expected rejected promise');
-      }, function (err) {
-        assert(err);
-      });
+  it('should preserve JavaScript as-is if minification fails', async () => {
+    const original = 'for: {';
+    const encoded = await collapser(Buffer.from(original), {
+      resourceLocation: '<test>'
+    });
+    assert(encoded === original);
   });
 
-  describe('external', function () {
-    it('should collapse an external script', function () {
-      return collapser.external('https://example.com/script.js', {
-        fetch: function (url) {
+  describe('external', () => {
+    it('should collapse an external script', async () => {
+      const encoded = await collapser.external({
+        async fetch(url) {
           assert(url === 'https://example.com/script.js');
-          return Bluebird.resolve('console.log("hello world!");');
-        }
-      })
-        .then(function (encoded) {
-          assert(typeof encoded === 'string');
-        });
+          return {
+            body: Buffer.from('console.log("hello world!");')
+          };
+        },
+        resourceLocation: 'https://example.com/script.js'
+      });
+
+      assert(typeof encoded === 'string');
     });
   });
 });

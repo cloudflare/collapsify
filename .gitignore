@@ -1,3 +1,4 @@
-node_modules
-coverage
-lib/version.js
+/node_modules
+/coverage
+/tmp
+/artifacts
