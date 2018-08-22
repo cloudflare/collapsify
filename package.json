@@ -72,7 +72,6 @@
   },
   "scripts": {
     "start": "./bin/server.js",
-    "prepublish": "./versionify.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
