@@ -14,7 +14,7 @@ print-builddeps:
 	@echo $(BUILD_DEPS)
 
 $(DEB_PACKAGE): clean
-	@echo $VERSION
+	@echo $(VERSION)
 	mkdir -p $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)
 
     # statics:
