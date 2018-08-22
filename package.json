@@ -11,7 +11,8 @@
   "contributors": [
     "Christopher Joel <chris@scriptolo.gy> (http://scriptolo.gy)",
     "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
-    "Andrew Galloni <andrew@cloudflare.com>"
+    "Andrew Galloni <andrew@cloudflare.com>",
+    "Ingvar Stepanyan <me@rreverser.com> (https://rreverser.com)"
   ],
   "dependencies": {
     "8bits": "^0.2.1",
