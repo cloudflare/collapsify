@@ -1,0 +1,19 @@
+everything: &everything
+  build:
+    builddeps:
+      - nodejs=10.*
+      - rubygem-fpm
+    post-cache:
+      - npm install --production
+      - make cf-package
+    artifacts:
+      - tmp/collapsify_*.deb
+  test:
+    builddeps:
+      - nodejs=10.*
+    post-cache:
+      - npm install
+      - npm test
+
+stretch: *everything
+jessie: *everything
