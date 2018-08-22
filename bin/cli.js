@@ -4,6 +4,7 @@ const byte = require('8bits');
 const bole = require('bole');
 const ndjs = require('ndjson-logrus');
 const pumpify = require('pumpify');
+const fs = require('fs');
 
 const allowedArgs = [
   {
@@ -37,6 +38,12 @@ const allowedArgs = [
     abbr: 'h',
     boolean: true,
     help: 'Show this usage information.'
+  },
+  {
+    name: 'output',
+    abbr: 'o',
+    default: '/dev/null',
+    help: 'Destination path for the resulting output'
   }
 ];
 
@@ -90,7 +97,7 @@ require('..')(domain, opts).then(
         digits: 2
       })
     );
-    process.stdout.write(output);
+    fs.writeFileSync(argv.output, output);
   },
   err => {
     logger.error('An error has occured while collapsing', domain, err);
