@@ -4,7 +4,6 @@ everything: &everything
       - nodejs=10.*
       - rubygem-fpm
     post-cache:
-      - npm install --production
       - make cf-package
     artifacts:
       - tmp/collapsify_*.deb
@@ -12,7 +11,7 @@ everything: &everything
     builddeps:
       - nodejs=10.*
     post-cache:
-      - npm install
+      - npm ci
       - npm test
 
 stretch: *everything

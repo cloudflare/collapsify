@@ -19,7 +19,7 @@ $(DEB_PACKAGE): clean
 	cp -r -p package-lock.json  $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/.
 
     # add node dependcies
-	cd $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/; npm install
+	cd $(PACKAGE_ROOT)/$(INSTALL_PREFIX)/$(NAME)/; npm ci
 
     # build deb package:
 	fpm -C $(PACKAGE_ROOT) -s dir -t deb -n $(NAME) -v $(VERSION) \
