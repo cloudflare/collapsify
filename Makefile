@@ -1,5 +1,5 @@
 NAME      := collapsify
-VERSION   := $(shell python -c "import json; data = json.load(file('package.json')); print data.get('version')")
+VERSION   := $(shell node -p "require('./package.json').version")
 ITERATION := 0
 
 TMP_ROOT             := $(shell pwd)/tmp
@@ -7,7 +7,7 @@ DEPS_ROOT            := $(TMP_ROOT)/deps
 BUILD_ROOT           := $(TMP_ROOT)/build
 PACKAGE_ROOT         := $(TMP_ROOT)/packaging
 INSTALL_PREFIX       := usr/local
-BUILD_DEPS           := nodejs python
+BUILD_DEPS           := nodejs
 DEB_PACKAGE          := $(NAME)_$(VERSION)-$(ITERATION)_amd64.deb
 
 print-builddeps:
