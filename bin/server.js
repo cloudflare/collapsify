@@ -74,7 +74,7 @@ if (argv.version) {
 const opts = {
   forbidden: argv.forbidden,
 
-  headers: argv.headers.filter(Boolean).reduce((headers, header) => {
+  headers: [].concat(argv.headers).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
