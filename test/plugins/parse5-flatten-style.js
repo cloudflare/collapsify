@@ -19,8 +19,8 @@ async function test(input, expected, opts) {
 describe('posthtml-flatten-style', () => {
   it('should flatten inline style', () => {
     return test(
-      '<style>body { background: url(gif.gif); }</style>',
-      '<style>body{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
+      '<style>body > .test { background: url(gif.gif); }</style>',
+      '<style>body>.test{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
@@ -64,13 +64,13 @@ describe('posthtml-flatten-style', () => {
   it('should flatten resources in external stylesheets', () => {
     return test(
       '<link rel="stylesheet" href="/static/css/app.css">',
-      '<style>body,html{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
+      '<style>body>.test{background:url(data:image/gif;base64,R0lGODlhAQABAAAAADs=)}</style>',
       {
         async fetch(url) {
           switch (url) {
             case 'https://example.com/static/css/app.css':
               return {
-                body: Buffer.from('html, body { background: url(gif.gif) }')
+                body: Buffer.from('body > .test { background: url(gif.gif) }')
               };
 
             case 'https://example.com/static/css/gif.gif':
