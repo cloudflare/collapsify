@@ -15,8 +15,8 @@ async function test(input, expected, opts) {
 describe('posthtml-flatten-script', () => {
   it('should flatten inline JavaScript', () => {
     return test(
-      '<script>alert("foo" + "bar");</script>',
-      '<script>alert("foobar");</script>',
+      '<script>alert("foo" + "bar"); var a = c < b;</script>',
+      '<script>alert("foobar");var a=c<b;</script>',
       {
         fetch() {
           assert(false, 'unexpected resource resolution');
@@ -50,11 +50,11 @@ describe('posthtml-flatten-script', () => {
   it('should flatten external JavaScript', () => {
     return test(
       '<script src="app.js"></script>',
-      '<script>alert("foobar");</script>',
+      '<script>alert("foobar");var a=c<b;</script>',
       {
         async fetch(url) {
           assert(url === 'https://example.com/app.js');
-          return {body: Buffer.from('alert("foo" + "bar");')};
+          return {body: Buffer.from('alert("foo" + "bar"); var a = c < b;')};
         },
         resourceLocation: 'https://example.com/'
       }
