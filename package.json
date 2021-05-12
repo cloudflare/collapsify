@@ -27,7 +27,7 @@
     "ndjson-logrus": "^1.1.0",
     "p-queue": "^2.4.2",
     "parse5-html-rewriting-stream": "^5.0.0",
-    "postcss": "^7.0.2",
+    "postcss": "^8.2.10",
     "postcss-value-parser": "^3.3.0",
     "pumpify": "^1.5.1",
     "server-summary": "^6.1.0",
