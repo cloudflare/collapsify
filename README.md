@@ -14,7 +14,7 @@ An HTTP server is installed as `collapsify-server`, which collapses the URL pass
 This HTTP server is systemd-aware: when running as a systemd service, collapsify will listen on the socket passed.
 Otherwise, this server defaults to listening on port 8020, which can be changed via the “-p” flag.
 
-Additional options can by found via the built in usage information, `collapsify-server -h`.
+Additional options can be found via the built in usage information, `collapsify-server -h`.
 
 ## API
 
