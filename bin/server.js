@@ -57,7 +57,7 @@ const argv = require('minimist')(process.argv.slice(2), {
 });
 
 const VERSION = require('../lib/version');
-const collapsify = require('..');
+const collapsify = require('../lib/node');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');

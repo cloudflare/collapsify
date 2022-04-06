@@ -88,7 +88,7 @@ const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
-require('..')(domain, opts).then(
+require('../lib/node')(domain, opts).then(
   output => {
     logger.info(
       'Collapsed Size: ',
