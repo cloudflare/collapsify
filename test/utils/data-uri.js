@@ -1,8 +1,7 @@
 'use strict';
-const path = require('path');
 const assert = require('power-assert');
-const fs = require('mz/fs');
 const {describe, it} = require('mocha');
+const {gifData} = require('../helpers');
 const {encodeSync, validateSync} = require('../../lib/utils/data-uri');
 
 describe('base64 utility', () => {
@@ -24,11 +23,7 @@ describe('base64 utility', () => {
     });
 
     it('should base64 encode a GIF', async () => {
-      const body = await fs.readFile(
-        path.join(__dirname, '../fixtures/gif.gif')
-      );
-
-      const encoded = encodeSync(body, {
+      const encoded = encodeSync(await gifData(), {
         contentType: 'image/gif'
       });
 
@@ -37,11 +32,7 @@ describe('base64 utility', () => {
     });
 
     it('should not have spaces in the base64 string', async () => {
-      const body = await fs.readFile(
-        path.join(__dirname, '../fixtures/gif.gif')
-      );
-
-      const encoded = encodeSync(body, {
+      const encoded = encodeSync(await gifData(), {
         contentType: 'image/gif'
       });
 

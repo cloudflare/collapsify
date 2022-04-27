@@ -4,6 +4,7 @@ const assert = require('power-assert');
 const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-url');
+const {binaryResponse} = require('../helpers');
 
 async function test(input, output, opts = {}) {
   const result = await postcss([plugin(opts)]).process(input, {
@@ -28,7 +29,7 @@ describe('postcss-flatten-url', () => {
       {
         async fetch(url) {
           assert(url === 'http://example.com/example.png');
-          return {contentType: 'image/png', body: Buffer.from('')};
+          return binaryResponse(Buffer.from(''), 'image/png');
         },
         resourceLocation: 'http://example.com/'
       }

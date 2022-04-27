@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "bin": {
     "collapsify": "./bin/cli.js",
@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "8bits": "^0.2.1",
+    "base64-js": "^1.5.1",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^4.0.5",

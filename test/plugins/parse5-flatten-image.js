@@ -1,13 +1,10 @@
 'use strict';
-const path = require('path');
 const assert = require('power-assert');
-const fs = require('mz/fs');
 const {describe, it} = require('mocha');
+const {gifResponse} = require('../helpers');
 const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const plugin = require('../../lib/plugins/parse5-flatten-image');
-
-const fixture = path.join(__dirname, '../fixtures/gif.gif');
 
 async function test(input, expected, opts) {
   const rewriter = new Rewriter();
@@ -24,7 +21,7 @@ describe('posthtml-flatten-image', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return {contentType: 'image/gif', body: await fs.readFile(fixture)};
+          return gifResponse();
         },
         resourceLocation: 'https://example.com/page.html'
       }
