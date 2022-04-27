@@ -34,7 +34,7 @@ describe('postcss-flatten-import', () => {
   it('should wrap flattend imports with media query', () => {
     return test(
       '@import flatten.css screen, projection',
-      '@media screen, projection {.flatten{color:#00f}}',
+      '@media screen, projection {.flatten{color:blue}}',
       {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/flatten.css');
