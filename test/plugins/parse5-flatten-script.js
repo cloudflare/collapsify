@@ -4,6 +4,7 @@ const {describe, it} = require('mocha');
 const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const plugin = require('../../lib/plugins/parse5-flatten-script');
+const {stringResponse} = require('../helpers');
 
 async function test(input, expected, opts) {
   const rewriter = new Rewriter();
@@ -54,7 +55,7 @@ describe('posthtml-flatten-script', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/app.js');
-          return {body: Buffer.from('alert("foo" + "bar"); var a = c < b;')};
+          return stringResponse('alert("foo" + "bar"); var a = c < b;');
         },
         resourceLocation: 'https://example.com/'
       }

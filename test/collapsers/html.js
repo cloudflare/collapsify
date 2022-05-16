@@ -1,6 +1,7 @@
 'use strict';
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
+const {binaryResponse} = require('../helpers');
 const collapser = require('../../lib/collapsers/html');
 
 describe('html collapser', () => {
@@ -31,10 +32,7 @@ describe('html collapser', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.org/foobar.png');
-          return {
-            contentType: 'image/png',
-            body: Buffer.from('')
-          };
+          return binaryResponse(Buffer.from(''), 'image/png');
         },
         resourceLocation: 'https://example.com'
       }
@@ -52,17 +50,14 @@ describe('html collapser', () => {
       async fetch(url) {
         switch (url) {
           case 'https://terinstock.com':
-            return {
-              body: Buffer.from(
+            return binaryResponse(
+              Buffer.from(
                 '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
               )
-            };
+            );
 
           case 'https://terinstock.com/avatar.jpeg':
-            return {
-              contentType: 'image/jpeg',
-              body: Buffer.from('')
-            };
+            return binaryResponse(Buffer.from(''), 'image/jpeg');
 
           default:
             throw new assert.AssertionError('unknown resource resolution');

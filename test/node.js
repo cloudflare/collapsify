@@ -2,11 +2,11 @@
 const assert = require('power-assert');
 const nock = require('nock');
 const {describe, it} = require('mocha');
-const collapsify = require('..');
+const collapsify = require('../lib/node');
 
 nock.disableNetConnect();
 
-describe('collapsify', () => {
+describe('collapsify node', () => {
   it('should collapse an HTML page', async () => {
     nock('https://terinstock.com')
       .get('/')

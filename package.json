@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "bin": {
     "collapsify": "./bin/cli.js",
@@ -16,9 +16,10 @@
   ],
   "dependencies": {
     "8bits": "^0.2.1",
+    "base64-js": "^1.5.1",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
-    "cssnano": "^4.0.5",
+    "cssnano": "^5.1.7",
     "got": "^9.0.0",
     "http-ndjson": "^3.1.0",
     "husky": "^1.0.0-rc.13",
@@ -27,12 +28,12 @@
     "ndjson-logrus": "^1.1.0",
     "p-queue": "^2.4.2",
     "parse5-html-rewriting-stream": "^5.0.0",
-    "postcss": "^7.0.2",
+    "postcss": "^8.2.15",
     "postcss-value-parser": "^3.3.0",
     "pumpify": "^1.5.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
-    "uglify-js": "^3.4.6"
+    "terser": "^5.13.0"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [

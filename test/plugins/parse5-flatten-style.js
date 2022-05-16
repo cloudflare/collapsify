@@ -1,12 +1,11 @@
 'use strict';
-const path = require('path');
 const assert = require('power-assert');
-const fs = require('mz/fs');
 const {describe, it} = require('mocha');
 const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const inlinePlugin = require('../../lib/plugins/parse5-flatten-inline-style');
 const externalPlugin = require('../../lib/plugins/parse5-flatten-external-style');
+const {stringResponse, gifResponse} = require('../helpers');
 
 async function test(input, expected, opts) {
   const rewriter = new Rewriter();
@@ -24,10 +23,7 @@ describe('posthtml-flatten-style', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return {
-            contentType: 'image/gif',
-            body: await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
-          };
+          return gifResponse();
         },
         resourceLocation: 'https://example.com'
       }
@@ -54,7 +50,7 @@ describe('posthtml-flatten-style', () => {
       {
         async fetch(url) {
           assert(url === 'https://example.com/static/css/app.css');
-          return {body: Buffer.from('html, body { height: 100%; }')};
+          return stringResponse('html, body { height: 100%; }');
         },
         resourceLocation: 'https://example.com/page.html'
       }
@@ -69,17 +65,12 @@ describe('posthtml-flatten-style', () => {
         async fetch(url) {
           switch (url) {
             case 'https://example.com/static/css/app.css':
-              return {
-                body: Buffer.from('body > .test { background: url(gif.gif) }')
-              };
+              return stringResponse(
+                'body > .test { background: url(gif.gif) }'
+              );
 
             case 'https://example.com/static/css/gif.gif':
-              return {
-                contentType: 'image/gif',
-                body: await fs.readFile(
-                  path.join(__dirname, '../fixtures/gif.gif')
-                )
-              };
+              return gifResponse();
 
             default:
               assert(false, 'unknown resource resolution');

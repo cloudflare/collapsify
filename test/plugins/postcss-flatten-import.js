@@ -4,6 +4,7 @@ const assert = require('power-assert');
 const {describe, it} = require('mocha');
 
 const plugin = require('../../lib/plugins/postcss-flatten-import');
+const {stringResponse} = require('../helpers');
 
 async function test(input, output, opts = {}) {
   const result = await postcss([plugin(opts)]).process(input, {
@@ -21,11 +22,9 @@ describe('postcss-flatten-import', () => {
       {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/fonts.css');
-          return {
-            body: Buffer.from(
-              '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
-            )
-          };
+          return stringResponse(
+            '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
+          );
         },
         resourceLocation: 'http://example.com/static/css/app.css'
       }
@@ -35,11 +34,11 @@ describe('postcss-flatten-import', () => {
   it('should wrap flattend imports with media query', () => {
     return test(
       '@import flatten.css screen, projection',
-      '@media screen, projection {.flatten{color:#00f}}',
+      '@media screen, projection {.flatten{color:blue}}',
       {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/flatten.css');
-          return {body: Buffer.from('.flatten { color: blue }')};
+          return stringResponse('.flatten { color: blue }');
         },
         resourceLocation: 'http://example.com/static/css/app.css'
       }

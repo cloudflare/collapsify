@@ -1,15 +1,12 @@
 'use strict';
-const path = require('path');
 const assert = require('power-assert');
-const fs = require('mz/fs');
 const {describe, it} = require('mocha');
+const {gifResponse, gifData} = require('../helpers');
 const collapser = require('../../lib/collapsers/binary');
 
 describe('binary collapser', () => {
   it('should collapse a GIF', async () => {
-    const body = await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'));
-
-    const encoded = await collapser(body, {
+    const encoded = await collapser(await gifData(), {
       contentType: 'image/gif'
     });
 
@@ -22,10 +19,7 @@ describe('binary collapser', () => {
       const encoded = await collapser.external({
         async fetch(url) {
           assert(url === 'https://example.com/gif.gif');
-          return {
-            contentType: 'image/gif',
-            body: await fs.readFile(path.join(__dirname, '../fixtures/gif.gif'))
-          };
+          return gifResponse();
         },
         resourceLocation: 'https://example.com/gif.gif'
       });
