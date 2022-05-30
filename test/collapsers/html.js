@@ -1,15 +1,13 @@
 'use strict';
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
-const {binaryResponse} = require('../helpers');
+const {binaryResponse, stringResponse} = require('../helpers');
 const collapser = require('../../lib/collapsers/html');
 
 describe('html collapser', () => {
   it('should collapse a script tag', async () => {
     const collapsed = await collapser(
-      Buffer.from(
-        '<html><body><script>alert("foo" + "bar");</script></body></html>'
-      ),
+      '<html><body><script>alert("foo" + "bar");</script></body></html>',
       {
         fetch() {
           assert(false, 'unexpected resource resolution');
@@ -26,9 +24,7 @@ describe('html collapser', () => {
 
   it('should collapse an image', async () => {
     const collapsed = await collapser(
-      Buffer.from(
-        '<html><body><img src="https://example.org/foobar.png"></body></html>'
-      ),
+      '<html><body><img src="https://example.org/foobar.png"></body></html>',
       {
         async fetch(url) {
           assert(url === 'https://example.org/foobar.png');
@@ -50,10 +46,8 @@ describe('html collapser', () => {
       async fetch(url) {
         switch (url) {
           case 'https://terinstock.com':
-            return binaryResponse(
-              Buffer.from(
-                '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
-              )
+            return stringResponse(
+              '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
             );
 
           case 'https://terinstock.com/avatar.jpeg':
