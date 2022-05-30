@@ -27,7 +27,7 @@
     "minimist": "^1.1.0",
     "ndjson-logrus": "^1.1.0",
     "p-queue": "^2.4.2",
-    "parse5-html-rewriting-stream": "^5.0.0",
+    "parse5-html-rewriting-stream": "^5.1.1",
     "postcss": "^8.2.15",
     "postcss-value-parser": "^3.3.0",
     "pumpify": "^1.5.1",
@@ -68,7 +68,7 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
     "mz": "^2.1.0",
-    "nock": "^9.5.0",
+    "nock": "^13.2.4",
     "power-assert": "^1.6.0",
     "xo": "^0.22.0"
   },
@@ -79,7 +79,10 @@
   },
   "xo": {
     "space": true,
-    "prettier": true
+    "prettier": true,
+    "ignores": [
+      "lib/version.js"
+    ]
   },
   "lint-staged": {
     "*.js": [
