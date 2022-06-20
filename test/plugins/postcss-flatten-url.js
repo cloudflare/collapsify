@@ -22,6 +22,13 @@ describe('postcss-flatten-url', () => {
     );
   });
 
+  it('should ignore empty src URLs', () => {
+    return test(
+      '@font-face { font-family: Noto Sans; src: url() format("opentype"); }',
+      '@font-face { font-family: Noto Sans; src: url() format("opentype"); }'
+    );
+  });
+
   it('should replace the URL in a property', () => {
     return test(
       '.flatten { background: url("example.png") }',
