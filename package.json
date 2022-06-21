@@ -65,7 +65,7 @@
     "husky": "^1.0.0-rc.13",
     "intelli-espower-loader": "^1.0.1",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^5.2.0",
+    "mocha": "^10.0.0",
     "mz": "^2.1.0",
     "nock": "^13.2.4",
     "power-assert": "^1.6.0",
