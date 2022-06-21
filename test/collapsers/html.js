@@ -1,4 +1,5 @@
 'use strict';
+const Buffer = require('buffer').Buffer;
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
 const {binaryResponse, stringResponse} = require('../helpers');
@@ -11,14 +12,14 @@ describe('html collapser', () => {
       {
         fetch() {
           assert(false, 'unexpected resource resolution');
-        }
-      }
+        },
+      },
     );
 
     assert(typeof collapsed === 'string');
     assert(
       collapsed ===
-        '<html><body><script>alert("foobar");</script></body></html>'
+        '<html><body><script>alert("foobar");</script></body></html>',
     );
   });
 
@@ -30,14 +31,14 @@ describe('html collapser', () => {
           assert(url === 'https://example.org/foobar.png');
           return binaryResponse(Buffer.from(''), 'image/png');
         },
-        resourceLocation: 'https://example.com'
-      }
+        resourceLocation: 'https://example.com',
+      },
     );
 
     assert(typeof collapsed === 'string');
     assert(
       collapsed ===
-        '<html><body><img src="data:image/png;base64,"></body></html>'
+        '<html><body><img src="data:image/png;base64,"></body></html>',
     );
   });
 
@@ -47,7 +48,7 @@ describe('html collapser', () => {
         switch (url) {
           case 'https://terinstock.com':
             return stringResponse(
-              '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>'
+              '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>',
             );
 
           case 'https://terinstock.com/avatar.jpeg':
@@ -57,13 +58,13 @@ describe('html collapser', () => {
             throw new assert.AssertionError('unknown resource resolution');
         }
       },
-      resourceLocation: 'https://terinstock.com'
+      resourceLocation: 'https://terinstock.com',
     });
 
     assert(typeof collapsed === 'string');
     assert(
       collapsed ===
-        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"></body></html>'
+        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"></body></html>',
     );
   });
 });

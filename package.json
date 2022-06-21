@@ -70,7 +70,7 @@
     "mz": "^2.1.0",
     "nock": "^13.2.4",
     "power-assert": "^1.6.0",
-    "xo": "^0.22.0"
+    "xo": "^0.50.0"
   },
   "scripts": {
     "start": "./bin/server.js",
@@ -82,7 +82,11 @@
     "prettier": true,
     "ignores": [
       "lib/version.js"
-    ]
+    ],
+    "rules": {
+      "import/extensions": "off",
+      "unicorn/prefer-module": "off"
+    }
   },
   "lint-staged": {
     "*.js": [

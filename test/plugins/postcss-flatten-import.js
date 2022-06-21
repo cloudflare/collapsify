@@ -6,9 +6,9 @@ const {describe, it} = require('mocha');
 const plugin = require('../../lib/plugins/postcss-flatten-import');
 const {stringResponse} = require('../helpers');
 
-async function test(input, output, opts = {}) {
-  const result = await postcss([plugin(opts)]).process(input, {
-    from: opts.resourceLocation
+async function test(input, output, options = {}) {
+  const result = await postcss([plugin(options)]).process(input, {
+    from: options.resourceLocation,
   });
 
   assert(result.css === output);
@@ -23,11 +23,11 @@ describe('postcss-flatten-import', () => {
         async fetch(url) {
           assert(url === 'http://example.com/static/css/fonts.css');
           return stringResponse(
-            '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}'
+            '@font-face {\n    font-family: Noto Sans;\n    font-style: normal;\n    font-weight: 400;\n    src: local("Noto Sans")\n}',
           );
         },
-        resourceLocation: 'http://example.com/static/css/app.css'
-      }
+        resourceLocation: 'http://example.com/static/css/app.css',
+      },
     );
   });
 
@@ -40,8 +40,8 @@ describe('postcss-flatten-import', () => {
           assert(url === 'http://example.com/static/css/flatten.css');
           return stringResponse('.flatten { color: blue }');
         },
-        resourceLocation: 'http://example.com/static/css/app.css'
-      }
+        resourceLocation: 'http://example.com/static/css/app.css',
+      },
     );
   });
 });
