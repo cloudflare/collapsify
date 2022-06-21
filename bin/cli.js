@@ -2,7 +2,6 @@
 'use strict';
 const fs = require('fs');
 const process = require('process');
-const byte = require('8bits');
 const bole = require('bole');
 const ndjs = require('ndjson-logrus');
 const pumpify = require('pumpify');
@@ -91,13 +90,7 @@ const domain = argv._[0];
 
 require('../lib/node')(domain, options).then(
   (output) => {
-    logger.info(
-      'Collapsed Size: ',
-      byte(output.length, {
-        binary: true,
-        digits: 2,
-      }),
-    );
+    logger.info(`Collapsed Size: ${output.length} bytes`);
     fs.writeFileSync(argv.output, output);
   },
   (error) => {

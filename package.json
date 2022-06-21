@@ -15,7 +15,6 @@
     "Ingvar Stepanyan <me@rreverser.com> (https://rreverser.com)"
   ],
   "dependencies": {
-    "8bits": "^0.2.10",
     "base64-js": "^1.5.1",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
