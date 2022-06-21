@@ -15,14 +15,13 @@
     "Ingvar Stepanyan <me@rreverser.com> (https://rreverser.com)"
   ],
   "dependencies": {
-    "8bits": "^0.2.1",
+    "8bits": "^0.2.10",
     "base64-js": "^1.5.1",
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^5.1.7",
     "got": "^9.0.0",
     "http-ndjson": "^3.1.0",
-    "husky": "^1.0.0-rc.13",
     "lint-staged": "^7.2.0",
     "minimist": "^1.1.0",
     "ndjson-logrus": "^1.1.0",
@@ -64,6 +63,7 @@
   "devDependencies": {
     "bl": "^2.0.1",
     "coveralls": "^3.0.2",
+    "husky": "^1.0.0-rc.13",
     "intelli-espower-loader": "^1.0.1",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
