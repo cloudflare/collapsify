@@ -1,10 +1,9 @@
-'use strict';
-const postcss = require('postcss');
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
+import postcss from 'postcss';
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
 
-const plugin = require('../../lib/plugins/postcss-flatten-import');
-const {stringResponse} = require('../helpers');
+import plugin from '../../lib/plugins/postcss-flatten-import.js';
+import {stringResponse} from '../helpers.js';
 
 async function test(input, output, options = {}) {
   const result = await postcss([plugin(options)]).process(input, {

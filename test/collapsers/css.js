@@ -1,9 +1,8 @@
-'use strict';
-const Buffer = require('buffer').Buffer;
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const {binaryResponse} = require('../helpers');
-const collapser = require('../../lib/collapsers/css');
+import {Buffer} from 'node:buffer';
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import {binaryResponse} from '../helpers.js';
+import collapser from '../../lib/collapsers/css.js';
 
 describe('CSS collapser', () => {
   it('should minify CSS', async () => {

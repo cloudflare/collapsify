@@ -1,9 +1,8 @@
-'use strict';
-const Buffer = require('buffer').Buffer;
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const {binaryResponse, stringResponse} = require('../helpers');
-const collapser = require('../../lib/collapsers/html');
+import {Buffer} from 'node:buffer';
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import {binaryResponse, stringResponse} from '../helpers.js';
+import collapser, {external} from '../../lib/collapsers/html.js';
 
 describe('html collapser', () => {
   it('should collapse a script tag', async () => {
@@ -43,7 +42,7 @@ describe('html collapser', () => {
   });
 
   it('should collapse an external HTML page', async () => {
-    const collapsed = await collapser.external({
+    const collapsed = await external({
       async fetch(url) {
         switch (url) {
           case 'https://terinstock.com':

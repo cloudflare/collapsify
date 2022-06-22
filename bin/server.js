@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-'use strict';
-const http = require('http');
-const process = require('process');
-const systemdSocket = require('systemd-socket');
-const bole = require('bole');
-const summary = require('server-summary');
-const httpNdjson = require('http-ndjson');
+import http from 'node:http';
+import process from 'node:process';
+import systemdSocket from 'systemd-socket';
+import bole from 'bole';
+import summary from 'server-summary';
+import httpNdjson from 'http-ndjson';
+import cliclopts from 'cliclopts';
+import minimist from 'minimist';
+import VERSION from '../lib/version.js';
+import collapsify from '../lib/node.js';
 
 const allowedArgs = [
   {
@@ -47,15 +50,12 @@ const allowedArgs = [
   },
 ];
 
-const clopts = require('cliclopts')(allowedArgs);
-const argv = require('minimist')(process.argv.slice(2), {
+const clopts = cliclopts(allowedArgs);
+const argv = minimist(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default(),
 });
-
-const VERSION = require('../lib/version');
-const collapsify = require('../lib/node');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' <options>\n');

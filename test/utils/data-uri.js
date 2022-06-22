@@ -1,9 +1,8 @@
-'use strict';
-const Buffer = require('buffer').Buffer;
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const {gifData} = require('../helpers');
-const {encodeSync, validateSync} = require('../../lib/utils/data-uri');
+import {Buffer} from 'node:buffer';
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import {gifData} from '../helpers.js';
+import {encodeSync, validateSync} from '../../lib/utils/data-uri.js';
 
 describe('base64 utility', () => {
   describe('encode', () => {

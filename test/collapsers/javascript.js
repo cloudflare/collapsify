@@ -1,8 +1,7 @@
-'use strict';
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const collapser = require('../../lib/collapsers/javascript');
-const {stringResponse} = require('../helpers');
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import collapser from '../../lib/collapsers/javascript.js';
+import {stringResponse} from '../helpers.js';
 
 describe('JavaScript collapser', () => {
   it('should minify JavaScript', async () => {
