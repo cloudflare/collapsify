@@ -1,6 +1,5 @@
-const path = require('path');
-const assert = require('power-assert');
-const fs = require('mz/fs');
+import {promises as fs} from 'node:fs';
+import assert from 'power-assert';
 
 function response({contentType, string, array}) {
   return {
@@ -30,28 +29,21 @@ function response({contentType, string, array}) {
   };
 }
 
-function binaryResponse(array, contentType) {
+export function binaryResponse(array, contentType) {
   return response({array, contentType});
 }
 
-function stringResponse(string, contentType) {
+export function stringResponse(string, contentType) {
   return response({string, contentType});
 }
 
-async function gifData() {
-  return fs.readFile(path.join(__dirname, 'fixtures/gif.gif'));
+export async function gifData() {
+  return fs.readFile(new URL('fixtures/gif.gif', import.meta.url));
 }
 
-async function gifResponse() {
+export async function gifResponse() {
   return response({
     array: gifData(),
     contentType: 'image/gif',
   });
 }
-
-module.exports = {
-  binaryResponse,
-  gifData,
-  gifResponse,
-  stringResponse,
-};

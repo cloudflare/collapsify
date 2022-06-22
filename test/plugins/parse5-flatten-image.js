@@ -1,10 +1,9 @@
-'use strict';
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const {gifResponse} = require('../helpers');
-const Rewriter = require('../../lib/utils/parse5-async-rewriter');
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import {gifResponse} from '../helpers.js';
+import Rewriter from '../../lib/utils/parse5-async-rewriter.js';
 
-const plugin = require('../../lib/plugins/parse5-flatten-image');
+import plugin from '../../lib/plugins/parse5-flatten-image.js';
 
 async function test(input, expected, options) {
   const rewriter = new Rewriter();

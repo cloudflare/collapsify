@@ -1,11 +1,10 @@
-'use strict';
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const Rewriter = require('../../lib/utils/parse5-async-rewriter');
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import Rewriter from '../../lib/utils/parse5-async-rewriter.js';
 
-const inlinePlugin = require('../../lib/plugins/parse5-flatten-inline-style');
-const externalPlugin = require('../../lib/plugins/parse5-flatten-external-style');
-const {stringResponse, gifResponse} = require('../helpers');
+import inlinePlugin from '../../lib/plugins/parse5-flatten-inline-style.js';
+import externalPlugin from '../../lib/plugins/parse5-flatten-external-style.js';
+import {stringResponse, gifResponse} from '../helpers.js';
 
 async function test(input, expected, options) {
   const rewriter = new Rewriter();

@@ -1,8 +1,7 @@
-'use strict';
-const assert = require('power-assert');
-const {describe, it} = require('mocha');
-const {gifResponse, gifData} = require('../helpers');
-const collapser = require('../../lib/collapsers/binary');
+import assert from 'power-assert';
+import {describe, it} from 'mocha';
+import {gifResponse, gifData} from '../helpers.js';
+import collapser from '../../lib/collapsers/binary.js';
 
 describe('binary collapser', () => {
   it('should collapse a GIF', async () => {

@@ -1,8 +1,7 @@
-'use strict';
-const assert = require('power-assert');
-const nock = require('nock');
-const {describe, it} = require('mocha');
-const collapsify = require('../lib/node');
+import assert from 'power-assert';
+import nock from 'nock';
+import {describe, it} from 'mocha';
+import collapsify from '../lib/node.js';
 
 nock.disableNetConnect();
 

@@ -1,2 +1,1 @@
-'use strict';
-module.exports = require('./lib/collapsify');
+export {default} from './lib/collapsify.js';

@@ -1,10 +1,13 @@
 #!/usr/bin/env node
-'use strict';
-const fs = require('fs');
-const process = require('process');
-const bole = require('bole');
-const ndjs = require('ndjson-logrus');
-const pumpify = require('pumpify');
+import fs from 'node:fs';
+import process from 'node:process';
+import bole from 'bole';
+import ndjs from 'ndjson-logrus';
+import pumpify from 'pumpify';
+import cliclopts from 'cliclopts';
+import minimist from 'minimist';
+import VERSION from '../lib/version.js';
+import collapsifyNode from '../lib/node.js';
 
 const allowedArgs = [
   {
@@ -46,14 +49,12 @@ const allowedArgs = [
   },
 ];
 
-const clopts = require('cliclopts')(allowedArgs);
-const argv = require('minimist')(process.argv.slice(2), {
+const clopts = cliclopts(allowedArgs);
+const argv = minimist(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default(),
 });
-
-const VERSION = require('../lib/version');
 
 if (argv.help) {
   console.log('Usage: ' + process.argv.slice(1, 2).join(' ') + ' [options]\n');
@@ -88,7 +89,7 @@ const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
-require('../lib/node')(domain, options).then(
+collapsifyNode(domain, options).then(
   (output) => {
     logger.info(`Collapsed Size: ${output.length} bytes`);
     fs.writeFileSync(argv.output, output);
