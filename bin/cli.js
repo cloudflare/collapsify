@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const fs = require('fs');
-const byte = require('8bits');
+const process = require('process');
 const bole = require('bole');
 const ndjs = require('ndjson-logrus');
 const pumpify = require('pumpify');
@@ -12,46 +12,45 @@ const allowedArgs = [
     abbr: 'x',
     default:
       '^(?:https?:)?(?:/+)?(localhost|(?:127|192.168|172.16|10).[0-9.]+)',
-    help: 'Forbidden URLs (passed to the RegExp constructor).'
+    help: 'Forbidden URLs (passed to the RegExp constructor).',
   },
   {
     name: 'headers',
     abbr: 'H',
     default: [],
-    help: 'Custom headers (curl style) to set on all requests.'
+    help: 'Custom headers (curl style) to set on all requests.',
   },
   {
     name: 'verbose',
     abbr: 'V',
     default: 0,
-    help:
-      'Verbosity of logging output. 0 is errors and warnings, 1 is info, 2 is all.'
+    help: 'Verbosity of logging output. 0 is errors and warnings, 1 is info, 2 is all.',
   },
   {
     name: 'version',
     abbr: 'v',
     boolean: true,
-    help: 'Print the version number.'
+    help: 'Print the version number.',
   },
   {
     name: 'help',
     abbr: 'h',
     boolean: true,
-    help: 'Show this usage information.'
+    help: 'Show this usage information.',
   },
   {
     name: 'output',
     abbr: 'o',
     default: '/dev/null',
-    help: 'Destination path for the resulting output'
-  }
+    help: 'Destination path for the resulting output',
+  },
 ];
 
 const clopts = require('cliclopts')(allowedArgs);
 const argv = require('minimist')(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
-  default: clopts.default()
+  default: clopts.default(),
 });
 
 const VERSION = require('../lib/version');
@@ -68,38 +67,33 @@ if (argv.version) {
   process.exit(0);
 }
 
-const opts = {
+const options = {
   forbidden: argv.forbidden,
 
+  // eslint-disable-next-line unicorn/no-array-reduce
   headers: argv.headers.filter(Boolean).reduce((headers, header) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
     return headers;
-  }, {})
+  }, {}),
 };
 
 const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
-  stream: pumpify(ndjs(), process.stderr)
+  stream: pumpify(ndjs(), process.stderr),
 });
 const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
-require('../lib/node')(domain, opts).then(
-  output => {
-    logger.info(
-      'Collapsed Size: ',
-      byte(output.length, {
-        binary: true,
-        digits: 2
-      })
-    );
+require('../lib/node')(domain, options).then(
+  (output) => {
+    logger.info(`Collapsed Size: ${output.length} bytes`);
     fs.writeFileSync(argv.output, output);
   },
-  err => {
-    logger.error('An error has occured while collapsing', domain, err);
-  }
+  (error) => {
+    logger.error('An error has occured while collapsing', domain, error);
+  },
 );

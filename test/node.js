@@ -12,18 +12,18 @@ describe('collapsify node', () => {
       .get('/')
       .reply(
         200,
-        '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg" /></body></html>'
+        '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg" /></body></html>',
       )
       .get('/avatar.jpeg')
       .reply(200, '', {
-        'Content-Type': 'image/jpeg'
+        'Content-Type': 'image/jpeg',
       });
 
     const collapsed = await collapsify('https://terinstock.com', {});
     assert(typeof collapsed === 'string');
     assert(
       collapsed ===
-        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"/></body></html>'
+        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"/></body></html>',
     );
   });
 
@@ -34,13 +34,13 @@ describe('collapsify node', () => {
         .reply(200, '<!doctype html><img src="http://localhost">');
 
       await collapsify('https://terinstock.com', {
-        forbidden: 'localhost'
+        forbidden: 'localhost',
       });
 
       assert(false, 'unexpected Promise resolution');
-    } catch (err) {
-      assert(err instanceof Error);
-      assert(err.message === 'Forbidden resource http://localhost/');
+    } catch (error) {
+      assert(error instanceof Error);
+      assert(error.message === 'Forbidden resource http://localhost/');
     }
   });
 });

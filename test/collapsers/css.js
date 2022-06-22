@@ -1,4 +1,5 @@
 'use strict';
+const Buffer = require('buffer').Buffer;
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
 const {binaryResponse} = require('../helpers');
@@ -10,7 +11,7 @@ describe('CSS collapser', () => {
       fetch() {
         assert(false, 'unexpected resource resolution');
       },
-      resourceLocation: 'https://example.com'
+      resourceLocation: 'https://example.com',
     });
 
     assert(typeof collapsed === 'string');
@@ -23,13 +24,13 @@ describe('CSS collapser', () => {
         fetch() {
           assert(false, 'unexpected resource resolution');
         },
-        resourceLocation: 'https://example.com'
+        resourceLocation: 'https://example.com',
       });
 
       assert(false, 'unexpect Promise resolution');
-    } catch (err) {
-      assert(!(err instanceof assert.AssertionError));
-      assert(err.reason === 'Unclosed block');
+    } catch (error) {
+      assert(!(error instanceof assert.AssertionError));
+      assert(error.reason === 'Unclosed block');
     }
   });
 
@@ -42,8 +43,8 @@ describe('CSS collapser', () => {
             assert(url === 'https://example.com/example.png');
             return binaryResponse(Buffer.from(''), 'image/png');
           },
-          resourceLocation: 'https://example.com'
-        }
+          resourceLocation: 'https://example.com',
+        },
       );
 
       assert(collapsed.includes('data:image/png'));

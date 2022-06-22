@@ -7,10 +7,10 @@ const inlinePlugin = require('../../lib/plugins/parse5-flatten-inline-style');
 const externalPlugin = require('../../lib/plugins/parse5-flatten-external-style');
 const {stringResponse, gifResponse} = require('../helpers');
 
-async function test(input, expected, opts) {
+async function test(input, expected, options) {
   const rewriter = new Rewriter();
-  inlinePlugin(rewriter, opts);
-  externalPlugin(rewriter, opts);
+  inlinePlugin(rewriter, options);
+  externalPlugin(rewriter, options);
   const actual = await rewriter.process(input);
   assert(actual === expected);
 }
@@ -25,8 +25,8 @@ describe('posthtml-flatten-style', () => {
           assert(url === 'https://example.com/gif.gif');
           return gifResponse();
         },
-        resourceLocation: 'https://example.com'
-      }
+        resourceLocation: 'https://example.com',
+      },
     );
   });
 
@@ -38,8 +38,8 @@ describe('posthtml-flatten-style', () => {
         fetch() {
           assert(false, 'unexpected resource resolution');
         },
-        resourceLocation: 'https://example.com'
-      }
+        resourceLocation: 'https://example.com',
+      },
     );
   });
 
@@ -52,8 +52,8 @@ describe('posthtml-flatten-style', () => {
           assert(url === 'https://example.com/static/css/app.css');
           return stringResponse('html, body { height: 100%; }');
         },
-        resourceLocation: 'https://example.com/page.html'
-      }
+        resourceLocation: 'https://example.com/page.html',
+      },
     );
   });
 
@@ -66,7 +66,7 @@ describe('posthtml-flatten-style', () => {
           switch (url) {
             case 'https://example.com/static/css/app.css':
               return stringResponse(
-                'body > .test { background: url(gif.gif) }'
+                'body > .test { background: url(gif.gif) }',
               );
 
             case 'https://example.com/static/css/gif.gif':
@@ -76,8 +76,8 @@ describe('posthtml-flatten-style', () => {
               assert(false, 'unknown resource resolution');
           }
         },
-        resourceLocation: 'https://example.com/page.html'
-      }
+        resourceLocation: 'https://example.com/page.html',
+      },
     );
   });
 });

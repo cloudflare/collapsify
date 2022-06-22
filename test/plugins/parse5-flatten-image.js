@@ -6,9 +6,9 @@ const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 
 const plugin = require('../../lib/plugins/parse5-flatten-image');
 
-async function test(input, expected, opts) {
+async function test(input, expected, options) {
   const rewriter = new Rewriter();
-  plugin(rewriter, opts);
+  plugin(rewriter, options);
   const actual = await rewriter.process(input);
   assert(actual === expected);
 }
@@ -23,8 +23,8 @@ describe('posthtml-flatten-image', () => {
           assert(url === 'https://example.com/gif.gif');
           return gifResponse();
         },
-        resourceLocation: 'https://example.com/page.html'
-      }
+        resourceLocation: 'https://example.com/page.html',
+      },
     );
   });
 
@@ -36,8 +36,8 @@ describe('posthtml-flatten-image', () => {
         fetch() {
           assert(false, 'unexpected resource resolution');
         },
-        resourceLocation: 'https://example.com/page.html'
-      }
+        resourceLocation: 'https://example.com/page.html',
+      },
     );
   });
 });

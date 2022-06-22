@@ -6,9 +6,9 @@ const Rewriter = require('../../lib/utils/parse5-async-rewriter');
 const plugin = require('../../lib/plugins/parse5-flatten-script');
 const {stringResponse} = require('../helpers');
 
-async function test(input, expected, opts) {
+async function test(input, expected, options) {
   const rewriter = new Rewriter();
-  plugin(rewriter, opts);
+  plugin(rewriter, options);
   const actual = await rewriter.process(input);
   assert(actual === expected);
 }
@@ -21,8 +21,8 @@ describe('posthtml-flatten-script', () => {
       {
         fetch() {
           assert(false, 'unexpected resource resolution');
-        }
-      }
+        },
+      },
     );
   });
 
@@ -32,7 +32,7 @@ describe('posthtml-flatten-script', () => {
     return test(handlebars, handlebars, {
       fetch() {
         assert(false, 'unexpected resource resolution');
-      }
+      },
     });
   });
 
@@ -43,8 +43,8 @@ describe('posthtml-flatten-script', () => {
       {
         fetch() {
           assert(false, 'unexpected resource resolution');
-        }
-      }
+        },
+      },
     );
   });
 
@@ -57,8 +57,8 @@ describe('posthtml-flatten-script', () => {
           assert(url === 'https://example.com/app.js');
           return stringResponse('alert("foo" + "bar"); var a = c < b;');
         },
-        resourceLocation: 'https://example.com/'
-      }
+        resourceLocation: 'https://example.com/',
+      },
     );
   });
 });

@@ -1,4 +1,5 @@
 'use strict';
+const Buffer = require('buffer').Buffer;
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
 const {gifData} = require('../helpers');
@@ -8,7 +9,7 @@ describe('base64 utility', () => {
   describe('encode', () => {
     it('should base64 encode ASCII text', async () => {
       const encoded = encodeSync(Buffer.from('plain text'), {
-        contentType: 'text/plain'
+        contentType: 'text/plain',
       });
       assert(typeof encoded === 'string');
       assert(encoded.startsWith('data:text/plain;base64,'));
@@ -16,7 +17,7 @@ describe('base64 utility', () => {
 
     it('should base64 encode Unicode text', async () => {
       const encoded = encodeSync(Buffer.from([0xf0, 0x9f, 0x9a, 0x97]), {
-        contentType: 'text/plain; charset=utf-8'
+        contentType: 'text/plain; charset=utf-8',
       });
       assert(typeof encoded === 'string');
       assert(encoded.startsWith('data:text/plain;charset=utf-8;base64,'));
@@ -24,7 +25,7 @@ describe('base64 utility', () => {
 
     it('should base64 encode a GIF', async () => {
       const encoded = encodeSync(await gifData(), {
-        contentType: 'image/gif'
+        contentType: 'image/gif',
       });
 
       assert(typeof encoded === 'string');
@@ -33,7 +34,7 @@ describe('base64 utility', () => {
 
     it('should not have spaces in the base64 string', async () => {
       const encoded = encodeSync(await gifData(), {
-        contentType: 'image/gif'
+        contentType: 'image/gif',
       });
 
       assert(typeof encoded === 'string');

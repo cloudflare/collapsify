@@ -7,7 +7,7 @@ const collapser = require('../../lib/collapsers/binary');
 describe('binary collapser', () => {
   it('should collapse a GIF', async () => {
     const encoded = await collapser(await gifData(), {
-      contentType: 'image/gif'
+      contentType: 'image/gif',
     });
 
     assert(typeof encoded === 'string');
@@ -21,7 +21,7 @@ describe('binary collapser', () => {
           assert(url === 'https://example.com/gif.gif');
           return gifResponse();
         },
-        resourceLocation: 'https://example.com/gif.gif'
+        resourceLocation: 'https://example.com/gif.gif',
       });
 
       assert(typeof encoded === 'string');

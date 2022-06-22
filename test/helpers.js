@@ -8,6 +8,7 @@ function response({contentType, string, array}) {
       if (contentType) {
         return contentType;
       }
+
       assert(false, 'unexpected getContentType call');
     },
 
@@ -15,6 +16,7 @@ function response({contentType, string, array}) {
       if (string) {
         return string;
       }
+
       assert(false, 'unexpected getAsString call');
     },
 
@@ -22,8 +24,9 @@ function response({contentType, string, array}) {
       if (array) {
         return array;
       }
+
       assert(false, 'unexpected getAsArray call');
-    }
+    },
   };
 }
 
@@ -42,7 +45,7 @@ async function gifData() {
 async function gifResponse() {
   return response({
     array: gifData(),
-    contentType: 'image/gif'
+    contentType: 'image/gif',
   });
 }
 
@@ -50,5 +53,5 @@ module.exports = {
   binaryResponse,
   gifData,
   gifResponse,
-  stringResponse
+  stringResponse,
 };

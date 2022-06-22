@@ -7,7 +7,7 @@ const {stringResponse} = require('../helpers');
 describe('JavaScript collapser', () => {
   it('should minify JavaScript', async () => {
     const encoded = await collapser('alert("foo: " + bar)', {
-      resourceLocation: '<test>'
+      resourceLocation: '<test>',
     });
     assert(typeof encoded === 'string');
   });
@@ -15,7 +15,7 @@ describe('JavaScript collapser', () => {
   it('should preserve JavaScript as-is if minification fails', async () => {
     const original = 'for: {';
     const encoded = await collapser(original, {
-      resourceLocation: '<test>'
+      resourceLocation: '<test>',
     });
     assert(encoded === original);
   });
@@ -27,7 +27,7 @@ describe('JavaScript collapser', () => {
           assert(url === 'https://example.com/script.js');
           return stringResponse('console.log("hello world!");');
         },
-        resourceLocation: 'https://example.com/script.js'
+        resourceLocation: 'https://example.com/script.js',
       });
 
       assert(typeof encoded === 'string');

@@ -1,4 +1,5 @@
 'use strict';
+const Buffer = require('buffer').Buffer;
 const postcss = require('postcss');
 const assert = require('power-assert');
 const {describe, it} = require('mocha');
@@ -6,9 +7,9 @@ const {describe, it} = require('mocha');
 const plugin = require('../../lib/plugins/postcss-flatten-url');
 const {binaryResponse} = require('../helpers');
 
-async function test(input, output, opts = {}) {
-  const result = await postcss([plugin(opts)]).process(input, {
-    from: opts.resourceLocation
+async function test(input, output, options = {}) {
+  const result = await postcss([plugin(options)]).process(input, {
+    from: options.resourceLocation,
   });
 
   assert(result.css === output);
@@ -18,7 +19,7 @@ describe('postcss-flatten-url', () => {
   it("should ignore properties that don't contain URLs", () => {
     return test(
       '.flatten { background: #0581C1 }',
-      '.flatten { background: #0581C1 }'
+      '.flatten { background: #0581C1 }',
     );
   });
 
@@ -31,8 +32,8 @@ describe('postcss-flatten-url', () => {
           assert(url === 'http://example.com/example.png');
           return binaryResponse(Buffer.from(''), 'image/png');
         },
-        resourceLocation: 'http://example.com/'
-      }
+        resourceLocation: 'http://example.com/',
+      },
     );
   });
 
@@ -44,8 +45,8 @@ describe('postcss-flatten-url', () => {
         fetch() {
           assert.fail('should not have called fetch');
         },
-        resourceLocation: 'http://example.com/'
-      }
+        resourceLocation: 'http://example.com/',
+      },
     );
   });
 });
