@@ -1,6 +1,6 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
-import collapser from '../../src/collapsers/javascript.js';
+import collapser from '../../built/collapsers/javascript.js';
 import {stringResponse} from '../helpers.js';
 
 describe('JavaScript collapser', () => {

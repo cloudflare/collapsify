@@ -1,4 +1,4 @@
-import {validateSync} from '../utils/data-uri.js';
+import {validateSync} from './data-uri.js';
 
 export default function cssUrl(node, skipCheck) {
   if (node.type === 'function' && node.value === 'url') {

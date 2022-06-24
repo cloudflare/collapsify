@@ -20,10 +20,8 @@ export default function flattenScript(rewriter, options) {
     // Ignore non-JavaScript types.
     // Empty `type` should be treated just like missing one.
     if (
-      type &&
-      type.value &&
-      type.value !== 'text/javascript' &&
-      type.value !== 'application/javascript'
+      type?.value !== 'text/javascript' &&
+      type?.value !== 'application/javascript'
     ) {
       logger.debug('ignoring script of type "%s"', type.value);
       return;

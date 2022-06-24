@@ -2,7 +2,7 @@ import {Buffer} from 'node:buffer';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {gifData} from '../helpers.js';
-import {encodeSync, validateSync} from '../../src/utils/data-uri.js';
+import {encodeSync, validateSync} from '../../built/utils/data-uri.js';
 
 describe('base64 utility', () => {
   describe('encode', () => {

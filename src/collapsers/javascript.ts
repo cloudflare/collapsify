@@ -14,7 +14,7 @@ async function collapse(bodyString, options) {
       [options.resourceLocation]: bodyString,
     });
     return result.code;
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error(error);
     return bodyString;
   }

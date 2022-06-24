@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import fs from 'node:fs';
-import process from 'node:process';
+import * as fs from 'node:fs';
+import * as process from 'node:process';
 import bole from 'bole';
 import ndjs from 'ndjson-logrus';
 import pumpify from 'pumpify';
@@ -64,7 +64,7 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log('Collapsify CLI - ' + VERSION);
+  console.log('Collapsify CLI - ' + String(VERSION));
   process.exit(0);
 }
 
@@ -90,8 +90,8 @@ const logger = bole('collapsify-cli');
 const domain = argv._[0];
 
 collapsifyNode(domain, options).then(
-  (output) => {
-    logger.info(`Collapsed Size: ${output.length} bytes`);
+  (output: any) => {
+    logger.info(`Collapsed Size: ${String(output.length)} bytes`);
     fs.writeFileSync(argv.output, output);
   },
   (error) => {

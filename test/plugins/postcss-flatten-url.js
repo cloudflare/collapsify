@@ -3,7 +3,7 @@ import postcss from 'postcss';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 
-import plugin from '../../src/plugins/postcss-flatten-url.js';
+import plugin from '../../built/plugins/postcss-flatten-url.js';
 import {binaryResponse} from '../helpers.js';
 
 async function test(input, output, options = {}) {

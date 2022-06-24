@@ -5,8 +5,8 @@
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "type": "module",
   "bin": {
-    "collapsify": "./src/bin/cli.js",
-    "collapsify-server": "./src/bin/server.js"
+    "collapsify": "./built/bin/cli.js",
+    "collapsify-server": "./built/bin/server.js"
   },
   "bugs": "http://github.com/cloudflare/collapsify/issues",
   "contributors": [
@@ -20,7 +20,7 @@
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^5.1.7",
-    "got": "^11.8.5",
+    "got": "^12.1.0",
     "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
     "ndjson-logrus": "^1.1.0",
@@ -67,10 +67,12 @@
     "mocha": "^10.0.0",
     "nock": "^13.2.4",
     "power-assert": "^1.6.0",
+    "typescript": "^4.7.4",
     "xo": "^0.50.0"
   },
   "scripts": {
-    "start": "./src/bin/server.js",
+    "build": "tsc",
+    "start": "node ./built/bin/server.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
@@ -78,10 +80,12 @@
     "space": true,
     "prettier": true,
     "rules": {
-      "n/no-unpublished-bin": "off"
+      "n/no-unpublished-bin": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-return": "off"
     }
   },
-
   "husky": {
     "hooks": {
       "pre-commit": "xo"

@@ -2,9 +2,10 @@ import valueParser from 'postcss-value-parser';
 import collapseCSS from '../collapsers/css.js';
 import cssURL from '../utils/css-url.js';
 
-export default function flattenImport(options = {}) {
+export default function flattenImport(options) {
   return {
     postcssPlugin: 'postcss-flatten-import',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     async Once(css) {
       const tasks = [];
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import http from 'node:http';
-import process from 'node:process';
+import * as http from 'node:http';
+import * as process from 'node:process';
 import systemdSocket from 'systemd-socket';
 import bole from 'bole';
 import summary from 'server-summary';
@@ -65,7 +65,7 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log('Collapsify Server - ' + VERSION);
+  console.log('Collapsify Server - ' + String(VERSION));
   process.exit(0);
 }
 
@@ -92,8 +92,9 @@ const socket = systemdSocket();
 
 const server = http.createServer((request, response) => {
   httpNdjson(request, response, logger.info);
-  const queries = new URL(request.url, 'http://localhost').searchParams;
-  const url = queries && queries.get('url');
+  const queries =
+    request.url && new URL(request.url, 'http://localhost').searchParams;
+  const url = queries?.get('url');
   if (url) {
     collapsify(url, options).then(
       (result) => {
@@ -109,7 +110,7 @@ const server = http.createServer((request, response) => {
       },
       (error) => {
         response.statusCode = 500;
-        response.end('Failed to collapsify. ' + error.message);
+        response.end('Failed to collapsify. ' + String(error.message));
         logger.error(
           error,
           {

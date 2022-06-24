@@ -2,7 +2,7 @@ import {Buffer} from 'node:buffer';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {binaryResponse, stringResponse} from '../helpers.js';
-import collapser, {external} from '../../src/collapsers/html.js';
+import collapser, {external} from '../../built/collapsers/html.js';
 
 describe('html collapser', () => {
   it('should collapse a script tag', async () => {

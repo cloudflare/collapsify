@@ -2,6 +2,9 @@ import {EventEmitter} from 'node:events';
 import RewritingStream from 'parse5-html-rewriting-stream';
 
 class Rewriter extends EventEmitter {
+  private readonly _rewriter;
+  private _queue;
+
   constructor() {
     super();
 
@@ -35,11 +38,11 @@ class Rewriter extends EventEmitter {
     };
   }
 
-  process(body) {
+  async process(body) {
     return new Promise((resolve, reject) => {
       let html = '';
 
-      this._rewriter.on('data', (chunk) => {
+      this._rewriter.on('data', (chunk: string) => {
         html += chunk;
       });
 

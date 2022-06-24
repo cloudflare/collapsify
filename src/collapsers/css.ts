@@ -12,7 +12,7 @@ async function external(options) {
 }
 
 async function collapse(bodyString, options) {
-  const lazy = postcss()
+  const lazy = (postcss as any)()
     .use(flattenUrl(options))
     .use(flattenImport(options))
     .use(cssnano({preset: 'default'}))
