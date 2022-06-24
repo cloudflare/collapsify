@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
     "outDir": "./built",
-    "allowJs": true,
+    "allowJs": false,
     "module": "ES2020",
     "moduleResolution": "node",
     "target": "ES2020",

@@ -1,6 +1,7 @@
+import type {Node} from 'postcss-value-parser';
 import {validateSync} from './data-uri.js';
 
-export default function cssUrl(node, skipCheck) {
+export default function cssUrl(node: Node, skipCheck: boolean) {
   if (node.type === 'function' && node.value === 'url') {
     node = node.nodes[0];
     skipCheck = true;

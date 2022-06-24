@@ -1,17 +1,18 @@
+import {Plugin} from 'postcss';
 import valueParser from 'postcss-value-parser';
 import collapseBinary from '../collapsers/binary.js';
 import cssURL from '../utils/css-url.js';
 
-export default function flattenUrl(options) {
+export default function flattenUrl(options: any): Plugin {
   return {
     postcssPlugin: 'postcss-flatten-url',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     async Once(css) {
-      const tasks = [];
+      const tasks: Array<Promise<void>> = [];
 
       css.walkDecls((decl) => {
         const parsedValue = valueParser(decl.value);
-        const newTasks = [];
+        const newTasks: Array<Promise<void>> = [];
 
         parsedValue.walk((node, index, nodes) => {
           const url = cssURL(node, false);
@@ -35,14 +36,15 @@ export default function flattenUrl(options) {
                     {
                       type: 'word',
                       value: binaryString,
-                    },
+                    } as any,
                   ],
-                };
+                } as any;
               }),
           );
         });
 
         const promise = Promise.all(newTasks).then(() => {
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           decl.value = parsedValue.toString();
         });
 
@@ -50,7 +52,6 @@ export default function flattenUrl(options) {
       });
 
       await Promise.all(tasks);
-      return css;
     },
   };
 }

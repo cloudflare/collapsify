@@ -1,12 +1,14 @@
 import bole from 'bole';
+import {StartTagToken} from 'parse5-sax-parser';
 import collapseJavaScript from '../collapsers/javascript.js';
+import Rewriter from '../utils/parse5-async-rewriter.js';
 
 const logger = bole('collapsify:collapsers:html');
 
-export default function flattenScript(rewriter, options) {
+export default function flattenScript(rewriter: Rewriter, options: any) {
   let inInlineScript = false;
 
-  rewriter.on('startTag', async (tag) => {
+  rewriter.on('startTag', async (tag: StartTagToken) => {
     inInlineScript = false;
 
     if (tag.tagName !== 'script') {

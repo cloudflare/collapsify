@@ -1,13 +1,14 @@
+import {Plugin} from 'postcss';
 import valueParser from 'postcss-value-parser';
 import collapseCSS from '../collapsers/css.js';
 import cssURL from '../utils/css-url.js';
 
-export default function flattenImport(options) {
+export default function flattenImport(options: any): Plugin {
   return {
     postcssPlugin: 'postcss-flatten-import',
     // eslint-disable-next-line @typescript-eslint/naming-convention
     async Once(css) {
-      const tasks = [];
+      const tasks: Array<Promise<void>> = [];
 
       css.walkAtRules('import', (rule) => {
         const parsedValue = valueParser(rule.params);
@@ -38,7 +39,6 @@ export default function flattenImport(options) {
       });
 
       await Promise.all(tasks);
-      return css;
     },
   };
 }

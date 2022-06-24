@@ -2,19 +2,19 @@ import {EventEmitter} from 'node:events';
 import RewritingStream from 'parse5-html-rewriting-stream';
 
 class Rewriter extends EventEmitter {
-  private readonly _rewriter;
-  private _queue;
+  private readonly rewriter: RewritingStream;
+  private queue: Promise<void>;
 
   constructor() {
     super();
 
-    this._rewriter = new RewritingStream();
-    this._queue = Promise.resolve();
+    this.rewriter = new RewritingStream();
+    this.queue = Promise.resolve();
 
     for (const eventName of ['startTag', 'endTag', 'doctype', 'text']) {
-      this._rewriter.on(
+      this.rewriter.on(
         eventName,
-        this._deferred(async (token, raw) => {
+        this.deferred(async (token: any, raw: any) => {
           for (const listener of this.rawListeners(eventName)) {
             // eslint-disable-next-line no-await-in-loop
             if (await listener(token, raw)) {
@@ -22,55 +22,63 @@ class Rewriter extends EventEmitter {
             }
           }
 
-          this._rewriter.emitRaw(raw);
+          this.rewriter.emitRaw(raw);
         }),
       );
     }
 
-    this._rewriter.on('comment', () => {
+    this.rewriter.on('comment', () => {
       /* ignore */
     });
   }
 
-  _deferred(fn) {
-    return (...args) => {
-      this._queue = this._queue.then(() => fn(...args));
-    };
-  }
-
-  async process(body) {
+  async process(body: string) {
     return new Promise((resolve, reject) => {
       let html = '';
 
-      this._rewriter.on('data', (chunk: string) => {
+      this.rewriter.on('data', (chunk: string) => {
         html += chunk;
       });
 
-      this._rewriter.once('finish', () => {
+      this.rewriter.once('finish', () => {
         resolve(html);
       });
 
-      this._rewriter.once('error', reject);
+      this.rewriter.once('error', reject);
 
-      this._rewriter.write(body, () => {
-        this._queue.then(() => {
-          this._rewriter.end();
+      this.rewriter.write(body, () => {
+        this.queue.then(() => {
+          this.rewriter.end();
         }, reject);
       });
     });
   }
-}
 
-for (const methodName of [
-  'emitStartTag',
-  'emitEndTag',
-  'emitDoctype',
-  'emitText',
-  'emitRaw',
-]) {
-  Rewriter.prototype[methodName] = function (...args) {
-    this._rewriter[methodName](...args);
-  };
+  emitStartTag(startTag: any) {
+    this.rewriter.emitStartTag(startTag);
+  }
+
+  emitEndTag(endTag: any) {
+    this.rewriter.emitEndTag(endTag);
+  }
+
+  emitDoctype(text: any) {
+    this.rewriter.emitDoctype(text);
+  }
+
+  emitText(text: any) {
+    this.rewriter.emitText(text);
+  }
+
+  emitRaw(html: any) {
+    this.rewriter.emitRaw(html);
+  }
+
+  private deferred(fn: any) {
+    return (...args: any[]) => {
+      this.queue = this.queue.then(() => fn(...args));
+    };
+  }
 }
 
 export default Rewriter;

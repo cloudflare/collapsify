@@ -1,7 +1,10 @@
 import httpClient from './utils/httpclient.js';
 import collapseHTML from './collapsify.js';
 
-export default async function collapsifyNode(resourceLocation, options) {
+export default async function collapsifyNode(
+  resourceLocation: string,
+  options: any,
+) {
   const fetch = httpClient(options.headers);
 
   options = Object.assign(

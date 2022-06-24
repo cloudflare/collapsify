@@ -6,12 +6,12 @@ import flattenImport from '../plugins/postcss-flatten-import.js';
 
 const logger = bole('collapsify:collapsers:css');
 
-async function external(options) {
+async function external(options: any) {
   const response = await options.fetch(options.resourceLocation);
   return collapse(await response.getAsString(), options);
 }
 
-async function collapse(bodyString, options) {
+async function collapse(bodyString: string, options: any) {
   const lazy = (postcss as any)()
     .use(flattenUrl(options))
     .use(flattenImport(options))

@@ -1,6 +1,7 @@
 import collapseCSS from '../collapsers/css.js';
+import Rewriter from '../utils/parse5-async-rewriter.js';
 
-export default function flattenInlineStyle(rewriter, options) {
+export default function flattenInlineStyle(rewriter: Rewriter, options: any) {
   let inStyle = false;
 
   rewriter.on('startTag', (tag) => {

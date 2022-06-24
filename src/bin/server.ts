@@ -5,12 +5,12 @@ import systemdSocket from 'systemd-socket';
 import bole from 'bole';
 import summary from 'server-summary';
 import httpNdjson from 'http-ndjson';
-import cliclopts from 'cliclopts';
+import cliclopts, {Argument} from 'cliclopts';
 import minimist from 'minimist';
 import VERSION from '../version.js';
 import collapsify from '../node.js';
 
-const allowedArgs = [
+const allowedArgs: Argument[] = [
   {
     name: 'forbidden',
     abbr: 'x',

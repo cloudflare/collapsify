@@ -4,12 +4,12 @@ import inlineStyle from '../plugins/parse5-flatten-inline-style.js';
 import externalStyle from '../plugins/parse5-flatten-external-style.js';
 import flattenScript from '../plugins/parse5-flatten-script.js';
 
-export async function external(options) {
+export async function external(options: any) {
   const response = await options.fetch(options.resourceLocation);
   return collapse(await response.getAsString(), options);
 }
 
-async function collapse(text, options) {
+async function collapse(text: string, options: any) {
   const rewriter = new Rewriter();
 
   flattenImage(rewriter, options);

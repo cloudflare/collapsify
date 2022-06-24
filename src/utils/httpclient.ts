@@ -53,11 +53,11 @@ export default function makeClient(defaultHeaders: Headers): Fetch {
       return client.get(url, {cache});
     });
 
-    if (response.fromCache) {
+    if (response.isFromCache) {
       logger.debug('Retrieved %s from cache.', url);
     }
 
-    return new GotResponse(response.headers['content-type'], response.body);
+    return new GotResponse(response.headers['content-type'], response.rawBody);
   }
 
   return gotFetch;

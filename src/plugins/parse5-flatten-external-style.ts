@@ -1,7 +1,9 @@
+import {StartTagToken} from 'parse5-sax-parser';
 import collapseCSS from '../collapsers/css.js';
+import Rewriter from '../utils/parse5-async-rewriter.js';
 
-export default function flattenExternalStyle(rewriter, options) {
-  rewriter.on('startTag', async (tag) => {
+export default function flattenExternalStyle(rewriter: Rewriter, options: any) {
+  rewriter.on('startTag', async (tag: StartTagToken) => {
     if (tag.tagName !== 'link') return;
 
     const rel = tag.attrs.find((attr) => attr.name === 'rel');

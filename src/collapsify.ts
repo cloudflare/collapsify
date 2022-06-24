@@ -2,6 +2,8 @@ import type {Buffer} from 'node:buffer';
 
 export {external as default} from './collapsers/html.js';
 
+export class CollapsifyError extends Error {}
+
 export interface Response {
   getContentType(): string;
 

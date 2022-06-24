@@ -3,13 +3,13 @@ import * as fs from 'node:fs';
 import * as process from 'node:process';
 import bole from 'bole';
 import ndjs from 'ndjson-logrus';
-import pumpify from 'pumpify';
-import cliclopts from 'cliclopts';
+import Pumpify from 'pumpify';
+import cliclopts, {Argument} from 'cliclopts';
 import minimist from 'minimist';
 import VERSION from '../version.js';
 import collapsifyNode from '../node.js';
 
-const allowedArgs = [
+const allowedArgs: Argument[] = [
   {
     name: 'forbidden',
     abbr: 'x',
@@ -72,7 +72,7 @@ const options = {
   forbidden: argv.forbidden,
 
   // eslint-disable-next-line unicorn/no-array-reduce
-  headers: argv.headers.filter(Boolean).reduce((headers, header) => {
+  headers: argv.headers.filter(Boolean).reduce((headers: any, header: any) => {
     header = header.trim().split(':');
     headers[header[0].trim()] = header[1].trim();
 
@@ -83,7 +83,7 @@ const options = {
 const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
-  stream: pumpify(ndjs(), process.stderr),
+  stream: new Pumpify(ndjs(), process.stderr),
 });
 const logger = bole('collapsify-cli');
 

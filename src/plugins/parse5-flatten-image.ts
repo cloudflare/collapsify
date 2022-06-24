@@ -1,8 +1,10 @@
+import {StartTagToken} from 'parse5-sax-parser';
 import collapseBinary from '../collapsers/binary.js';
 import {validateSync} from '../utils/data-uri.js';
+import Rewriter from '../utils/parse5-async-rewriter.js';
 
-export default function flattenImage(rewriter, options) {
-  rewriter.on('startTag', async (tag) => {
+export default function flattenImage(rewriter: Rewriter, options: any) {
+  rewriter.on('startTag', async (tag: StartTagToken) => {
     if (tag.tagName !== 'img') {
       return;
     }
