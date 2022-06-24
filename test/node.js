@@ -1,7 +1,7 @@
 import assert from 'power-assert';
 import nock from 'nock';
 import {describe, it} from 'mocha';
-import collapsify from '../lib/node.js';
+import collapsify from '../src/node.js';
 
 nock.disableNetConnect();
 

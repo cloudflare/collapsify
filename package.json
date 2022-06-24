@@ -5,8 +5,8 @@
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "type": "module",
   "bin": {
-    "collapsify": "./bin/cli.js",
-    "collapsify-server": "./bin/server.js"
+    "collapsify": "./src/bin/cli.js",
+    "collapsify-server": "./src/bin/server.js"
   },
   "bugs": "http://github.com/cloudflare/collapsify/issues",
   "contributors": [
@@ -50,8 +50,7 @@
   "license": "MIT",
   "main": "index.js",
   "files": [
-    "bin",
-    "lib",
+    "src",
     "index.js"
   ],
   "preferGlobal": true,
@@ -71,13 +70,16 @@
     "xo": "^0.50.0"
   },
   "scripts": {
-    "start": "./bin/server.js",
+    "start": "./src/bin/server.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
   "xo": {
     "space": true,
-    "prettier": true
+    "prettier": true,
+    "rules": {
+      "n/no-unpublished-bin": "off"
+    }
   },
 
   "husky": {

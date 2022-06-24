@@ -2,7 +2,7 @@ import {Buffer} from 'node:buffer';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {binaryResponse} from '../helpers.js';
-import collapser from '../../lib/collapsers/css.js';
+import collapser from '../../src/collapsers/css.js';
 
 describe('CSS collapser', () => {
   it('should minify CSS', async () => {

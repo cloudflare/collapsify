@@ -6,8 +6,8 @@ import ndjs from 'ndjson-logrus';
 import pumpify from 'pumpify';
 import cliclopts from 'cliclopts';
 import minimist from 'minimist';
-import VERSION from '../lib/version.js';
-import collapsifyNode from '../lib/node.js';
+import VERSION from '../version.js';
+import collapsifyNode from '../node.js';
 
 const allowedArgs = [
   {

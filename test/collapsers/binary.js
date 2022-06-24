@@ -1,7 +1,7 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {gifResponse, gifData} from '../helpers.js';
-import collapser from '../../lib/collapsers/binary.js';
+import collapser from '../../src/collapsers/binary.js';
 
 describe('binary collapser', () => {
   it('should collapse a GIF', async () => {

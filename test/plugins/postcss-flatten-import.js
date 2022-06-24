@@ -2,7 +2,7 @@ import postcss from 'postcss';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 
-import plugin from '../../lib/plugins/postcss-flatten-import.js';
+import plugin from '../../src/plugins/postcss-flatten-import.js';
 import {stringResponse} from '../helpers.js';
 
 async function test(input, output, options = {}) {

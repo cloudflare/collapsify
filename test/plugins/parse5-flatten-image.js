@@ -1,9 +1,9 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {gifResponse} from '../helpers.js';
-import Rewriter from '../../lib/utils/parse5-async-rewriter.js';
+import Rewriter from '../../src/utils/parse5-async-rewriter.js';
 
-import plugin from '../../lib/plugins/parse5-flatten-image.js';
+import plugin from '../../src/plugins/parse5-flatten-image.js';
 
 async function test(input, expected, options) {
   const rewriter = new Rewriter();
