@@ -1,7 +1,10 @@
 #!/usr/bin/env node
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+/* eslint @typescript-eslint/no-unsafe-call: 0 */
 import * as fs from 'node:fs';
 import * as process from 'node:process';
 import bole from 'bole';
+import type {Headers} from 'got';
 import ndjs from 'ndjson-logrus';
 import Pumpify from 'pumpify';
 import cliclopts, {Argument} from 'cliclopts';
@@ -49,8 +52,17 @@ const allowedArgs: Argument[] = [
   },
 ];
 
+interface Args {
+  help: boolean;
+  version: boolean;
+  forbidden: string;
+  headers: string[];
+  verbose: number;
+  output: string;
+}
+
 const clopts = cliclopts(allowedArgs);
-const argv = minimist(process.argv.slice(2), {
+const argv = minimist<Args>(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default(),
@@ -68,16 +80,15 @@ if (argv.version) {
   process.exit(0);
 }
 
+const headers: Headers = {};
+for (const header of argv.headers.filter(Boolean)) {
+  const [key, value] = header.trim().split(':');
+  headers[key.trim()] = value.trim();
+}
+
 const options = {
   forbidden: argv.forbidden,
-
-  // eslint-disable-next-line unicorn/no-array-reduce
-  headers: argv.headers.filter(Boolean).reduce((headers: any, header: any) => {
-    header = header.trim().split(':');
-    headers[header[0].trim()] = header[1].trim();
-
-    return headers;
-  }, {}),
+  headers,
 };
 
 const levels = 'warn info debug'.split(' ');

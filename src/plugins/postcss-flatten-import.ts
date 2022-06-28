@@ -1,9 +1,10 @@
-import {Plugin} from 'postcss';
+import {Plugin, Result} from 'postcss';
 import valueParser from 'postcss-value-parser';
 import collapseCSS from '../collapsers/css.js';
+import {CollapsifyOptions} from '../collapsify.js';
 import cssURL from '../utils/css-url.js';
 
-export default function flattenImport(options: any): Plugin {
+export default function flattenImport(options: CollapsifyOptions): Plugin {
   return {
     postcssPlugin: 'postcss-flatten-import',
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -23,6 +24,10 @@ export default function flattenImport(options: any): Plugin {
             resourceLocation: new URL(url, options.resourceLocation).toString(),
           })
           .then((result) => {
+            if (!(result instanceof Result)) {
+              throw new TypeError(`postcss result wasn't a Result`);
+            }
+
             if (parsedValue.nodes.length > 1) {
               rule.name = 'media';
               rule.params = rule.params

@@ -74,9 +74,9 @@ class Rewriter extends EventEmitter {
     this.rewriter.emitRaw(html);
   }
 
-  private deferred(fn: any) {
+  private deferred(fn: (...args: any[]) => Promise<void>) {
     return (...args: any[]) => {
-      this.queue = this.queue.then(() => fn(...args));
+      this.queue = this.queue.then(async () => fn(...args));
     };
   }
 }

@@ -1,6 +1,12 @@
 import {readFileSync} from 'node:fs';
 
-const contents = readFileSync(new URL('../package.json', import.meta.url));
-const packageJson = contents.toJSON() as any;
+interface PackageJson {
+  version: string;
+}
+
+const contents = readFileSync(new URL('../package.json', import.meta.url), {
+  encoding: 'utf8',
+});
+const packageJson: PackageJson = JSON.parse(contents) as PackageJson;
 
 export default packageJson.version;

@@ -1,8 +1,12 @@
 import {StartTagToken} from 'parse5-sax-parser';
 import collapseCSS from '../collapsers/css.js';
+import {CollapsifyOptions} from '../collapsify.js';
 import Rewriter from '../utils/parse5-async-rewriter.js';
 
-export default function flattenExternalStyle(rewriter: Rewriter, options: any) {
+export default function flattenExternalStyle(
+  rewriter: Rewriter,
+  options: CollapsifyOptions,
+) {
   rewriter.on('startTag', async (tag: StartTagToken) => {
     if (tag.tagName !== 'link') return;
 

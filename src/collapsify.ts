@@ -13,3 +13,8 @@ export interface Response {
 }
 
 export type Fetch = (url: string) => Promise<Response>;
+
+export interface CollapsifyOptions {
+  resourceLocation: string;
+  fetch: Fetch;
+}

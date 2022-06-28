@@ -1,9 +1,15 @@
+import type {Headers} from 'got';
 import httpClient from './utils/httpclient.js';
 import collapseHTML from './collapsify.js';
 
+interface NodeOptions {
+  forbidden?: string;
+  headers?: Headers;
+}
+
 export default async function collapsifyNode(
   resourceLocation: string,
-  options: any,
+  options: NodeOptions,
 ) {
   const fetch = httpClient(options.headers);
 
