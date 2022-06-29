@@ -3,6 +3,7 @@ import assert from 'power-assert';
 import {describe, it} from 'mocha';
 import {binaryResponse} from '../helpers.js';
 import collapser from '../../built/collapsers/css.js';
+import {CollapsifyError} from '../../built/collapsify.js';
 
 describe('CSS collapser', () => {
   it('should minify CSS', async () => {
@@ -28,8 +29,24 @@ describe('CSS collapser', () => {
 
       assert(false, 'unexpect Promise resolution');
     } catch (error) {
-      assert(!(error instanceof assert.AssertionError));
-      assert(error.reason === 'Unclosed block');
+      assert(error instanceof CollapsifyError, 'wrong error type');
+      assert.equal(error.message, 'Error during CSS inlining.');
+    }
+  });
+
+  it('fetch error message returned', async () => {
+    try {
+      await collapser(`html, body { background: url('something.jpg'); }`, {
+        fetch() {
+          throw new CollapsifyError('Error from fetch');
+        },
+        resourceLocation: 'https://example.com',
+      });
+
+      assert(false, 'unexpect Promise resolution');
+    } catch (error) {
+      assert(error instanceof CollapsifyError, 'wrong error type');
+      assert.equal(error.message, 'Error from fetch');
     }
   });
 

@@ -11,9 +11,14 @@ const logger = bole('collapsify:http');
 
 class GotResponse implements Response {
   constructor(
+    private readonly statusCode: number,
     private readonly contentType: string,
     private readonly buffer: Buffer,
   ) {}
+
+  getStatusCode(): number {
+    return this.statusCode;
+  }
 
   getContentType(): string {
     return this.contentType;
@@ -57,7 +62,11 @@ export default function makeClient(defaultHeaders: Headers): Fetch {
       logger.debug('Retrieved %s from cache.', url);
     }
 
-    return new GotResponse(response.headers['content-type'], response.rawBody);
+    return new GotResponse(
+      response.statusCode,
+      response.headers['content-type'],
+      response.rawBody,
+    );
   }
 
   return gotFetch;

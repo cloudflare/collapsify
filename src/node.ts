@@ -1,6 +1,6 @@
 import type {Headers} from 'got';
 import httpClient from './utils/httpclient.js';
-import collapseHTML from './collapsify.js';
+import collapseHTML, {CollapsifyError} from './collapsify.js';
 
 interface NodeOptions {
   forbidden?: string;
@@ -24,7 +24,7 @@ export default async function collapsifyNode(
     const re = new RegExp(options.forbidden, 'i');
 
     if (re.test(url)) {
-      throw new Error('Forbidden resource ' + url);
+      throw new CollapsifyError('Forbidden resource ' + url);
     }
 
     return fetch(url);
