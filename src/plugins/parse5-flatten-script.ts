@@ -1,12 +1,18 @@
 import bole from 'bole';
+import {StartTagToken} from 'parse5-sax-parser';
 import collapseJavaScript from '../collapsers/javascript.js';
+import {CollapsifyOptions} from '../collapsify.js';
+import Rewriter from '../utils/parse5-async-rewriter.js';
 
 const logger = bole('collapsify:collapsers:html');
 
-export default function flattenScript(rewriter, options) {
+export default function flattenScript(
+  rewriter: Rewriter,
+  options: CollapsifyOptions,
+) {
   let inInlineScript = false;
 
-  rewriter.on('startTag', async (tag) => {
+  rewriter.on('startTag', async (tag: StartTagToken) => {
     inInlineScript = false;
 
     if (tag.tagName !== 'script') {
@@ -21,9 +27,8 @@ export default function flattenScript(rewriter, options) {
     // Empty `type` should be treated just like missing one.
     if (
       type &&
-      type.value &&
-      type.value !== 'text/javascript' &&
-      type.value !== 'application/javascript'
+      type?.value !== 'text/javascript' &&
+      type?.value !== 'application/javascript'
     ) {
       logger.debug('ignoring script of type "%s"', type.value);
       return;

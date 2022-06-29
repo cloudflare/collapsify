@@ -1,7 +1,16 @@
+import type {Headers} from 'got';
 import httpClient from './utils/httpclient.js';
 import collapseHTML from './collapsify.js';
 
-export default function collapsifyNode(resourceLocation, options) {
+interface NodeOptions {
+  forbidden?: string;
+  headers?: Headers;
+}
+
+export default async function collapsifyNode(
+  resourceLocation: string,
+  options: NodeOptions,
+) {
   const fetch = httpClient(options.headers);
 
   options = Object.assign(
@@ -11,7 +20,7 @@ export default function collapsifyNode(resourceLocation, options) {
     options,
   );
 
-  async function read(url) {
+  async function read(url: string) {
     const re = new RegExp(options.forbidden, 'i');
 
     if (re.test(url)) {

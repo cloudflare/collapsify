@@ -1,8 +1,8 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
-import Rewriter from '../../lib/utils/parse5-async-rewriter.js';
+import Rewriter from '../../built/utils/parse5-async-rewriter.js';
 
-import plugin from '../../lib/plugins/parse5-flatten-script.js';
+import plugin from '../../built/plugins/parse5-flatten-script.js';
 import {stringResponse} from '../helpers.js';
 
 async function test(input, expected, options) {

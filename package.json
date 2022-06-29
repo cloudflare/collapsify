@@ -5,8 +5,8 @@
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "type": "module",
   "bin": {
-    "collapsify": "./bin/cli.js",
-    "collapsify-server": "./bin/server.js"
+    "collapsify": "./built/bin/cli.js",
+    "collapsify-server": "./built/bin/server.js"
   },
   "bugs": "http://github.com/cloudflare/collapsify/issues",
   "contributors": [
@@ -20,15 +20,16 @@
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^5.1.7",
-    "got": "^11.8.5",
+    "got": "^12.1.0",
     "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
     "ndjson-logrus": "^1.1.0",
-    "p-queue": "^2.4.2",
+    "p-queue": "^7.2.0",
     "parse5-html-rewriting-stream": "^5.1.1",
+    "parse5-sax-parser": "^5.1.1",
     "postcss": "^8.2.15",
-    "postcss-value-parser": "^3.3.0",
-    "pumpify": "^1.5.1",
+    "postcss-value-parser": "^4.2.0",
+    "pumpify": "^2.0.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
     "terser": "^5.13.0"
@@ -50,8 +51,7 @@
   "license": "MIT",
   "main": "index.js",
   "files": [
-    "bin",
-    "lib",
+    "src",
     "index.js"
   ],
   "preferGlobal": true,
@@ -60,6 +60,9 @@
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
+    "@types/parse5-html-rewriting-stream": "^5.1.2",
+    "@types/parse5-sax-parser": "^5.0.2",
+    "@types/pumpify": "^1.4.1",
     "bl": "^2.0.1",
     "coveralls": "^3.0.2",
     "husky": "^1.0.0-rc.13",
@@ -68,18 +71,22 @@
     "mocha": "^10.0.0",
     "nock": "^13.2.4",
     "power-assert": "^1.6.0",
+    "typescript": "^4.7.4",
     "xo": "^0.50.0"
   },
   "scripts": {
-    "start": "./bin/server.js",
+    "build": "tsc",
+    "start": "node ./built/bin/server.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
   },
   "xo": {
     "space": true,
-    "prettier": true
+    "prettier": true,
+    "rules": {
+      "n/no-unpublished-bin": "off"
+    }
   },
-
   "husky": {
     "hooks": {
       "pre-commit": "xo"

@@ -1,9 +1,9 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
-import Rewriter from '../../lib/utils/parse5-async-rewriter.js';
+import Rewriter from '../../built/utils/parse5-async-rewriter.js';
 
-import inlinePlugin from '../../lib/plugins/parse5-flatten-inline-style.js';
-import externalPlugin from '../../lib/plugins/parse5-flatten-external-style.js';
+import inlinePlugin from '../../built/plugins/parse5-flatten-inline-style.js';
+import externalPlugin from '../../built/plugins/parse5-flatten-external-style.js';
 import {stringResponse, gifResponse} from '../helpers.js';
 
 async function test(input, expected, options) {

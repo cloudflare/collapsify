@@ -1,12 +1,15 @@
+import {Plugin, Result} from 'postcss';
 import valueParser from 'postcss-value-parser';
 import collapseCSS from '../collapsers/css.js';
+import {CollapsifyOptions} from '../collapsify.js';
 import cssURL from '../utils/css-url.js';
 
-export default function flattenImport(options = {}) {
+export default function flattenImport(options: CollapsifyOptions): Plugin {
   return {
     postcssPlugin: 'postcss-flatten-import',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     async Once(css) {
-      const tasks = [];
+      const tasks: Array<Promise<void>> = [];
 
       css.walkAtRules('import', (rule) => {
         const parsedValue = valueParser(rule.params);
@@ -21,6 +24,10 @@ export default function flattenImport(options = {}) {
             resourceLocation: new URL(url, options.resourceLocation).toString(),
           })
           .then((result) => {
+            if (!(result instanceof Result)) {
+              throw new TypeError(`postcss result wasn't a Result`);
+            }
+
             if (parsedValue.nodes.length > 1) {
               rule.name = 'media';
               rule.params = rule.params
@@ -37,7 +44,6 @@ export default function flattenImport(options = {}) {
       });
 
       await Promise.all(tasks);
-      return css;
     },
   };
 }

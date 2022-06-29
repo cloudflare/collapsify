@@ -1,15 +1,18 @@
 #!/usr/bin/env node
-import fs from 'node:fs';
-import process from 'node:process';
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+/* eslint @typescript-eslint/no-unsafe-call: 0 */
+import * as fs from 'node:fs';
+import * as process from 'node:process';
 import bole from 'bole';
+import type {Headers} from 'got';
 import ndjs from 'ndjson-logrus';
-import pumpify from 'pumpify';
-import cliclopts from 'cliclopts';
+import Pumpify from 'pumpify';
+import cliclopts, {Argument} from 'cliclopts';
 import minimist from 'minimist';
-import VERSION from '../lib/version.js';
-import collapsifyNode from '../lib/node.js';
+import VERSION from '../version.js';
+import collapsifyNode from '../node.js';
 
-const allowedArgs = [
+const allowedArgs: Argument[] = [
   {
     name: 'forbidden',
     abbr: 'x',
@@ -49,8 +52,17 @@ const allowedArgs = [
   },
 ];
 
+interface Args {
+  help: boolean;
+  version: boolean;
+  forbidden: string;
+  headers: string[];
+  verbose: number;
+  output: string;
+}
+
 const clopts = cliclopts(allowedArgs);
-const argv = minimist(process.argv.slice(2), {
+const argv = minimist<Args>(process.argv.slice(2), {
   alias: clopts.alias(),
   boolean: clopts.boolean(),
   default: clopts.default(),
@@ -64,34 +76,33 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log('Collapsify CLI - ' + VERSION);
+  console.log('Collapsify CLI - ' + String(VERSION));
   process.exit(0);
+}
+
+const headers: Headers = {};
+for (const header of argv.headers.filter(Boolean)) {
+  const [key, value] = header.trim().split(':');
+  headers[key.trim()] = value.trim();
 }
 
 const options = {
   forbidden: argv.forbidden,
-
-  // eslint-disable-next-line unicorn/no-array-reduce
-  headers: argv.headers.filter(Boolean).reduce((headers, header) => {
-    header = header.trim().split(':');
-    headers[header[0].trim()] = header[1].trim();
-
-    return headers;
-  }, {}),
+  headers,
 };
 
 const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
-  stream: pumpify(ndjs(), process.stderr),
+  stream: new Pumpify(ndjs(), process.stderr),
 });
 const logger = bole('collapsify-cli');
 
 const domain = argv._[0];
 
 collapsifyNode(domain, options).then(
-  (output) => {
-    logger.info(`Collapsed Size: ${output.length} bytes`);
+  (output: any) => {
+    logger.info(`Collapsed Size: ${String(output.length)} bytes`);
     fs.writeFileSync(argv.output, output);
   },
   (error) => {

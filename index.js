@@ -1,1 +1,1 @@
-export {default} from './lib/collapsify.js';
+export {default} from './src/collapsify.js';
