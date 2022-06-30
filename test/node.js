@@ -20,10 +20,10 @@ describe('collapsify node', () => {
       });
 
     const collapsed = await collapsify('https://terinstock.com', {});
-    assert(typeof collapsed === 'string');
-    assert(
-      collapsed ===
-        '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"/></body></html>',
+    assert.equal(typeof collapsed, 'string');
+    assert.equal(
+      collapsed,
+      '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64," /></body></html>',
     );
   });
 
