@@ -1,9 +1,9 @@
-import postcss from 'postcss';
+import postcss, {Result} from 'postcss';
 import cssnano from 'cssnano';
 import bole from 'bole';
 import flattenUrl from '../plugins/postcss-flatten-url.js';
 import flattenImport from '../plugins/postcss-flatten-import.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {CollapsifyError, CollapsifyOptions} from '../collapsify.js';
 
 const logger = bole('collapsify:collapsers:css');
 
@@ -17,22 +17,31 @@ async function external(options: CssOptions) {
 }
 
 async function collapse(bodyString: string, options: CssOptions) {
-  const lazy = postcss()
-    .use(flattenUrl(options))
-    .use(flattenImport(options))
-    .use(cssnano({preset: 'default'}))
-    .process(bodyString, {from: options.resourceLocation});
-  const result = await lazy;
+  try {
+    const lazy = postcss()
+      .use(flattenUrl(options))
+      .use(flattenImport(options))
+      .use(cssnano({preset: 'default'}))
+      .process(bodyString, {from: options.resourceLocation});
+    const result = await lazy;
 
-  for (const message of result.warnings()) {
-    logger.warn(message);
+    for (const message of result.warnings()) {
+      logger.warn(message);
+    }
+
+    if (options.imported) {
+      return result;
+    }
+
+    return result.css;
+  } catch (error: unknown) {
+    if (error instanceof CollapsifyError) {
+      throw error;
+    }
+
+    logger.error(error);
+    throw new CollapsifyError('Error during CSS inlining.');
   }
-
-  if (options.imported) {
-    return result;
-  }
-
-  return result.css;
 }
 
 collapse.external = external;

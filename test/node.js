@@ -2,6 +2,7 @@ import assert from 'power-assert';
 import nock from 'nock';
 import {describe, it} from 'mocha';
 import collapsify from '../built/node.js';
+import {CollapsifyError} from '../built/collapsify.js';
 
 nock.disableNetConnect();
 
@@ -38,8 +39,8 @@ describe('collapsify node', () => {
 
       assert(false, 'unexpected Promise resolution');
     } catch (error) {
-      assert(error instanceof Error);
-      assert(error.message === 'Forbidden resource http://localhost/');
+      assert(error instanceof CollapsifyError, 'wrong error type');
+      assert.equal(error.message, 'Forbidden resource http://localhost/');
     }
   });
 });
