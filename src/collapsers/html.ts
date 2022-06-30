@@ -1,8 +1,4 @@
-import Rewriter from '../utils/parse5-async-rewriter.js';
-import flattenImage from '../plugins/parse5-flatten-image.js';
-import inlineStyle from '../plugins/parse5-flatten-inline-style.js';
-import externalStyle from '../plugins/parse5-flatten-external-style.js';
-import flattenScript from '../plugins/parse5-flatten-script.js';
+import {rewriteHtml} from '../utils/html-rewriter.js';
 import {CollapsifyOptions} from '../collapsify.js';
 
 export async function external(options: CollapsifyOptions) {
@@ -11,14 +7,7 @@ export async function external(options: CollapsifyOptions) {
 }
 
 async function collapse(text: string, options: CollapsifyOptions) {
-  const rewriter = new Rewriter();
-
-  flattenImage(rewriter, options);
-  inlineStyle(rewriter, options);
-  externalStyle(rewriter, options);
-  flattenScript(rewriter, options);
-
-  return rewriter.process(text);
+  return rewriteHtml(text, options);
 }
 
 export default collapse;

@@ -21,12 +21,11 @@
     "cliclopts": "^1.1.0",
     "cssnano": "^5.1.7",
     "got": "^12.1.0",
+    "html-rewriter-wasm": "^0.4.1",
     "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
     "ndjson-logrus": "^1.1.0",
     "p-queue": "^7.2.0",
-    "parse5-html-rewriting-stream": "^5.1.1",
-    "parse5-sax-parser": "^5.1.1",
     "postcss": "^8.2.15",
     "postcss-value-parser": "^4.2.0",
     "pumpify": "^2.0.1",
@@ -60,8 +59,6 @@
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
-    "@types/parse5-html-rewriting-stream": "^5.1.2",
-    "@types/parse5-sax-parser": "^5.0.2",
     "@types/pumpify": "^1.4.1",
     "bl": "^2.0.1",
     "coveralls": "^3.0.2",

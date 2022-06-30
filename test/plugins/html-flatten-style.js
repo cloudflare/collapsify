@@ -1,17 +1,11 @@
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
-import Rewriter from '../../built/utils/parse5-async-rewriter.js';
-
-import inlinePlugin from '../../built/plugins/parse5-flatten-inline-style.js';
-import externalPlugin from '../../built/plugins/parse5-flatten-external-style.js';
 import {stringResponse, gifResponse} from '../helpers.js';
+import {rewriteHtml} from '../../built/utils/html-rewriter.js';
 
 async function test(input, expected, options) {
-  const rewriter = new Rewriter();
-  inlinePlugin(rewriter, options);
-  externalPlugin(rewriter, options);
-  const actual = await rewriter.process(input);
-  assert(actual === expected);
+  const actual = await rewriteHtml(input, options);
+  assert.equal(actual, expected);
 }
 
 describe('posthtml-flatten-style', () => {
