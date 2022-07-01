@@ -48,10 +48,9 @@
     "optimization"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "built/collapsify.js",
   "files": [
-    "src",
-    "index.js"
+    "built"
   ],
   "preferGlobal": true,
   "repository": {
@@ -79,10 +78,7 @@
   },
   "xo": {
     "space": true,
-    "prettier": true,
-    "rules": {
-      "n/no-unpublished-bin": "off"
-    }
+    "prettier": true
   },
   "husky": {
     "hooks": {

@@ -7,9 +7,8 @@
     "moduleResolution": "node",
     "target": "ES2020",
     "declaration": true,
-    "declarationDir": "./types",
     "allowSyntheticDefaultImports": true
   },
   "include": ["./src/**/*"],
-  "exclude": [    "node_modules/*"  ]
+  "exclude": ["node_modules/*"]
 }
