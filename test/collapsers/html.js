@@ -66,4 +66,55 @@ describe('html collapser', () => {
         '<!doctype html><html><body><h1>Hi.</h1><img src="data:image/jpeg;base64,"></body></html>',
     );
   });
+
+  // Over 1kb the text is split into multiple chunks
+  it('testing inline style block greater than 1kb', async () => {
+    const bigContent = Array.from({length: 2048}).fill('a').join('');
+    const collapsed = await collapser(
+      `<html><style>
+      body {
+        background: blue;
+        content: '${bigContent}';
+      }
+      </style></html>`,
+      {
+        async fetch() {
+          assert.fail('no request expected');
+        },
+        resourceLocation: 'https://example.com',
+      },
+    );
+
+    assert.equal(typeof collapsed, 'string');
+    assert.equal(
+      collapsed,
+      `<html><style>body{background:blue;content:"${bigContent}"}</style></html>`,
+    );
+  });
+
+  // Over 1kb the text is split into multiple chunks
+  it('testing inline script block greater than 1kb', async () => {
+    const bigContent = Array.from({length: 2048}).fill('a').join('');
+    const collapsed = await collapser(
+      `<html><body><script>
+        function someFunc() {
+          return {
+            content: '${bigContent}'
+          };
+        }
+      </script></html>`,
+      {
+        async fetch() {
+          assert.fail('no request expected');
+        },
+        resourceLocation: 'https://example.com',
+      },
+    );
+
+    assert.equal(typeof collapsed, 'string');
+    assert.equal(
+      collapsed,
+      `<html><body><script>function someFunc(){return{content:"${bigContent}"}}</script></html>`,
+    );
+  });
 });
