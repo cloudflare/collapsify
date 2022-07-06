@@ -6,13 +6,22 @@ export default function flattenInlineStyle(
   rewriter: HTMLRewriter,
   options: CollapsifyOptions,
 ) {
+  let currentText = '';
   rewriter.on('style', {
     async text(text) {
-      const content = await collapseCSS(text.text, {
+      if (!text.lastInTextNode) {
+        currentText += text.text;
+        text.remove();
+        return;
+      }
+
+      const content = await collapseCSS(currentText, {
         imported: false,
         fetch: options.fetch,
         resourceLocation: options.resourceLocation,
       });
+
+      currentText = '';
 
       if (typeof content !== 'string') {
         throw new TypeError('Wrong output from collapseCSS');
