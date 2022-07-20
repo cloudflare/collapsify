@@ -1,7 +1,7 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "type": "module",
   "bin": {
@@ -31,7 +31,7 @@
     "pumpify": "^2.0.1",
     "server-summary": "^6.1.0",
     "systemd-socket": "0.0.0",
-    "terser": "^5.13.0"
+    "terser": "^5.14.2"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
   "keywords": [
