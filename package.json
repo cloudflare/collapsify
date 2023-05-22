@@ -1,12 +1,11 @@
 {
   "name": "collapsify",
   "description": "Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "author": "Terin Stock <terinjokes@gmail.com> (http://terinstock.com)",
   "type": "module",
   "bin": {
-    "collapsify": "./built/bin/cli.js",
-    "collapsify-server": "./built/bin/server.js"
+    "collapsify": "./built/bin/cli.js"
   },
   "bugs": "http://github.com/cloudflare/collapsify/issues",
   "contributors": [
@@ -20,17 +19,10 @@
     "bole": "^3.0.2",
     "cliclopts": "^1.1.0",
     "cssnano": "^5.1.7",
-    "got": "^12.1.0",
     "html-rewriter-wasm": "^0.4.1",
-    "http-ndjson": "^3.1.0",
     "minimist": "^1.1.0",
-    "ndjson-logrus": "^1.1.0",
-    "p-queue": "^7.2.0",
     "postcss": "^8.2.15",
     "postcss-value-parser": "^4.2.0",
-    "pumpify": "^2.0.1",
-    "server-summary": "^6.1.0",
-    "systemd-socket": "0.0.0",
     "terser": "^5.14.2"
   },
   "homepage": "http://github.com/cloudflare/collapsify",
@@ -52,37 +44,23 @@
   "files": [
     "built"
   ],
-  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/cloudflare/collapsify.git"
   },
   "devDependencies": {
-    "@types/pumpify": "^1.4.1",
-    "bl": "^2.0.1",
-    "coveralls": "^3.0.2",
-    "husky": "^1.0.0-rc.13",
-    "intelli-espower-loader": "^1.0.1",
-    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^10.0.0",
-    "nock": "^13.2.4",
     "power-assert": "^1.6.0",
-    "typescript": "^4.7.4",
-    "xo": "^0.50.0"
+    "typescript": "^5.0.4",
+    "xo": "^0.54.2"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./built/bin/server.js",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
-    "test": "xo && istanbul cover _mocha -- --require intelli-espower-loader --reporter spec --recursive"
+    "start": "node ./built/bin/cli.js",
+    "test": "xo && mocha --recursive"
   },
   "xo": {
     "space": true,
     "prettier": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "xo"
-    }
   }
 }

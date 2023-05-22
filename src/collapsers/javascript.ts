@@ -1,6 +1,6 @@
 import {minify} from 'terser';
 import bole from 'bole';
-import {CollapsifyError, CollapsifyOptions} from '../collapsify.js';
+import {CollapsifyError, type CollapsifyOptions} from '../collapsify.js';
 
 const logger = bole('collapsify:collapsers:javascript');
 

@@ -57,16 +57,19 @@ describe('posthtml-flatten-style', () => {
       {
         async fetch(url) {
           switch (url) {
-            case 'https://example.com/static/css/app.css':
+            case 'https://example.com/static/css/app.css': {
               return stringResponse(
                 'body > .test { background: url(gif.gif) }',
               );
+            }
 
-            case 'https://example.com/static/css/gif.gif':
+            case 'https://example.com/static/css/gif.gif': {
               return gifResponse();
+            }
 
-            default:
+            default: {
               assert(false, 'unknown resource resolution');
+            }
           }
         },
         resourceLocation: 'https://example.com/page.html',

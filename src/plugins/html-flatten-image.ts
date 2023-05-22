@@ -1,6 +1,6 @@
-import {HTMLRewriter} from 'html-rewriter-wasm';
+import {type HTMLRewriter} from 'html-rewriter-wasm';
 import collapseBinary from '../collapsers/binary.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 import {validateSync} from '../utils/data-uri.js';
 
 export default function flattenImage(

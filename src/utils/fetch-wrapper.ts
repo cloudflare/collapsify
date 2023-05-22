@@ -1,6 +1,6 @@
 import type {Buffer} from 'node:buffer';
 import bole from 'bole';
-import {CollapsifyError, Fetch, Response} from '../collapsify.js';
+import {CollapsifyError, type Fetch, type Response} from '../collapsify.js';
 
 const logger = bole('collapsify:fetch');
 

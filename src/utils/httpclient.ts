@@ -1,19 +1,17 @@
-import * as process from 'node:process';
-import type {Buffer} from 'node:buffer';
-import got from 'got';
-import type {Headers} from 'got';
-import PQueue from 'p-queue';
+import {Buffer} from 'node:buffer';
 import bole from 'bole';
 import VERSION from '../version.js';
 import type {Fetch, Response} from '../collapsify';
 
 const logger = bole('collapsify:http');
 
-class GotResponse implements Response {
+const userAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10; rv:60.0) Gecko/20100101 Firefox/60.0 Collapsify/${VERSION}`;
+
+class FetchResponse implements Response {
   constructor(
     private readonly statusCode: number,
     private readonly contentType: string,
-    private readonly buffer: Buffer,
+    private readonly blob: Blob,
   ) {}
 
   getStatusCode(): number {
@@ -25,49 +23,35 @@ class GotResponse implements Response {
   }
 
   async getAsString(): Promise<string> {
-    return String(this.buffer);
+    return this.blob.text();
   }
 
   async getAsArray(): Promise<Buffer> {
-    return this.buffer;
+    return Buffer.from(await this.blob.arrayBuffer());
   }
 }
 
-export default function makeClient(defaultHeaders: Headers): Fetch {
+export default function makeClient(
+  defaultHeaders?: Record<string, string>,
+): Fetch {
   const cache = new Map();
 
-  const client = got.extend({
-    headers: {
-      'user-agent': `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10; rv:60.0) Gecko/20100101 Firefox/60.0 Collapsify/${String(
-        VERSION,
-      )} node/${String(process.version)}`,
-      ...defaultHeaders,
-    },
-    responseType: 'buffer',
-    timeout: {request: 2000},
-    retry: {limit: 5},
-  });
+  async function nodeFetch(url: string) {
+    logger.debug('Fetching %s.', url);
 
-  const queue = new PQueue({
-    concurrency: 8,
-  });
-
-  async function gotFetch(url: string) {
-    const response = await queue.add(() => {
-      logger.debug('Fetching %s.', url);
-      return client.get(url, {cache});
+    const resp = await fetch(url, {
+      headers: {
+        'user-agent': userAgent,
+        ...defaultHeaders,
+      },
     });
 
-    if (response.isFromCache) {
-      logger.debug('Retrieved %s from cache.', url);
-    }
-
-    return new GotResponse(
-      response.statusCode,
-      response.headers['content-type'],
-      response.rawBody,
+    return new FetchResponse(
+      resp.status,
+      resp.headers.get('content-type') ?? '',
+      await resp.blob(),
     );
   }
 
-  return gotFetch;
+  return nodeFetch;
 }

@@ -4,13 +4,10 @@
 import * as fs from 'node:fs';
 import * as process from 'node:process';
 import bole from 'bole';
-import type {Headers} from 'got';
-import ndjs from 'ndjson-logrus';
-import Pumpify from 'pumpify';
-import cliclopts, {Argument} from 'cliclopts';
+import cliclopts, {type Argument} from 'cliclopts';
 import minimist from 'minimist';
 import VERSION from '../version.js';
-import collapsifyNode from '../node.js';
+import {simpleCollapsify} from '../simple.js';
 
 const allowedArgs: Argument[] = [
   {
@@ -29,7 +26,7 @@ const allowedArgs: Argument[] = [
   {
     name: 'verbose',
     abbr: 'V',
-    default: 0,
+    default: 1,
     help: 'Verbosity of logging output. 0 is errors and warnings, 1 is info, 2 is all.',
   },
   {
@@ -52,14 +49,14 @@ const allowedArgs: Argument[] = [
   },
 ];
 
-interface Args {
+type Args = {
   help: boolean;
   version: boolean;
   forbidden: string;
   headers: string[];
   verbose: number;
   output: string;
-}
+};
 
 const clopts = cliclopts(allowedArgs);
 const argv = minimist<Args>(process.argv.slice(2), {
@@ -80,7 +77,7 @@ if (argv.version) {
   process.exit(0);
 }
 
-const headers: Headers = {};
+const headers: Record<string, string> = {};
 for (const header of argv.headers.filter(Boolean)) {
   const [key, value] = header.trim().split(':');
   headers[key.trim()] = value.trim();
@@ -94,18 +91,12 @@ const options = {
 const levels = 'warn info debug'.split(' ');
 bole.output({
   level: levels[argv.verbose] || 'warn',
-  stream: new Pumpify(ndjs(), process.stderr),
+  stream: process.stderr,
 });
 const logger = bole('collapsify-cli');
 
-const domain = argv._[0];
+const url = argv._[0];
 
-collapsifyNode(domain, options).then(
-  (output: any) => {
-    logger.info(`Collapsed Size: ${String(output.length)} bytes`);
-    fs.writeFileSync(argv.output, output);
-  },
-  (error) => {
-    logger.error('An error has occured while collapsing', domain, error);
-  },
-);
+const output = await simpleCollapsify(url, options);
+logger.info(`Collapsed Size: ${String(output.length)} bytes`);
+fs.writeFileSync(argv.output, output);

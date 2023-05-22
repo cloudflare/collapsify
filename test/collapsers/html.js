@@ -45,16 +45,19 @@ describe('html collapser', () => {
     const collapsed = await external({
       async fetch(url) {
         switch (url) {
-          case 'https://terinstock.com':
+          case 'https://terinstock.com': {
             return stringResponse(
               '<!doctype html><html><body><h1>Hi.</h1><img src="avatar.jpeg"></body></html>',
             );
+          }
 
-          case 'https://terinstock.com/avatar.jpeg':
+          case 'https://terinstock.com/avatar.jpeg': {
             return binaryResponse(Buffer.from(''), 'image/jpeg');
+          }
 
-          default:
+          default: {
             throw new assert.AssertionError('unknown resource resolution');
+          }
         }
       },
       resourceLocation: 'https://terinstock.com',

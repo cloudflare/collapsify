@@ -1,4 +1,4 @@
-# Collapsify [![Build Status](http://img.shields.io/travis/cloudflare/collapsify/master.svg?style=flat)](https://travis-ci.org/cloudflare/collapsify) [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](https://img.shields.io/coveralls/cloudflare/collapsify/master.svg)](https://coveralls.io/github/cloudflare/collapsify)
+# Collapsify [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify)
 
 > Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.
 
@@ -10,29 +10,33 @@ npm install -g collapsify
 
 ## Usage
 
-An HTTP server is installed as `collapsify-server`, which collapses the URL passed to “/?url=”.
-This HTTP server is systemd-aware: when running as a systemd service, collapsify will listen on the socket passed.
-Otherwise, this server defaults to listening on port 8020, which can be changed via the “-p” flag.
-
-Additional options can by found via the built in usage information, `collapsify-server -h`.
+You can use the collapsify CLI like this to download and save the page into a single file like this:
+```sh
+collapsify -o single-page.html https://my-site.com/
+```
+see `collapsify -h` for all options.
 
 ## API
 
 ```javascript
-var collapsify = require('collapsify');
+import {simpleCollapsify} from 'collapsify';
 
-collapsify('http://www.cloudflare.com', {
+await simpleCollapsify('https://example.com', {
   headers: {
-    Accept-Language: 'en-US'
-  },
-}).then(function(output) {
-  console.log(output);
-});
+    'accept-language': 'en-US'
+  }
+})
+  .then(page => console.log(page))
+  .catch(err => console.error(err));
+
 ```
 
-The “collapsify” function takes the URL to collapse, as well as an object of options, and returns a promise that resolves to a Buffer.
+The `simpleCollapsify` function takes the URL to collapse, as well as an object of options, and returns a promise that resolves to a String.
 
 ### Options
 
 * **headers**: An object of headers, to be added to each HTTP request.
 * **forbidden**: A regex that matches blacklisted resources that should be avoided while navigating.
+
+## Requirements
+The simple mode and CLI require nodejs >= 18, as they use the global `fetch` function.
