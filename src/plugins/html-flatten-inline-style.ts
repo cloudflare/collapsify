@@ -1,6 +1,6 @@
-import {HTMLRewriter} from 'html-rewriter-wasm';
+import {type HTMLRewriter} from 'html-rewriter-wasm';
 import collapseCSS from '../collapsers/css.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 
 export default function flattenInlineStyle(
   rewriter: HTMLRewriter,

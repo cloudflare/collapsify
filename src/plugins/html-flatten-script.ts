@@ -1,7 +1,7 @@
 import bole from 'bole';
-import {HTMLRewriter} from 'html-rewriter-wasm';
+import {type HTMLRewriter} from 'html-rewriter-wasm';
 import collapseJavaScript from '../collapsers/javascript.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 
 const logger = bole('collapsify:collapsers:html');
 
@@ -39,7 +39,7 @@ export default function flattenScript(
 
       // Remove original `src` attribute.
       element.removeAttribute('src');
-      element.setInnerContent(content, {html: true});
+      element.setInnerContent(content!, {html: true});
     },
   });
 
@@ -53,7 +53,7 @@ export default function flattenScript(
           resourceLocation: '<script>',
         });
 
-        text.replace(content, {html: true});
+        text.replace(content!, {html: true});
         innerContent = '';
       } else {
         text.remove();

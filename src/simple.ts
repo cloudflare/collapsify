@@ -1,18 +1,16 @@
-import type {Headers} from 'got';
 import httpClient from './utils/httpclient.js';
 import collapseHTML, {CollapsifyError} from './collapsify.js';
 
-interface NodeOptions {
-  forbidden?: string;
-  headers?: Headers;
-}
+export type SimpleOptions = {
+  forbidden: string;
+  headers?: Record<string, string>;
+};
 
-export default async function collapsifyNode(
+export async function simpleCollapsify(
   resourceLocation: string,
-  options: NodeOptions,
+  options: SimpleOptions,
 ) {
-  const fetch = httpClient(options.headers);
-
+  const fetch = httpClient(options?.headers);
   options = Object.assign(
     {
       forbidden: 'a^',

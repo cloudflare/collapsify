@@ -1,4 +1,4 @@
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 import {encodeSync} from '../utils/data-uri.js';
 
 async function external({fetch, resourceLocation: url}: CollapsifyOptions) {

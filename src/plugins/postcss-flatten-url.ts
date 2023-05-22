@@ -1,7 +1,7 @@
-import {Plugin} from 'postcss';
+import {type Plugin} from 'postcss';
 import valueParser from 'postcss-value-parser';
 import collapseBinary from '../collapsers/binary.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 import cssURL from '../utils/css-url.js';
 
 export default function flattenUrl(options: CollapsifyOptions): Plugin {

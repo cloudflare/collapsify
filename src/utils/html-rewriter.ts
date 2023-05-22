@@ -1,5 +1,5 @@
 import {HTMLRewriter} from 'html-rewriter-wasm';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 import flattenExternalStyle from '../plugins/html-flatten-external-style.js';
 import flattenImage from '../plugins/html-flatten-image.js';
 import flattenInlineStyle from '../plugins/html-flatten-inline-style.js';

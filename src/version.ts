@@ -1,8 +1,8 @@
 import {readFileSync} from 'node:fs';
 
-interface PackageJson {
+type PackageJson = {
   version: string;
-}
+};
 
 const contents = readFileSync(new URL('../package.json', import.meta.url), {
   encoding: 'utf8',

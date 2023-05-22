@@ -1,11 +1,11 @@
 declare module 'cliclopts' {
-  export interface Argument {
+  export type Argument = {
     name: string;
     abbr: string;
     default?: any;
     help?: string;
     boolean?: boolean;
-  }
+  };
 
   function cliclopts(args: Argument[]): any;
 

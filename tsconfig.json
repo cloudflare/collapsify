@@ -3,10 +3,11 @@
     "noImplicitAny": true,
     "outDir": "./built",
     "allowJs": false,
-    "module": "ES2020",
+    "module": "ES2022",
     "moduleResolution": "node",
     "target": "ES2020",
     "declaration": true,
+    "strictNullChecks": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["./src/**/*"],

@@ -1,5 +1,5 @@
 import {rewriteHtml} from '../utils/html-rewriter.js';
-import {CollapsifyOptions} from '../collapsify.js';
+import {type CollapsifyOptions} from '../collapsify.js';
 
 export async function external(options: CollapsifyOptions) {
   const response = await options.fetch(options.resourceLocation);

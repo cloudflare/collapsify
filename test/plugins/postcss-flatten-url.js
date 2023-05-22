@@ -2,7 +2,6 @@ import {Buffer} from 'node:buffer';
 import postcss from 'postcss';
 import assert from 'power-assert';
 import {describe, it} from 'mocha';
-
 import plugin from '../../built/plugins/postcss-flatten-url.js';
 import {binaryResponse} from '../helpers.js';
 

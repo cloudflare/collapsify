@@ -3,13 +3,13 @@ import cssnano from 'cssnano';
 import bole from 'bole';
 import flattenUrl from '../plugins/postcss-flatten-url.js';
 import flattenImport from '../plugins/postcss-flatten-import.js';
-import {CollapsifyError, CollapsifyOptions} from '../collapsify.js';
+import {CollapsifyError, type CollapsifyOptions} from '../collapsify.js';
 
 const logger = bole('collapsify:collapsers:css');
 
-interface CssOptions extends CollapsifyOptions {
+type CssOptions = {
   imported?: boolean;
-}
+} & CollapsifyOptions;
 
 async function external(options: CssOptions) {
   const response = await options.fetch(options.resourceLocation);
