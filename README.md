@@ -1,3 +1,6 @@
+This project has been archived, and is no longer actively maintained.
+See the  [Cloudflare Documentation](https://developers.cloudflare.com/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) for details on managing Custom Pages.
+
 # Collapsify [![](http://img.shields.io/npm/dm/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify) [![](http://img.shields.io/npm/v/collapsify.svg?style=flat)](https://www.npmjs.org/package/collapsify)
 
 > Inlines all of the JavaScripts, stylesheets, images, fonts etc. of an HTML page.
